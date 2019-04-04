@@ -23,7 +23,7 @@ public class SignIn implements Command {
         } else {
             // TODO передай ошибку где-то тут
             System.out.println("Error: invalid login/password");
-            return "/signIn.jsp";
+            return "/WEB-INF/error.jsp";
         }
     }
 }

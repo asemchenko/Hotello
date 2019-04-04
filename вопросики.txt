@@ -1,1 +1,0 @@
-что делать с SQLException? Нормально ли ловить и перебрасывать как RuntimeException
