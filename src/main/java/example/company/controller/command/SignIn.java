@@ -24,7 +24,7 @@ public class SignIn implements Command {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
             System.out.println("Successfully login");
-            return "/WEB-INF/loginHome.jsp";
+            return "/";
         } else {
             // TODO передай ошибку где-то тут
             System.out.println("Error: invalid login/password");
