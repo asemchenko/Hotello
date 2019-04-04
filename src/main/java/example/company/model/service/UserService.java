@@ -35,6 +35,13 @@ public class UserService {
         }
     }
 
+    public Optional<User> getUserByEmail(String email) {
+        try (DaoFactory factory = JdbcDaoFactory.getFactory()) {
+            UserDao userDao = factory.getUserDao();
+            return userDao.findByEmail(email);
+        }
+    }
+
     private void hashPassword(User user, String password) {
         byte[] salt = new byte[16];
         SecureRandom random = new SecureRandom();
