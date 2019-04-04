@@ -24,8 +24,8 @@
         <a class="p-2 text-dark" href="#">Поддержка</a>
         <a class="p-2 text-dark" href="#">О нас</a>
     </nav>
-    <a class="btn btn-outline-primary" href="#">Зарегистироваться</a>
-    <a class="btn btn-outline-primary" href="/app/signIn" style="margin-left: 10px">Войти</a>
+    <a class="btn btn-outline-primary" href="/signUp.jsp">Зарегистироваться</a>
+    <a class="btn btn-outline-primary" href="/signIn.jsp" style="margin-left: 10px">Войти</a>
 </div>
 <main role="main">
     <section class="jumbotron text-center">

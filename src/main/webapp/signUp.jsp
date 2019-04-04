@@ -16,16 +16,27 @@
             <div class="card">
                 <div class="card-header">Register</div>
                 <div class="card-body">
-
-                    <form class="form-horizontal" method="post" action="#">
+<%--todo поменяй ссылку action в форме --%>
+                    <form class="form-horizontal" method="post" action="/app/signUp">
 
                         <div class="form-group">
-                            <label for="name" class="cols-sm-2 control-label">Your Name</label>
+                            <label for="firstName" class="cols-sm-2 control-label">Your First Name</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user fa"
                                                                        aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="name" id="name"
+                                    <input type="text" class="form-control" name="firstName" id="firstName"
+                                           placeholder="Enter your Name"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" class="cols-sm-2 control-label">Your Last Name</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa"
+                                                                       aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" name="lastName" id="lastName"
                                            placeholder="Enter your Name"/>
                                 </div>
                             </div>
@@ -41,17 +52,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="username" class="cols-sm-2 control-label">Username</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-users fa"
-                                                                       aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="username" id="username"
-                                           placeholder="Enter your Username"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label for="password" class="cols-sm-2 control-label">Password</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
@@ -61,6 +61,7 @@
                                 </div>
                             </div>
                         </div>
+<%--                        TODO реализуй проверку что пароли совпадают--%>
                         <div class="form-group">
                             <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
                             <div class="cols-sm-10">
@@ -72,11 +73,7 @@
                             </div>
                         </div>
                         <div class="form-group ">
-                            <button type="button" class="btn btn-primary btn-lg btn-block login-button">Register
-                            </button>
-                        </div>
-                        <div class="login-register">
-                            <a href="index.php">Login</a>
+                            <input type="submit" class="btn btn-primary btn-lg btn-block login-button" value="Register"/>
                         </div>
                     </form>
                 </div>

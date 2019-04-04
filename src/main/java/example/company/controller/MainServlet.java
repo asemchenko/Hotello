@@ -12,6 +12,15 @@ import java.io.IOException;
 public class MainServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        proccess(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        proccess(req, resp);
+    }
+
+    private void proccess(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String requestURI = req.getRequestURI();
         // FIXME delete this trash
         requestURI = requestURI.replaceAll("/app/", "");
@@ -21,7 +30,7 @@ public class MainServlet extends HttpServlet {
             req.getRequestDispatcher("/index.jsp").forward(req, resp);
         } else {
             String redirect = command.execute(req);
-        req.getRequestDispatcher(redirect).forward(req, resp);
+            req.getRequestDispatcher(redirect).forward(req, resp);
 //            resp.sendRedirect(redirect);
         }
     }

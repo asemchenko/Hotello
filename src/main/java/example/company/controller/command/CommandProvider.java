@@ -1,5 +1,7 @@
 package example.company.controller.command;
 
+import example.company.model.service.UserService;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +25,8 @@ public final class CommandProvider {
     }
 
     private void initCommandMap() {
-        commandMap.put("signIn", new SignInCommand());
+        commandMap.put("signIn", new SignIn(new UserService()));
+        commandMap.put("signUp", new SignUp(new UserService()));
     }
 
     public Command getCommand(String identifier) {
