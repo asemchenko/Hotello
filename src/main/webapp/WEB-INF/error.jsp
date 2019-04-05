@@ -4,6 +4,6 @@
     <title>An error occurred</title>
 </head>
 <body>
-    <h1>Sorry, an error occurred</h1>
+<h1>Sorry, an error occurred</h1>
 </body>
 </html>

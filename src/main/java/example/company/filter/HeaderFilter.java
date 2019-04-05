@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class RootFilter implements Filter {
+public class HeaderFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -15,12 +15,8 @@ public class RootFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest httpReq = (HttpServletRequest) request;
-        if (httpReq.getRequestURI().equals("/")) {
-            httpReq.getRequestDispatcher(getForwardURI(httpReq)).forward(request, response);
-        } else {
-            chain.doFilter(request, response);
-        }
+        request.setAttribute("headerPath", getHeaderPath((HttpServletRequest) request));
+        chain.doFilter(request, response);
     }
 
     @Override
@@ -28,17 +24,17 @@ public class RootFilter implements Filter {
 
     }
 
-    private String getForwardURI(HttpServletRequest request) {
+    private String getHeaderPath(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        if (session != null) {
+        if (session != null && session.getAttribute("user") != null) {
             User user = (User) session.getAttribute("user");
             switch (user.getStatus()) {
                 case ADMIN:
-                    return "/WEB-INF/admin/index.jsp";
+                    return "/WEB-INF/admin/navbar.jsp";
                 case CLIENT:
-                    return "/WEB-INF/user/index.jsp";
+                    return "/WEB-INF/user/navbar.jsp";
             }
         }
-        return "/index.jsp";
+        return "/navbar.jsp";
     }
 }

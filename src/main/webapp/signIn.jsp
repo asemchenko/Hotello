@@ -12,9 +12,13 @@
 <form class="form-signin" method="post" action="/app/signIn">
     <div class="container"><h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
         <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="email" required autofocus>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="email" required
+               autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
+        <div class="text-center mb-3">
+            <a href="/signUp.jsp" class="text-center">Do not have an account? Just sign up</a>
+        </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     </div>
 </form>

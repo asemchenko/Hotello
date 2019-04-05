@@ -3,6 +3,7 @@ package example.company.controller.command;
 import example.company.model.entity.User;
 import example.company.model.service.UserService;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -15,7 +16,7 @@ public class SignUp implements Command {
     }
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         // TODO add error handling
         // TODO придумай способ передавать сообщение об ошибке/успехе отсюда
         User user = new User();
@@ -27,16 +28,6 @@ public class SignUp implements Command {
         String password = (request.getParameter("password"));
         // save user to database
         userService.signUp(user, password);
-        makeRedirect(response, "/signIn.jsp");
+        response.sendRedirect("/signIn.jsp");
     }
-
-    // TODO дублирование кода метода makeRedirect
-    private void makeRedirect(HttpServletResponse response, String uri) {
-        try {
-            response.sendRedirect(uri);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }

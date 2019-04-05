@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="card-header">Register</div>
                 <div class="card-body">
-<%--todo поменяй ссылку action в форме --%>
+                    <%--todo поменяй ссылку action в форме --%>
                     <form class="form-horizontal" method="post" action="/app/signUp">
 
                         <div class="form-group">
@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                         </div>
-<%--                        TODO реализуй проверку что пароли совпадают--%>
+                        <%--                        TODO реализуй проверку что пароли совпадают--%>
                         <div class="form-group">
                             <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
                             <div class="cols-sm-10">
@@ -73,7 +73,8 @@
                             </div>
                         </div>
                         <div class="form-group ">
-                            <input type="submit" class="btn btn-primary btn-lg btn-block login-button" value="Register"/>
+                            <input type="submit" class="btn btn-primary btn-lg btn-block login-button"
+                                   value="Register"/>
                         </div>
                     </form>
                 </div>
@@ -81,6 +82,7 @@
             </div>
         </div>
     </div>
+<%--    TODO реализуй работу с кирилицей в БД--%>
 </div>
 </body>
 </html>
