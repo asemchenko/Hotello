@@ -29,9 +29,7 @@ public class MainServlet extends HttpServlet {
         if (command == null) {
             req.getRequestDispatcher("/index.jsp").forward(req, resp);
         } else {
-            String redirect = command.execute(req);
-            req.getRequestDispatcher(redirect).forward(req, resp);
-//            resp.sendRedirect(redirect);
+            command.execute(req, resp);
         }
     }
 }

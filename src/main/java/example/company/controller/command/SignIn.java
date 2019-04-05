@@ -4,7 +4,9 @@ import example.company.model.entity.User;
 import example.company.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 public class SignIn implements Command {
     private UserService userService;
@@ -14,7 +16,7 @@ public class SignIn implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) {
+    public void execute(HttpServletRequest request, HttpServletResponse response) {
         // TODO проверка логина и пароля
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -24,11 +26,20 @@ public class SignIn implements Command {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
             System.out.println("Successfully login");
-            return "/";
+            makeRedirect(response, "/");
+
         } else {
             // TODO передай ошибку где-то тут
             System.out.println("Error: invalid login/password");
-            return "/WEB-INF/error.jsp";
+            makeRedirect(response, "/signIn.jsp");
+        }
+    }
+
+    private void makeRedirect(HttpServletResponse response, String uri) {
+        try {
+            response.sendRedirect(uri);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
