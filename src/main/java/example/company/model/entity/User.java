@@ -2,14 +2,14 @@ package example.company.model.entity;
 
 import java.util.NoSuchElementException;
 
-public class User {
-    private Long id;
+public class User extends Entity {
     private String firstName;
     private String lastName;
     private String email;
     private byte[] passwordHash;
     private byte[] passwordSalt;
     private UserStatus status;
+    // TODO добавь поле creation_time как в БД и обнови код DAO
 
     public String getFirstName() {
         return firstName;
@@ -57,15 +57,6 @@ public class User {
 
     public void setStatus(UserStatus status) {
         this.status = status;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    // TODO разрешать менять id-шник как-то не оч
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public enum UserStatus {

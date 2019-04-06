@@ -3,32 +3,45 @@ package example.company.model.dao.implementation;
 import example.company.model.dao.UserDao;
 import example.company.model.entity.User;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 // TODO implement this
-public class JdbcUserDao implements UserDao {
+public class JdbcUserDao extends JdbcGenericDao<User> implements UserDao {
+    public static final String ID_COLUMN_LABEL = "user_id";
     private static final String INSERT_QUERY = "INSERT INTO users " +
             "(first_name, last_name, email, password_hash, salt, user_status_id)" +
             " VALUES (?, ?, ?, ?, ?, ?)";
     private static final String FIND_BY_EMAIL_QUERY = "SELECT user_id, first_name, last_name, email, password_hash, salt, user_status_id from users where email=?";
     private static final String UPDATE_QUERY = "UPDATE users SET first_name=?, last_name=?, email=?, password_hash=?, salt=?, user_status_id=? WHERE user_id=?";
-    private Connection connection;
 
     public JdbcUserDao(Connection connection) {
-        this.connection = connection;
+        super(connection);
     }
 
     @Override
-    public void create(User user) {
-        try (PreparedStatement s = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
-            setUserParams(s, user, 0);
-            s.executeUpdate();
-            user.setId(getInsertionId(s));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    protected void setUpdateQueryParams(PreparedStatement s, User entity) throws SQLException {
+        int nextParamIndex = setUserParams(s, entity, 0);
+        s.setLong(nextParamIndex, entity.getId());
+    }
+
+    @Override
+    protected String getUpdateQuery() {
+        return UPDATE_QUERY;
+    }
+
+    @Override
+    protected String getInsertQuery() {
+        return INSERT_QUERY;
+    }
+
+    @Override
+    protected void setInsertQueryParams(PreparedStatement s, User user) throws SQLException {
+        setUserParams(s, user, 0);
     }
 
     private int setUserParams(PreparedStatement s, User user, int offset) throws SQLException {
@@ -39,16 +52,6 @@ public class JdbcUserDao implements UserDao {
         s.setBytes(5 + offset, user.getPasswordSalt());
         s.setLong(6 + offset, user.getStatus().getId());
         return 6 + 1 + offset;
-    }
-
-    private long getInsertionId(Statement statement) throws SQLException {
-        try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-            if (generatedKeys.next()) {
-                return generatedKeys.getLong("user_id");
-            } else {
-                throw new SQLException("Creating user failed, no ID obtained.");
-            }
-        }
     }
 
     @Override
@@ -62,24 +65,13 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public void update(User user) {
-        try (PreparedStatement s = connection.prepareStatement(UPDATE_QUERY)) {
-            int nextParamIndex = setUserParams(s, user, 0);
-            s.setLong(nextParamIndex, user.getId());
-            s.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
     public void delete(int id) {
 
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        try (PreparedStatement statement = connection.prepareStatement(FIND_BY_EMAIL_QUERY)) {
+        try (PreparedStatement statement = getConnection().prepareStatement(FIND_BY_EMAIL_QUERY)) {
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {

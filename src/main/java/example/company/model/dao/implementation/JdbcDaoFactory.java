@@ -1,5 +1,6 @@
 package example.company.model.dao.implementation;
 
+import example.company.model.dao.ApartmentDao;
 import example.company.model.dao.DaoFactory;
 import example.company.model.dao.UserDao;
 
@@ -12,6 +13,7 @@ import java.sql.SQLException;
 public class JdbcDaoFactory implements DaoFactory {
     private Connection connection;
     private UserDao userDao;
+    private ApartmentDao apartmentDao;
 
     public JdbcDaoFactory(Connection connection) {
         this.connection = connection;
@@ -38,6 +40,14 @@ public class JdbcDaoFactory implements DaoFactory {
             userDao = new JdbcUserDao(getCurrentConnection());
         }
         return userDao;
+    }
+
+    @Override
+    public ApartmentDao getApartmentDao() {
+        if (apartmentDao == null) {
+            apartmentDao = new JdbcApartmentDao(getCurrentConnection());
+        }
+        return apartmentDao;
     }
 
     private Connection getCurrentConnection() {

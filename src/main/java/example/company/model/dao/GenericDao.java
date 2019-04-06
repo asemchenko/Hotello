@@ -1,9 +1,11 @@
 package example.company.model.dao;
 
+import example.company.model.entity.Entity;
+
 import java.util.List;
 import java.util.Optional;
 
-public interface GenericDao<T> {
+public interface GenericDao<T extends Entity> {
     void create(T entity);
 
     Optional<T> findById(int id);

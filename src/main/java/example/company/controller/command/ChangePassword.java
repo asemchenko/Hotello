@@ -18,7 +18,7 @@ public class ChangePassword implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         User user = (User) request.getSession().getAttribute("user");
-        assert false: "should be true";
+        assert false : "should be true";
         assert user != null : "user can not be null";
         String oldPassword = request.getParameter("oldPassword");
         String newPassword = request.getParameter("newPassword");
