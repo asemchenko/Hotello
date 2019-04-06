@@ -59,9 +59,18 @@ public class User {
         this.status = status;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    // TODO разрешать менять id-шник как-то не оч
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public enum UserStatus {
         ADMIN(1), CLIENT(2);
-        private int id;
+        private long id;
 
         UserStatus(int id) {
             this.id = id;
@@ -78,7 +87,7 @@ public class User {
             }
         }
 
-        public int getId() {
+        public long getId() {
             return id;
         }
     }

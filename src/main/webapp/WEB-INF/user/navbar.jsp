@@ -13,7 +13,7 @@
             <img src="/img/user_logo.svg" alt="user_logo" width="25">
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Профиль</a>
+            <a class="dropdown-item" href="/app/profile">Профиль</a>
             <a class="dropdown-item" href="/app/orders">Мои заказы</a>
             <a class="dropdown-item" href="/app/logout">Выйти</a>
         </div>

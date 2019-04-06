@@ -29,6 +29,8 @@ public final class CommandProvider {
         commandMap.put("signUp", new SignUp(new UserService()));
         commandMap.put("logout", new Logout());
         commandMap.put("orders", new OrdersList());
+        commandMap.put("profile", new Profile());
+        commandMap.put("changePassword", new ChangePassword(new UserService()));
     }
 
     public Command getCommand(String identifier) {

@@ -14,9 +14,10 @@ import java.security.spec.KeySpec;
 import java.util.Arrays;
 import java.util.Optional;
 
+// TODO сделай интерфейс, который реализует этот класс
 public class UserService {
     public void signUp(User user, String password) {
-        hashPassword(user, password);
+        setPassword(user, password);
         try (DaoFactory factory = JdbcDaoFactory.getFactory()) {
             UserDao userDao = factory.getUserDao();
             userDao.create(user);
@@ -42,7 +43,21 @@ public class UserService {
         }
     }
 
-    private void hashPassword(User user, String password) {
+    public boolean changePassword(User user, String oldPassword, String newPassword) {
+        if (verifyPassword(user, oldPassword)) {
+            setPassword(user, newPassword);
+            try (DaoFactory daoFactory = JdbcDaoFactory.getFactory()) {
+                UserDao userDao = daoFactory.getUserDao();
+                userDao.update(user);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // TODO возможно метод setPassword нужно перенести в user
+    private void setPassword(User user, String password) {
         byte[] salt = new byte[16];
         SecureRandom random = new SecureRandom();
         random.nextBytes(salt);

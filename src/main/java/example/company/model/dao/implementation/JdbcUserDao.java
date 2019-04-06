@@ -3,10 +3,7 @@ package example.company.model.dao.implementation;
 import example.company.model.dao.UserDao;
 import example.company.model.entity.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +12,8 @@ public class JdbcUserDao implements UserDao {
     private static final String INSERT_QUERY = "INSERT INTO users " +
             "(first_name, last_name, email, password_hash, salt, user_status_id)" +
             " VALUES (?, ?, ?, ?, ?, ?)";
-    private static final String FIND_BY_EMAIL_QUERY = "SELECT first_name, last_name, email, password_hash, salt, user_status_id from users where email=?";
+    private static final String FIND_BY_EMAIL_QUERY = "SELECT user_id, first_name, last_name, email, password_hash, salt, user_status_id from users where email=?";
+    private static final String UPDATE_QUERY = "UPDATE users SET first_name=?, last_name=?, email=?, password_hash=?, salt=?, user_status_id=? WHERE user_id=?";
     private Connection connection;
 
     public JdbcUserDao(Connection connection) {
@@ -24,17 +22,32 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public void create(User user) {
-        try (PreparedStatement s = connection.prepareStatement(INSERT_QUERY)) {
-            s.setString(1, user.getFirstName());
-            s.setString(2, user.getLastName());
-            s.setString(3, user.getEmail());
-            s.setBytes(4, user.getPasswordHash());
-            s.setBytes(5, user.getPasswordSalt());
-            s.setInt(6, user.getStatus().getId());
+        try (PreparedStatement s = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
+            setUserParams(s, user, 0);
             s.executeUpdate();
-            // TODO тут нужно узнать текущий индекс объекта и установить его
+            user.setId(getInsertionId(s));
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private int setUserParams(PreparedStatement s, User user, int offset) throws SQLException {
+        s.setString(1 + offset, user.getFirstName());
+        s.setString(2 + offset, user.getLastName());
+        s.setString(3 + offset, user.getEmail());
+        s.setBytes(4 + offset, user.getPasswordHash());
+        s.setBytes(5 + offset, user.getPasswordSalt());
+        s.setLong(6 + offset, user.getStatus().getId());
+        return 6 + 1 + offset;
+    }
+
+    private long getInsertionId(Statement statement) throws SQLException {
+        try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                return generatedKeys.getLong("user_id");
+            } else {
+                throw new SQLException("Creating user failed, no ID obtained.");
+            }
         }
     }
 
@@ -50,7 +63,13 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public void update(User user) {
-
+        try (PreparedStatement s = connection.prepareStatement(UPDATE_QUERY)) {
+            int nextParamIndex = setUserParams(s, user, 0);
+            s.setLong(nextParamIndex, user.getId());
+            s.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -75,6 +94,7 @@ public class JdbcUserDao implements UserDao {
 
     private User getFromRow(ResultSet resultSet) throws SQLException {
         User user = new User();
+        user.setId(resultSet.getLong("user_id"));
         user.setFirstName(resultSet.getString("first_name"));
         user.setLastName(resultSet.getString("last_name"));
         user.setEmail(resultSet.getString("email"));
