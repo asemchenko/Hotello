@@ -7,7 +7,7 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<jsp:include page="${headerPath}"/>
+<jsp:include page="/navbar.jsp"/>
 <main role="main">
     <div class="container" style="width: 60%;">
         <div class="card">

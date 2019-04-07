@@ -7,6 +7,7 @@
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>
+    <!--    Main servlet-->
     <servlet>
         <servlet-name>Main</servlet-name>
         <servlet-class>example.company.controller.MainServlet</servlet-class>
@@ -15,14 +16,44 @@
         <servlet-name>Main</servlet-name>
         <url-pattern>/app/*</url-pattern>
     </servlet-mapping>
+    <!--    Navigation bar filter-->
     <filter>
-        <filter-name>headerFilter</filter-name>
+        <filter-name>navbarFilter</filter-name>
         <filter-class>example.company.filter.NavbarFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>headerFilter</filter-name>
+        <filter-name>navbarFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <!--    Encoding filter-->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>example.company.filter.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>requestEncoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>responseEncoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!--    Authorization filter-->
+    <filter>
+        <filter-name>authorizationFilter</filter-name>
+        <filter-class>example.company.filter.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>authorizationFilter</filter-name>
+        <!--        FIXME magic constant - app. Maybe pattern should be '/*'-->
+        <url-pattern>/app/*</url-pattern>
+    </filter-mapping>
+
+
     <!--    <session-config>-->
     <!--        &lt;!&ndash; Timeout of inactivity in minutes &ndash;&gt;-->
     <!--        <session-timeout>15</session-timeout>-->
@@ -33,7 +64,20 @@
     <!--            <max-age>900</max-age>-->
     <!--        </cookie-config>-->
     <!--    </session-config>-->
+
+
+    <!--    Root page-->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+    <!--    Error page 403 - Forbidden-->
+    <error-page>
+        <error-code>403</error-code>
+        <location>/error/403.jsp</location>
+    </error-page>
+    <!--    Error page 404 - Not found-->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/404.jsp</location>
+    </error-page>
 </web-app>

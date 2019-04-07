@@ -15,7 +15,7 @@
 <body style="background-color: #F8F9FA;">
 <jsp:include page="/navbar.jsp"/>
 <main role="main">
-    <div class="my-3 p-3 bg-white rounded shadow-sm justify-content-center mx-auto" style="width: 50%">
+    <div class="my-3 p-3 bg-white rounded shadow-sm justify-content-center mx-auto border border-dark" style="width: 50%">
         <div class="row">
             <div class="col-sm"><h6 class="border-bottom border-gray pb-2 mb-0 text-left">Заказ №123456789</h6></div>
             <div class="col-sm"></div>
