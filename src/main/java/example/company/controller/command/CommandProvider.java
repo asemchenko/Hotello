@@ -33,6 +33,7 @@ public final class CommandProvider {
         commandMap.put("profile", new Profile());
         commandMap.put("changePassword", new ChangePassword(new UserService()));
         commandMap.put("apartment", new ApartmentDetail(new ApartmentService()));
+        commandMap.put("findApartment", new FindApartment(new ApartmentService()));
     }
 
     public Command getCommand(String identifier) {

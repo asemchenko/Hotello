@@ -23,7 +23,7 @@ public class ApartmentDetail implements Command {
         Optional<Apartment> apartmentOptional = apartmentService.get(apartment_id);
         if (apartmentOptional.isPresent()) {
             request.setAttribute("apartment", apartmentOptional.get());
-            request.getRequestDispatcher("/apartmentDetail.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/apartmentDetail.jsp").forward(request, response);
         } else {
             // FIXME возможно optional тут как возу пятое колесо?
             throw new RuntimeException();
