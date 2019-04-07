@@ -10,14 +10,14 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class SignIn implements Command {
-    private UserService userService;
+    private final UserService userService;
 
     public SignIn(UserService userService) {
         this.userService = userService;
     }
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         if (userService.signIn(email, password)) {

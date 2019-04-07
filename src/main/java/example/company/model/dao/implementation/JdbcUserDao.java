@@ -18,6 +18,8 @@ public class JdbcUserDao extends JdbcGenericDao<User> implements UserDao {
             " VALUES (?, ?, ?, ?, ?, ?)";
     private static final String FIND_BY_EMAIL_QUERY = "SELECT user_id, first_name, last_name, email, password_hash, salt, user_status_id from users where email=?";
     private static final String UPDATE_QUERY = "UPDATE users SET first_name=?, last_name=?, email=?, password_hash=?, salt=?, user_status_id=? WHERE user_id=?";
+    private static final String FIND_ALL_QUERY = "SELECT user_id, user_status_id, first_name, last_name, email, password_hash, salt, creation_time FROM users";
+    private static final String FIND_BY_ID_QUERY = "SELECT user_id, user_status_id, first_name, last_name, email, password_hash, salt, creation_time FROM users WHERE user_id=?";
 
     public JdbcUserDao(Connection connection) {
         super(connection);
@@ -55,7 +57,7 @@ public class JdbcUserDao extends JdbcGenericDao<User> implements UserDao {
     }
 
     @Override
-    public Optional<User> findById(int id) {
+    public Optional<User> findById(long id) {
         return Optional.empty();
     }
 
@@ -65,7 +67,7 @@ public class JdbcUserDao extends JdbcGenericDao<User> implements UserDao {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
 
     }
 
@@ -93,6 +95,27 @@ public class JdbcUserDao extends JdbcGenericDao<User> implements UserDao {
         user.setPasswordHash(resultSet.getBytes("password_hash"));
         user.setPasswordSalt(resultSet.getBytes("salt"));
         user.setStatus(User.UserStatus.getById(resultSet.getInt("user_status_id")));
+        // TODO добавь чтение creation_time
         return user;
+    }
+
+    @Override
+    protected User getFromResultSet(ResultSet resultSet) throws SQLException {
+        return getFromRow(resultSet);
+    }
+
+    @Override
+    protected void setFindByIdQueryParams(PreparedStatement s, long id) throws SQLException {
+        s.setLong(1, id);
+    }
+
+    @Override
+    protected String getFindByIdQuery() {
+        return FIND_BY_ID_QUERY;
+    }
+
+    @Override
+    protected String getFindAllQuery() {
+        return FIND_ALL_QUERY;
     }
 }

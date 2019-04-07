@@ -61,7 +61,7 @@ public class User extends Entity {
 
     public enum UserStatus {
         ADMIN(1), CLIENT(2);
-        private long id;
+        private final long id;
 
         UserStatus(int id) {
             this.id = id;

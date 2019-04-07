@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -20,7 +21,6 @@
         <div class="row justify-content-center">
 
             <div class="col-lg-8">
-                <!--            <div style="width: 80%">-->
 
                 <!-- Title -->
                 <h1 class="mt-4">VIP номер в подвале гостинцы 'Уют'</h1>
@@ -35,33 +35,9 @@
                 <hr>
 
                 <!-- Post Content -->
-                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut,
-                    error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni
-                    recusandae laborum minus inventore?</p>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos
-                    iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat.
-                    Temporibus, voluptatibus.</p>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis
-                    unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat
-                    perspiciatis. Enim, iure!</p>
-
-                <blockquote class="blockquote">
-                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a
-                        ante.</p>
-                    <footer class="blockquote-footer">Someone famous in
-                        <cite title="Source Title">Source Title</cite>
-                    </footer>
-                </blockquote>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, nostrum, aliquid, animi, ut quas
-                    placeat totam sunt tempora commodi nihil ullam alias modi dicta saepe minima ab quo voluptatem
-                    obcaecati?</p>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo,
-                    aliquam tenetur ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam
-                    recusandae? Qui, necessitatibus, est!</p>
+                <p class="lead">
+                    <c:out value="${apartment.description}" />
+                </p>
             </div>
 
             <div class="col-md-4">
@@ -72,15 +48,14 @@
                     <div class="card-body">
                         <div class="container">
                             <ul>
-                                <!--                            <ul class="list-unstyled mb-0">-->
                                 <li>
                                     Класс апартаментов - 1
                                 </li>
                                 <li>
-                                    Количество мест - 2
+                                    Количество мест - <c:out value="${apartment.placesAmount}" />
                                 </li>
                                 <li>
-                                    Количество комнат - 2
+                                    Количество комнат - <c:out value="${apartment.roomsAmount}" />
                                 </li>
                             </ul>
                         </div>

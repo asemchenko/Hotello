@@ -8,11 +8,11 @@ import java.util.Optional;
 public interface GenericDao<T extends Entity> {
     void create(T entity);
 
-    Optional<T> findById(int id);
+    Optional<T> findById(long id);
 
     List<T> findAll();
 
     void update(T t);
 
-    void delete(int id);
+    void delete(long id);
 }

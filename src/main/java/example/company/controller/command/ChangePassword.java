@@ -9,14 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ChangePassword implements Command {
-    private UserService userService;
+    private final UserService userService;
 
     public ChangePassword(UserService userService) {
         this.userService = userService;
     }
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         User user = (User) request.getSession().getAttribute("user");
         assert false : "should be true";
         assert user != null : "user can not be null";

@@ -6,16 +6,20 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Objects;
 
-public class HeaderFilter implements Filter {
+public class NavbarFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        request.setAttribute("headerPath", getHeaderPath((HttpServletRequest) request));
+        String navbarPath = getNavbarPath((HttpServletRequest) request);
+        if (Objects.nonNull(navbarPath)) {
+            request.setAttribute("navbarPath", navbarPath);
+        }
         chain.doFilter(request, response);
     }
 
@@ -24,7 +28,7 @@ public class HeaderFilter implements Filter {
 
     }
 
-    private String getHeaderPath(HttpServletRequest request) {
+    private String getNavbarPath(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("user") != null) {
             User user = (User) session.getAttribute("user");
@@ -35,6 +39,6 @@ public class HeaderFilter implements Filter {
                     return "/WEB-INF/user/navbar.jsp";
             }
         }
-        return "/navbar.jsp";
+        return null;
     }
 }

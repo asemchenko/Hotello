@@ -17,7 +17,7 @@
     </servlet-mapping>
     <filter>
         <filter-name>headerFilter</filter-name>
-        <filter-class>example.company.filter.HeaderFilter</filter-class>
+        <filter-class>example.company.filter.NavbarFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>headerFilter</filter-name>

@@ -1,5 +1,6 @@
 package example.company.controller.command;
 
+import example.company.model.service.ApartmentService;
 import example.company.model.service.UserService;
 
 import java.util.HashMap;
@@ -7,7 +8,7 @@ import java.util.Map;
 
 public final class CommandProvider {
     private static CommandProvider instance;
-    private Map<String, Command> commandMap = new HashMap<>();
+    private final Map<String, Command> commandMap = new HashMap<>();
 
     private CommandProvider() {
         initCommandMap();
@@ -31,6 +32,7 @@ public final class CommandProvider {
         commandMap.put("orders", new OrdersList());
         commandMap.put("profile", new Profile());
         commandMap.put("changePassword", new ChangePassword(new UserService()));
+        commandMap.put("apartment", new ApartmentDetail(new ApartmentService()));
     }
 
     public Command getCommand(String identifier) {

@@ -4,6 +4,9 @@ import example.company.model.dao.GenericDao;
 import example.company.model.entity.Entity;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public abstract class JdbcGenericDao<T extends Entity> implements GenericDao<T> {
     private final Connection connection;
@@ -12,7 +15,7 @@ public abstract class JdbcGenericDao<T extends Entity> implements GenericDao<T> 
         this.connection = connection;
     }
 
-    public Connection getConnection() {
+    public final Connection getConnection() {
         return connection;
     }
 
@@ -54,4 +57,46 @@ public abstract class JdbcGenericDao<T extends Entity> implements GenericDao<T> 
     protected abstract String getInsertQuery();
 
     protected abstract void setInsertQueryParams(PreparedStatement s, T entity) throws SQLException;
+
+    @Override
+    public Optional<T> findById(long id) {
+        try (PreparedStatement s = connection.prepareStatement(getFindByIdQuery())) {
+            setFindByIdQueryParams(s, id);
+            ResultSet resultSet = s.executeQuery();
+            if (resultSet.next()) {
+                return Optional.ofNullable(getFromResultSet(resultSet));
+            } else {
+                return Optional.empty();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected abstract void setFindByIdQueryParams(PreparedStatement s, long id) throws SQLException;
+
+    protected abstract String getFindByIdQuery();
+
+    @Override
+    public List<T> findAll() {
+        try (PreparedStatement s = connection.prepareStatement(getFindAllQuery())) {
+            ResultSet resultSet = s.executeQuery();
+            ArrayList<T> entities = new ArrayList<>();
+            while (resultSet.next()) {
+                entities.add(getFromResultSet(resultSet));
+            }
+            return entities;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected abstract T getFromResultSet(ResultSet resultSet) throws SQLException;
+
+    protected abstract String getFindAllQuery();
+
+    @Override
+    public void delete(long id) {
+        throw new UnsupportedOperationException("This feature is not supported yet");
+    }
 }
