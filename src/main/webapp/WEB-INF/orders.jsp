@@ -13,7 +13,7 @@
     <title>Hotello</title>
 </head>
 <body style="background-color: #F8F9FA;">
-<jsp:include page="${headerPath}"/>
+<jsp:include page="/navbar.jsp"/>
 <main role="main">
     <div class="my-3 p-3 bg-white rounded shadow-sm justify-content-center mx-auto" style="width: 50%">
         <div class="row">
