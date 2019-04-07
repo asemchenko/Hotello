@@ -31,8 +31,8 @@ public class SignIn implements Command {
             // TODO передай ошибку где-то тут
             System.out.println("Error: invalid login/password");
             // TODO подумай как установаливать код ошибки, с учетом того что тут редирект
-//            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.sendRedirect("/signIn.jsp");
+            String redirectLocation = String.format("/signIn.jsp?invalidCredentials=true&email=%s", email);
+            response.sendRedirect(redirectLocation);
 //            try {
 //                request.getRequestDispatcher("/index.jsp").forward(request, response);
 //            } catch (ServletException e) {
