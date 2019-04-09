@@ -13,7 +13,7 @@
     <title>Search results</title>
 </head>
 <body style="background-color: #F8F9FA;">
-<jsp:include page="/navbar.jsp"/>
+<jsp:include page="${pageContext.request.contextPath}/navbar.jsp"/>
 <main role="main">
     <%--Search bar--%>
     <section class="jumbotron text-center">
@@ -55,14 +55,14 @@
                 <c:forEach var="apartment" items="${apartments}">
                     <div class="col-md-4">
                         <div class="card mb-4 shadow-sm">
-                            <img src="/hotel_sketch.jpg" alt="Apartment" width="100%" height="225">
+                            <img src="${pageContext.request.contextPath}/hotel_sketch.jpg" alt="Apartment" width="100%" height="225">
                             <div class="card-body">
                                 <p class="card-text">
                                     <c:out value="${apartment.title}"/>
                                 </p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a href="/app/apartment?apartment_id=<c:out value="${apartment.id}" />"
+                                        <a href="${pageContext.request.contextPath}/app/apartment?apartment_id=<c:out value="${apartment.id}" />"
                                                    class="btn btn-sm btn-outline-secondary">
                                         View
                                         </a>

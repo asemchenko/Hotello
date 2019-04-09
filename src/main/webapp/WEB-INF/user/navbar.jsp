@@ -2,7 +2,7 @@
 <div class="btn-group dropleft">
     <button class="btn btn-outline-primary" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-        <img src="/img/user_logo.svg" alt="user_logo" width="25">
+        <img src="${pageContext.request.contextPath}/img/user_logo.svg" alt="user_logo" width="25">
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" href="${pageContext.request.contextPath}/app/profile">Профиль</a>

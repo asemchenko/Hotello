@@ -12,11 +12,11 @@
     <title>Hotello</title>
 </head>
 <body style="background-color: #F8F9FA;">
-<jsp:include page="/navbar.jsp"/>
+<jsp:include page="${pageContext.request.contextPath}/navbar.jsp"/>
 <main role="main">
     <%--Search bar--%>
     <section class="jumbotron text-center">
-        <form method="get" action="/app/findApartment">
+        <form method="get" action="${pageContext.request.contextPath}/app/findApartment">
             <div class="form-row justify-content-center">
                 <div class="col-auto">
                     <label for="checkInInput">Дата заезда</label>

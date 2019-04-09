@@ -13,7 +13,7 @@
     <title>Sign in</title>
 </head>
 <body style="background-color: #F5F5F5;">
-<form class="form-signin" method="post" action="/app/signIn">
+<form class="form-signin" method="post" action="${pageContext.request.contextPath}/app/signIn">
     <div class="container"><h1 class="h3 mb-3 font-weight-normal text-center">Please sign in</h1>
         <%--    Error message--%>
         <c:if test="${not empty param.invalidCredentials and param.invalidCredentials eq true}">

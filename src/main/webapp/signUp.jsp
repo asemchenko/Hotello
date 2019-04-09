@@ -16,7 +16,7 @@
                 <div class="card-header">Register</div>
                 <div class="card-body">
                     <%--todo поменяй ссылку action в форме --%>
-                    <form class="form-horizontal" method="post" action="/app/signUp">
+                    <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/app/signUp">
 
                         <div class="form-group">
                             <label for="firstName" class="cols-sm-2 control-label">Your First Name</label>

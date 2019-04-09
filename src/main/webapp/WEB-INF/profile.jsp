@@ -6,7 +6,7 @@
     <jsp:include page="${pageContext.request.contextPath}/css/bootstrap_min.jsp"/>
 </head>
 <body>
-<jsp:include page="/navbar.jsp"/>
+<jsp:include page="${pageContext.request.contextPath}/navbar.jsp"/>
 <main role="main">
     <div class="container" style="width: 60%;">
         <div class="card">
@@ -58,7 +58,7 @@
                 </div>
             </div>
             <%--            <div class="mx-5">--%>
-            <form action="/app/changePassword" method="post" class="mx-5">
+            <form action="${pageContext.request.contextPath}/app/changePassword" method="post" class="mx-5">
                 <div class="panel-heading text-center mt-2">
                     <h4>Change password</h4>
                 </div>

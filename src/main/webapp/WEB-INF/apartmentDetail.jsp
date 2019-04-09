@@ -13,7 +13,7 @@
     <title>Hotello</title>
 </head>
 <body style="background-color: #F8F9FA;">
-<jsp:include page="/navbar.jsp"/>
+<jsp:include page="${pageContext.request.contextPath}/navbar.jsp"/>
 <main role="main">
     <div class="container">
 
@@ -28,7 +28,7 @@
 
                 <!-- Preview Image -->
                 <div class="text-center">
-                    <img class="img-fluid rounded" src="/hotel_sketch.jpg" alt="apartments photo">
+                    <img class="img-fluid rounded" src="${pageContext.request.contextPath}/hotel_sketch.jpg" alt="apartments photo">
                 </div>
 
                 <hr>
