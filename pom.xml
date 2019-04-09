@@ -48,6 +48,24 @@
             <version>17.0.0</version>
             <scope>compile</scope>
         </dependency>
+        <!--JQuery-->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+        <!--Bootstrap-->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>4.3.1</version>
+        </dependency>
+<!--        Popper.js-->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>popper.js</artifactId>
+            <version>1.14.6</version>
+        </dependency>
     </dependencies>
 
     <build>

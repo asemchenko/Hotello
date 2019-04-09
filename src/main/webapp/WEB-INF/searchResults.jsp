@@ -9,8 +9,7 @@
             color: orange;
         }
     </style>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <jsp:include page="${pageContext.request.contextPath}/css/bootstrap_min.jsp"/>
     <title>Search results</title>
 </head>
 <body style="background-color: #F8F9FA;">
@@ -18,7 +17,7 @@
 <main role="main">
     <%--Search bar--%>
     <section class="jumbotron text-center">
-        <form method="get" action="/app/findApartment">
+        <form method="get" action="${pageContext.request.contextPath}/app/findApartment">
             <div class="form-row justify-content-center">
                 <div class="col-auto">
                     <label for="checkInInput">Дата заезда</label>

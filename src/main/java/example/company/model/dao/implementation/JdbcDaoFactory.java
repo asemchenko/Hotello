@@ -14,7 +14,7 @@ public class JdbcDaoFactory implements DaoFactory {
     private Connection connection;
     private UserDao userDao;
     private ApartmentDao apartmentDao;
-
+ // TODO фабика фабрик?777
     public JdbcDaoFactory(Connection connection) {
         this.connection = connection;
     }

@@ -24,6 +24,7 @@ public class MainServlet extends HttpServlet {
         String requestURI = req.getRequestURI();
         // FIXME delete this trash
         requestURI = requestURI.replaceAll("/app/", "");
+        // FIXME закинь в атрибут
         CommandProvider commandProvider = CommandProvider.getInstance();
         Command command = commandProvider.getCommand(requestURI);
         if (command == null) {
