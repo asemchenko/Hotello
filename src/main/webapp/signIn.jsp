@@ -30,9 +30,11 @@
                value="<c:out value="${param.email}" />"
         >
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password"
+               required>
         <div class="text-center mb-3">
-            <a href="${pageContext.request.contextPath}/signUp.jsp" class="text-center">Do not have an account? Just sign up</a>
+            <a href="${pageContext.request.contextPath}/signUp.jsp" class="text-center">Do not have an account? Just
+                sign up</a>
         </div>
         <%--        Sign in button--%>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>

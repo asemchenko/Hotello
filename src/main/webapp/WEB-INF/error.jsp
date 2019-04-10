@@ -5,5 +5,6 @@
 </head>
 <body>
 <h1>Sorry, an error occurred</h1>
+<jsp:include page="${pageContext.request.contextPath}/footer.jsp"/>
 </body>
 </html>

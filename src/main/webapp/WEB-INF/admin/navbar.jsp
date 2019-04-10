@@ -11,6 +11,6 @@
         <a class="dropdown-item" href="${pageContext.request.contextPath}/app/logout">Выйти</a>
     </div>
 </div>
-<jsp:include page="${pageContext.request.contextPath}/js/jquery.jsp" />
-<jsp:include page="${pageContext.request.contextPath}/js/popper_min.jsp" />
-<jsp:include page="${pageContext.request.contextPath}/js/bootstrap_min.jsp" />
+<jsp:include page="${pageContext.request.contextPath}/js/jquery.jsp"/>
+<jsp:include page="${pageContext.request.contextPath}/js/popper_min.jsp"/>
+<jsp:include page="${pageContext.request.contextPath}/js/bootstrap_min.jsp"/>

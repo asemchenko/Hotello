@@ -28,14 +28,15 @@
 
                 <!-- Preview Image -->
                 <div class="text-center">
-                    <img class="img-fluid rounded" src="${pageContext.request.contextPath}/hotel_sketch.jpg" alt="apartments photo">
+                    <img class="img-fluid rounded" src="${pageContext.request.contextPath}/hotel_sketch.jpg"
+                         alt="apartments photo">
                 </div>
 
                 <hr>
 
                 <!-- Post Content -->
                 <p class="lead">
-                    <c:out value="${apartment.description}" />
+                    <c:out value="${apartment.description}"/>
                 </p>
             </div>
 
@@ -51,16 +52,16 @@
                                     Класс апартаментов - 1
                                 </li>
                                 <li>
-                                    Количество мест - <c:out value="${apartment.placesAmount}" />
+                                    Количество мест - <c:out value="${apartment.placesAmount}"/>
                                 </li>
                                 <li>
-                                    Количество комнат - <c:out value="${apartment.roomsAmount}" />
+                                    Количество комнат - <c:out value="${apartment.roomsAmount}"/>
                                 </li>
                             </ul>
                         </div>
                         <hr>
                         <div class="text-center">
-                            <a class="btn btn-outline-success" href="#"
+                            <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/app/booking/${apartment.id}"
                                style="margin-left: 10px">Забронировать</a>
                         </div>
                     </div>
@@ -71,5 +72,6 @@
 
     </div>
 </main>
+<jsp:include page="${pageContext.request.contextPath}/footer.jsp"/>
 </body>
 </html>

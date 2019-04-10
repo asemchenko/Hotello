@@ -10,10 +10,11 @@
     </nav>
     <c:choose>
         <c:when test="${not empty navbarPath}">
-            <jsp:include page="${navbarPath}" />
+            <jsp:include page="${navbarPath}"/>
         </c:when>
         <c:otherwise>
-            <a class="btn btn-outline-primary" href="${pageContext.request.contextPath}/signIn.jsp" style="margin-left: 10px">Войти</a>
+            <a class="btn btn-outline-primary" href="${pageContext.request.contextPath}/signIn.jsp"
+               style="margin-left: 10px">Войти</a>
         </c:otherwise>
     </c:choose>
 </div>

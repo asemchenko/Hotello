@@ -14,7 +14,8 @@
 <body style="background-color: #F8F9FA;">
 <jsp:include page="${pageContext.request.contextPath}/navbar.jsp"/>
 <main role="main">
-    <div class="my-3 p-3 bg-white rounded shadow-sm justify-content-center mx-auto border border-dark" style="width: 50%">
+    <div class="my-3 p-3 bg-white rounded shadow-sm justify-content-center mx-auto border border-dark"
+         style="width: 50%">
         <div class="row">
             <div class="col-sm"><h6 class="border-bottom border-gray pb-2 mb-0 text-left">Заказ №123456789</h6></div>
             <div class="col-sm"></div>
@@ -23,7 +24,8 @@
         </div>
         <div class="media text-muted pt-3">
 
-            <img class="mr-2 my-2" src="${pageContext.request.contextPath}/img/apartmentLogo.png" alt="apartment logo" width="32" height="32">
+            <img class="mr-2 my-2" src="${pageContext.request.contextPath}/img/apartmentLogo.png" alt="apartment logo"
+                 width="32" height="32">
             <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                 <strong class="d-block text-gray-dark">Номер класса люкс</strong>
                 <a href="#">Просмотреть</a>
@@ -33,13 +35,15 @@
             </h4>
         </div>
         <div class="media text-muted">
-            <img class="mr-2 my-2" src="${pageContext.request.contextPath}/img/checkInLogo.png" alt="check in logo" width="32" height="32">
+            <img class="mr-2 my-2" src="${pageContext.request.contextPath}/img/checkInLogo.png" alt="check in logo"
+                 width="32" height="32">
             <p class="media-body my-3">
                 Дата въезда - 01.02.2019
             </p>
         </div>
         <div class="media text-muted">
-            <img class="mr-2 my-2" src="${pageContext.request.contextPath}/img/checkOutLogo.png" alt="check in logo" width="32" height="32">
+            <img class="mr-2 my-2" src="${pageContext.request.contextPath}/img/checkOutLogo.png" alt="check in logo"
+                 width="32" height="32">
             <p class="media-body my-3">
                 Дата выезда - 04.02.2019
             </p>
@@ -53,5 +57,6 @@
         </div>
     </div>
 </main>
+<jsp:include page="${pageContext.request.contextPath}/footer.jsp"/>
 </body>
 </html>

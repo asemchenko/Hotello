@@ -55,7 +55,8 @@
                 <c:forEach var="apartment" items="${apartments}">
                     <div class="col-md-4">
                         <div class="card mb-4 shadow-sm">
-                            <img src="${pageContext.request.contextPath}/hotel_sketch.jpg" alt="Apartment" width="100%" height="225">
+                            <img src="${pageContext.request.contextPath}/hotel_sketch.jpg" alt="Apartment" width="100%"
+                                 height="225">
                             <div class="card-body">
                                 <p class="card-text">
                                     <c:out value="${apartment.title}"/>
@@ -63,8 +64,8 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a href="${pageContext.request.contextPath}/app/apartment?apartment_id=<c:out value="${apartment.id}" />"
-                                                   class="btn btn-sm btn-outline-secondary">
-                                        View
+                                           class="btn btn-sm btn-outline-secondary">
+                                            View
                                         </a>
                                     </div>
 
@@ -106,5 +107,6 @@
         </nav>
     </div>
 </main>
+<jsp:include page="${pageContext.request.contextPath}/footer.jsp"/>
 </body>
 </html>
