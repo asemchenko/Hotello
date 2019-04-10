@@ -23,7 +23,7 @@ public class AuthFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         allowedUri.put(User.UserStatus.ADMIN, Arrays.asList("logout", "profile", "changePassword", "apartment", "findApartment"));
-        allowedUri.put(User.UserStatus.CLIENT, Arrays.asList("logout", "profile", "changePassword", "apartment", "findApartment", "orders"));
+        allowedUri.put(User.UserStatus.CLIENT, Arrays.asList("logout", "profile", "changePassword", "apartment", "findApartment", "orders", "booking"));
         // null represents not authenticated user(just a visitor)
         allowedUri.put(null, Arrays.asList("signIn", "signUp", "apartment", "findApartment"));
     }
@@ -35,6 +35,8 @@ public class AuthFilter implements Filter {
         String currentUri = getUri(httpRequest);
         if (allowedUri.get(role).contains(currentUri)) {
             chain.doFilter(request, response);
+        } else if (role == null) {
+            ((HttpServletResponse)response).sendRedirect("/signIn.jsp");
         } else {
             ((HttpServletResponse) response).sendError(HttpServletResponse.SC_FORBIDDEN);
         }

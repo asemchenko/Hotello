@@ -1,14 +1,16 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
+    <jsp:include page="${pageContext.request.contextPath}/css/bootstrap_min.jsp"/>
 </head>
 <body>
 <main role="main">
     <div class="container">
         <div class="py-5 text-center">
-            <h2>Оформление заказ</h2>
+            <h2>Оформление заказа</h2>
             <p class="lead">
                 Укажите необходимые данные и подтвердите заказ
             </p>
@@ -22,11 +24,17 @@
                 </h4>
                 <ul class="list-group mb-3">
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div class="col-auto">
-                            <h6 class="my-0">Product name</h6>
-                            <small class="text-muted">Brief description</small>
+                        <div class="md-3 mr-1">
+                            <h6 class="my-0">
+                                <a
+                                        href="${pageContext.request.contextPath}/app/apartment?apartment_id=<c:out value="${apartment.id}" />"
+                                        target="_blank">
+                                    <c:out value="${apartment.title}"/>
+                                </a>
+                            </h6>
                         </div>
-                        <div class="col-auto"><span class="text-muted">$12/day</span><br>
+                        <div class="md-3 ml-1"><span class="text-muted">$<c:out
+                                value="${apartment.pricePerDay}"/>/day</span><br>
                             <span class="text-muted">x5 days</span></div>
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
@@ -75,10 +83,6 @@
                 </form>
             </div>
         </div>
-
-        <footer class="my-5 pt-5 text-muted text-center text-small">
-            <p class="mb-1">&copy; 2019 Hotello Inc.</p>
-        </footer>
     </div>
 </main>
 <jsp:include page="${pageContext.request.contextPath}/footer.jsp"/>

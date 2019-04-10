@@ -34,6 +34,7 @@ public final class CommandProvider {
         commandMap.put("changePassword", new ChangePassword(new UserService()));
         commandMap.put("apartment", new ApartmentDetail(new ApartmentService()));
         commandMap.put("findApartment", new FindApartment(new ApartmentService()));
+        commandMap.put("booking", new Booking(new ApartmentService()));
     }
 
     public Command getCommand(String identifier) {
