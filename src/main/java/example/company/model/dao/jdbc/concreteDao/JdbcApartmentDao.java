@@ -10,13 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class JdbcApartmentDao extends JdbcGenericDao<Apartment> implements ApartmentDao {
-    public static final String FIND_ALL_QUERY = "SELECT apartment_id, id_apartment_class, title, description, places_amount, rooms_amount, price_per_day FROM apartments";
-    /* TODO
-        надо добавить работу с apartment_classes, но как? Сделать enum для класса или позволить динамически создавать новые классы?
-        не забудь поменять текст INSERT_QUERY
-     */
-    private static final String INSERT_QUERY = "INSERT INTO apartments(id_apartment_class, title, description, places_amount, rooms_amount, price_per_day) VALUES (1, ?, ?, ?, ?, ?)";
-    private static final String FIND_BY_ID_QUERY = "SELECT apartment_id, id_apartment_class, title, description, places_amount, rooms_amount, price_per_day FROM apartments WHERE apartment_id=?";
+    public static final String FIND_ALL_QUERY = "SELECT apartment_id, title, description, places_amount, rooms_amount, price_per_day, stars_amount FROM apartments";
+    private static final String INSERT_QUERY = "INSERT INTO apartments(title, description, places_amount, rooms_amount, price_per_day, stars_amount) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String FIND_BY_ID_QUERY = "SELECT apartment_id, title, description, places_amount, rooms_amount, price_per_day, stars_amount FROM apartments WHERE apartment_id=?";
 
     public JdbcApartmentDao(Connection connection) {
         super(connection);
@@ -45,10 +41,11 @@ public class JdbcApartmentDao extends JdbcGenericDao<Apartment> implements Apart
     private int setApartmentParams(PreparedStatement s, Apartment apartment, int offset) throws SQLException {
         s.setString(1 + offset, apartment.getTitle());
         s.setString(2 + offset, apartment.getDescription());
-        s.setLong(3 + offset, apartment.getPlacesAmount());
-        s.setLong(4 + offset, apartment.getRoomsAmount());
+        s.setShort(3 + offset, apartment.getPlacesAmount());
+        s.setShort(4 + offset, apartment.getRoomsAmount());
         s.setLong(5 + offset, apartment.getPricePerDay());
-        return 5 + 1 + offset;
+        s.setShort(6 + offset, apartment.getStarsAmount());
+        return 6 + 1 + offset;
     }
 
     @Override
@@ -56,10 +53,11 @@ public class JdbcApartmentDao extends JdbcGenericDao<Apartment> implements Apart
         Apartment apartment = new Apartment();
         apartment.setId(resultSet.getLong("apartment_id"));
         apartment.setTitle(resultSet.getString("title"));
-        apartment.setPlacesAmount(resultSet.getLong("places_amount"));
-        apartment.setRoomsAmount(resultSet.getLong("rooms_amount"));
+        apartment.setPlacesAmount(resultSet.getShort("places_amount"));
+        apartment.setRoomsAmount(resultSet.getShort("rooms_amount"));
         apartment.setDescription(resultSet.getString("description"));
         apartment.setPricePerDay(resultSet.getLong("price_per_day"));
+        apartment.setStarsAmount(resultSet.getShort("stars_amount"));
         return apartment;
     }
 

@@ -19,8 +19,8 @@ import java.util.List;
 import static java.util.Objects.nonNull;
 
 public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
-    public static final String FIND_BY_USER_QUERY = "SELECT id_order, bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price, creation_time FROM orders WHERE user_id=?";
-    private static final String INSERT_QUERY = "INSERT INTO orders (bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public static final String FIND_BY_USER_QUERY = "SELECT id_order, bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price, creation_time, order_status FROM orders WHERE user_id=?";
+    private static final String INSERT_QUERY = "INSERT INTO orders (bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price, order_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String FIND_BY_ID_QUERY = "SELECT id_order, bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price, creation_time FROM orders WHERE id_order=?";
     private UserDao userDao;
     private ApartmentDao apartmentDao;
@@ -72,6 +72,9 @@ public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
         s.setLong(6 + offset, order.getPricePerDayAtTheTimeOfOrder());
         // total price
         s.setLong(7 + offset, order.getTotalPrice());
+        // order status
+        s.setString(8 + offset, order.getStatus().name());
+        // TODO вставка creation_time
     }
     private void setLocalDate(PreparedStatement s, int parameterIndex, LocalDate date) throws SQLException {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -105,6 +108,7 @@ public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
         order.setPricePerDayAtTheTimeOfOrder(resultSet.getLong("price_per_day"));
         order.setTotalPrice(resultSet.getLong("total_price"));
         order.setCreationTime(resultSet.getTimestamp("creation_time").toInstant());
+        order.setStatus(resultSet.getString("order_status"));
         return order;
     }
 

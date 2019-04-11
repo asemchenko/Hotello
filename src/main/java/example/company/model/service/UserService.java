@@ -11,12 +11,14 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Optional;
 
 // TODO сделай интерфейс, который реализует этот класс
 public class UserService {
     public void signUp(User user, String password) {
+        user.setCreationTime(Instant.now());
         setPassword(user, password);
         try (DaoFactory factory = JdbcDaoFactory.getFactory()) {
             UserDao userDao = factory.getUserDao();
