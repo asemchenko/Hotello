@@ -9,8 +9,11 @@ import example.company.model.entity.Bill;
 import example.company.model.entity.Order;
 import example.company.model.entity.User;
 
+import javax.swing.text.DateFormatter;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static java.util.Objects.nonNull;
@@ -62,13 +65,18 @@ public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
         // user_id
         s.setLong(3 + offset, order.getUser().getId());
         // check in date
-        s.setObject(4 + offset, order.getCheckInDate());
+        setLocalDate(s, 4 + offset, order.getCheckInDate());
         // check out date
-        s.setObject(5 + offset, order.getCheckOutDate());
+        setLocalDate(s, 5 + offset, order.getCheckOutDate());
         // price per day
         s.setLong(6 + offset, order.getPricePerDayAtTheTimeOfOrder());
         // total price
         s.setLong(7 + offset, order.getTotalPrice());
+    }
+    private void setLocalDate(PreparedStatement s, int parameterIndex, LocalDate date) throws SQLException {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = dateTimeFormatter.format(date);
+        s.setString(parameterIndex, formattedDate);
     }
 
     @Override
