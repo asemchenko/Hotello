@@ -98,7 +98,7 @@ public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
         order.setCheckOutDate(resultSet.getObject("check_out", LocalDate.class));
         order.setPricePerDayAtTheTimeOfOrder(resultSet.getLong("price_per_day"));
         order.setTotalPrice(resultSet.getLong("total_price"));
-        order.setCreationTime(resultSet.getObject("creation_time", Instant.class));
+        order.setCreationTime(resultSet.getTimestamp("creation_time").toInstant());
         return order;
     }
 
