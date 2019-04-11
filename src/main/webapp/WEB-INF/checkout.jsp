@@ -7,6 +7,7 @@
     <jsp:include page="${pageContext.request.contextPath}/css/bootstrap_min.jsp"/>
 </head>
 <body>
+<jsp:include page="${pageContext.request.contextPath}/navbar.jsp"/>
 <main role="main">
     <div class="container">
         <div class="py-5 text-center">
