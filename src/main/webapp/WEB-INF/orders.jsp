@@ -69,8 +69,10 @@
                         </p>
                     </div>
                     <div class="row">
-                        <div class="col-sm "><h6 class="border-bottom border-gray text-left text-muted">СТАТУС ЗАКАЗА -
-                            ОПЛАЧЕН</h6>
+                        <div class="col-sm ">
+                            <h6 class="border-bottom border-gray text-left text-muted">
+                                СТАТУС ЗАКАЗА - <c:out value="${order.status}" />
+                            </h6>
                         </div>
                         <div class="col-sm"><h4 class="card-title pricing-card-title mr-0 text-right text-muted">
                             Total $<c:out value="${order.totalPrice}"/>

@@ -4,6 +4,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.NoSuchElementException;
+
+import static java.util.Objects.isNull;
 
 public class Order extends Entity {
     @Nullable
@@ -84,5 +87,16 @@ public class Order extends Entity {
 
     public void setBill(Bill bill) {
         this.bill = bill;
+    }
+
+    public String getStatus() {
+        if (isNull(bill)) {
+            return "НОВЫЙ";
+        } else if (bill.getStatus() == Bill.BillStatus.PAYMENT_EXPECTED) {
+            return "ОЖИДАЕТ ОПЛАТЫ";
+        } else if (bill.getStatus() == Bill.BillStatus.PAID){
+            return "ОПЛАЧЕН";
+        }
+        throw new NoSuchElementException("Unknown bill status: " + bill);
     }
 }
