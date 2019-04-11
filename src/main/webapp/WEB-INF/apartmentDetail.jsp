@@ -58,6 +58,12 @@
                                     Количество комнат - <c:out value="${apartment.roomsAmount}"/>
                                 </li>
                             </ul>
+                            <div class="container text-center">
+                                <h4 class="card-title pricing-card-title">
+                                    <c:out value="${apartment.pricePerDay}"/>
+                                    <small class="text-muted">/ day</small>
+                                </h4>
+                            </div>
                         </div>
                         <hr>
                         <div class="text-center">
