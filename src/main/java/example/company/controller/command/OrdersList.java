@@ -19,7 +19,8 @@ public class OrdersList implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        List<Order> orderList = orderService.getOrders(getUser(request));
+        List<Order> ordersList = orderService.getOrders(getUser(request));
+        request.setAttribute("orders", ordersList);
         request.getRequestDispatcher("/WEB-INF/orders.jsp").forward(request, response);
     }
 

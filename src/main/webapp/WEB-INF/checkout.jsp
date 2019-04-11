@@ -41,10 +41,10 @@
                             <span class="text-muted" id="daysAmount" style="visibility: hidden;">x5 days</span>
                         </div>
                     </li>
-<%--                    <li class="list-group-item d-flex justify-content-between">--%>
-<%--                        <span>Total (USD)</span>--%>
-<%--                        <strong id="totalPrice">$20</strong>--%>
-<%--                    </li>--%>
+                    <%--                    <li class="list-group-item d-flex justify-content-between">--%>
+                    <%--                        <span>Total (USD)</span>--%>
+                    <%--                        <strong id="totalPrice">$20</strong>--%>
+                    <%--                    </li>--%>
                 </ul>
             </div>
             <div class="col-md-8 order-md-1">
@@ -71,11 +71,13 @@
                     <div class="row">
                         <div class="col-mb-3 mx-auto">
                             <label for="checkInInput">Дата заезда</label>
-                            <input class="form-control" type="date" id="checkInInput" onchange="updatePrice(this)" name="checkInDate" required>
+                            <input class="form-control" type="date" id="checkInInput" onchange="updatePrice(this)"
+                                   name="checkInDate" required>
                         </div>
                         <div class="col-mb-3 mx-auto">
                             <label for="checkOutInput">Дата выезда</label>
-                            <input class="form-control" type="date" id="checkOutInput" onchange="updatePrice(this)" name="checkOutDate" required>
+                            <input class="form-control" type="date" id="checkOutInput" onchange="updatePrice(this)"
+                                   name="checkOutDate" required>
                         </div>
                         <input type="number" hidden value="${apartment.id}" name="apartmentId">
                     </div>

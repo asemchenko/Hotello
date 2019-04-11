@@ -3,7 +3,6 @@ package example.company.controller.command;
 import example.company.model.entity.User;
 import example.company.model.service.UserService;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;

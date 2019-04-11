@@ -61,7 +61,8 @@
                         </div>
                         <hr>
                         <div class="text-center">
-                            <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/app/booking?apartment_id=${apartment.id}"
+                            <a class="btn btn-outline-success"
+                               href="${pageContext.request.contextPath}/app/booking?apartment_id=${apartment.id}"
                                style="margin-left: 10px">Забронировать</a>
                         </div>
                     </div>

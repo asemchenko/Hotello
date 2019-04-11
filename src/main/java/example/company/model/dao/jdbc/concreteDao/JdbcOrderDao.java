@@ -10,17 +10,15 @@ import example.company.model.entity.Order;
 import example.company.model.entity.User;
 
 import java.sql.*;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
 import static java.util.Objects.nonNull;
 
 public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
+    public static final String FIND_BY_USER_QUERY = "SELECT id_order, bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price, creation_time FROM orders WHERE user_id=?";
     private static final String INSERT_QUERY = "INSERT INTO orders (bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String FIND_BY_ID_QUERY = "SELECT id_order, bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price, creation_time FROM orders WHERE id_order=?";
-    public static final String FIND_BY_USER_QUERY = "SELECT id_order, bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price, creation_time FROM orders WHERE user_id=?";
-
     private UserDao userDao;
     private ApartmentDao apartmentDao;
 
@@ -129,12 +127,12 @@ public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
 
     @Override
     public List<Order> getByUser(User user) {
-       return findList(FIND_BY_USER_QUERY, (s) -> {
-           try {
-               s.setLong(1, user.getId());
-           } catch (SQLException e) {
-               throw new RuntimeException(e);
-           }
-       });
+        return findList(FIND_BY_USER_QUERY, (s) -> {
+            try {
+                s.setLong(1, user.getId());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

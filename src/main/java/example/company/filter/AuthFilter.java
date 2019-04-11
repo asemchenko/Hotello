@@ -36,7 +36,7 @@ public class AuthFilter implements Filter {
         if (allowedUri.get(role).contains(currentUri)) {
             chain.doFilter(request, response);
         } else if (role == null) {
-            ((HttpServletResponse)response).sendRedirect("/signIn.jsp");
+            ((HttpServletResponse) response).sendRedirect("/signIn.jsp");
         } else {
             ((HttpServletResponse) response).sendError(HttpServletResponse.SC_FORBIDDEN);
         }

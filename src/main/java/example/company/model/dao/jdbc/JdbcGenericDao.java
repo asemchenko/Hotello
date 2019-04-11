@@ -80,7 +80,8 @@ public abstract class JdbcGenericDao<T extends Entity> implements GenericDao<T> 
 
     @Override
     public List<T> findAll() {
-        return findList(getFindAllQuery(), (s) -> {});
+        return findList(getFindAllQuery(), (s) -> {
+        });
         // TODO удали если findAll нормально работает
 //        try (PreparedStatement s = connection.prepareStatement(getFindAllQuery())) {
 //            ResultSet resultSet = s.executeQuery();

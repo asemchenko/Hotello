@@ -1,7 +1,7 @@
 package example.company.model.service;
 
-import example.company.model.dao.api.concreteDao.ApartmentDao;
 import example.company.model.dao.api.DaoFactory;
+import example.company.model.dao.api.concreteDao.ApartmentDao;
 import example.company.model.dao.jdbc.JdbcDaoFactory;
 import example.company.model.entity.Apartment;
 
