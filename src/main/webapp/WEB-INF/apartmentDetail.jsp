@@ -46,11 +46,12 @@
                 <div class="card my-4">
                     <h5 class="card-header">Характеристики</h5>
                     <div class="card-body">
-                        <div class="container">
+                        <div class="container text-center">
+                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                            <div class="container"><c:forEach begin="1" end="${apartment.starsAmount}" varStatus="loop">
+                                <span class="fa fa-star checked"></span>
+                            </c:forEach></div>
                             <ul>
-                                <li>
-                                    Класс апартаментов - 1
-                                </li>
                                 <li>
                                     Количество мест - <c:out value="${apartment.placesAmount}"/>
                                 </li>

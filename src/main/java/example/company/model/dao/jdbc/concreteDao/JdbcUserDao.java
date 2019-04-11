@@ -4,21 +4,18 @@ import example.company.model.dao.api.concreteDao.UserDao;
 import example.company.model.dao.jdbc.JdbcGenericDao;
 import example.company.model.entity.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Optional;
 
 // TODO implement this
 public class JdbcUserDao extends JdbcGenericDao<User> implements UserDao {
     private static final String INSERT_QUERY = "INSERT INTO users " +
-            "(first_name, last_name, email, password_hash, salt, user_status_id)" +
-            " VALUES (?, ?, ?, ?, ?, ?)";
-    private static final String FIND_BY_EMAIL_QUERY = "SELECT user_id, first_name, last_name, email, password_hash, salt, user_status_id from users where email=?";
-    private static final String UPDATE_QUERY = "UPDATE users SET first_name=?, last_name=?, email=?, password_hash=?, salt=?, user_status_id=? WHERE user_id=?";
-    private static final String FIND_ALL_QUERY = "SELECT user_id, user_status_id, first_name, last_name, email, password_hash, salt, creation_time FROM users";
-    private static final String FIND_BY_ID_QUERY = "SELECT user_id, user_status_id, first_name, last_name, email, password_hash, salt, creation_time FROM users WHERE user_id=?";
+            "(first_name, last_name, email, password_hash, salt, creation_time ,user_role)" +
+            " VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private static final String FIND_BY_EMAIL_QUERY = "SELECT user_id, first_name, last_name, email, password_hash, salt, creation_time, user_role FROM users WHERE email=?";
+    private static final String UPDATE_QUERY = "UPDATE users SET first_name=?, last_name=?, email=?, password_hash=?, salt=?, creation_time=? ,user_role=? WHERE user_id=?";
+    private static final String FIND_ALL_QUERY = "SELECT user_id, first_name, last_name, email, password_hash, salt, creation_time, user_role FROM users";
+    private static final String FIND_BY_ID_QUERY = "SELECT user_id, first_name, last_name, email, password_hash, salt, creation_time, user_role FROM users WHERE user_id=?";
 
     public JdbcUserDao(Connection connection) {
         super(connection);
@@ -51,8 +48,9 @@ public class JdbcUserDao extends JdbcGenericDao<User> implements UserDao {
         s.setString(3 + offset, user.getEmail());
         s.setBytes(4 + offset, user.getPasswordHash());
         s.setBytes(5 + offset, user.getPasswordSalt());
-        s.setLong(6 + offset, user.getStatus().getId());
-        return 6 + 1 + offset;
+        s.setTimestamp(6 + offset, Timestamp.from(user.getCreationTime()));
+        s.setString(7 + offset, user.getStatus().name());
+        return 7 + 1 + offset;
     }
 
     @Override
@@ -78,8 +76,8 @@ public class JdbcUserDao extends JdbcGenericDao<User> implements UserDao {
         user.setEmail(resultSet.getString("email"));
         user.setPasswordHash(resultSet.getBytes("password_hash"));
         user.setPasswordSalt(resultSet.getBytes("salt"));
-        user.setStatus(User.UserStatus.getById(resultSet.getInt("user_status_id")));
-        // TODO добавь чтение creation_time
+        user.setCreationTime(resultSet.getTimestamp("creation_time").toInstant());
+        user.setStatus(resultSet.getString("user_role"));
         return user;
     }
 

@@ -24,6 +24,12 @@ public class Order extends Entity {
     private long pricePerDayAtTheTimeOfOrder;
     private long totalPrice;
     private Instant creationTime;
+    private OrderStatus status;
+
+    public Order() {
+        // default status
+        status = OrderStatus.CONFIRMATION_EXPECTED;
+    }
 
     public Apartment getApartment() {
         return apartment;
@@ -89,14 +95,19 @@ public class Order extends Entity {
         this.bill = bill;
     }
 
-    public String getStatus() {
-        if (isNull(bill)) {
-            return "НОВЫЙ";
-        } else if (bill.getStatus() == Bill.BillStatus.PAYMENT_EXPECTED) {
-            return "ОЖИДАЕТ ОПЛАТЫ";
-        } else if (bill.getStatus() == Bill.BillStatus.PAID){
-            return "ОПЛАЧЕН";
-        }
-        throw new NoSuchElementException("Unknown bill status: " + bill);
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public void setStatus(String status) {
+        this.status = OrderStatus.valueOf(status);
+    }
+
+    public enum OrderStatus {
+        CONFIRMATION_EXPECTED, PAYMENT_EXPECTED, PAID, DISAPPROVED
     }
 }

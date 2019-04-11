@@ -1,6 +1,6 @@
 package example.company.model.entity;
 
-import java.util.NoSuchElementException;
+import java.time.Instant;
 
 public class User extends Entity {
     private String firstName;
@@ -8,6 +8,7 @@ public class User extends Entity {
     private String email;
     private byte[] passwordHash;
     private byte[] passwordSalt;
+    private Instant creationTime;
     private UserStatus status;
     // TODO добавь поле creation_time как в БД и обнови код DAO
 
@@ -51,6 +52,14 @@ public class User extends Entity {
         this.passwordSalt = passwordSalt;
     }
 
+    public Instant getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(Instant creationTime) {
+        this.creationTime = creationTime;
+    }
+
     public UserStatus getStatus() {
         return status;
     }
@@ -59,27 +68,11 @@ public class User extends Entity {
         this.status = status;
     }
 
+    public void setStatus(String role) {
+        this.status = UserStatus.valueOf(role);
+    }
+    // TODO rename to UserRole
     public enum UserStatus {
-        ADMIN(1), CLIENT(2);
-        private final long id;
-
-        UserStatus(int id) {
-            this.id = id;
-        }
-
-        public static UserStatus getById(int id) {
-            switch (id) {
-                case 1:
-                    return ADMIN;
-                case 2:
-                    return CLIENT;
-                default:
-                    throw new NoSuchElementException("No user statuses with id " + id);
-            }
-        }
-
-        public long getId() {
-            return id;
-        }
+        ADMIN, CLIENT
     }
 }
