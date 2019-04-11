@@ -1,4 +1,4 @@
-package example.company.model.dao;
+package example.company.model.dao.api;
 
 import example.company.model.entity.Entity;
 

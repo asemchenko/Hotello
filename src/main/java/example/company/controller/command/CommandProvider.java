@@ -1,6 +1,7 @@
 package example.company.controller.command;
 
 import example.company.model.service.ApartmentService;
+import example.company.model.service.OrderService;
 import example.company.model.service.UserService;
 
 import java.util.HashMap;
@@ -29,12 +30,13 @@ public final class CommandProvider {
         commandMap.put("signIn", new SignIn(new UserService()));
         commandMap.put("signUp", new SignUp(new UserService()));
         commandMap.put("logout", new Logout());
-        commandMap.put("orders", new OrdersList());
+        commandMap.put("orders", new OrdersList(new OrderService()));
         commandMap.put("profile", new Profile());
         commandMap.put("changePassword", new ChangePassword(new UserService()));
         commandMap.put("apartment", new ApartmentDetail(new ApartmentService()));
         commandMap.put("findApartment", new FindApartment(new ApartmentService()));
         commandMap.put("booking", new Booking(new ApartmentService()));
+        commandMap.put("confirmOrder", new ConfirmOrder(new ApartmentService(), new OrderService()));
     }
 
     public Command getCommand(String identifier) {

@@ -1,6 +1,7 @@
-package example.company.model.dao.implementation;
+package example.company.model.dao.jdbc.concreteDao;
 
-import example.company.model.dao.ApartmentDao;
+import example.company.model.dao.api.concreteDao.ApartmentDao;
+import example.company.model.dao.jdbc.JdbcGenericDao;
 import example.company.model.entity.Apartment;
 
 import java.sql.Connection;

@@ -1,12 +1,13 @@
-package example.company.model.dao.implementation;
+package example.company.model.dao.jdbc;
 
-import example.company.model.dao.GenericDao;
+import example.company.model.dao.api.GenericDao;
 import example.company.model.entity.Entity;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public abstract class JdbcGenericDao<T extends Entity> implements GenericDao<T> {
     private final Connection connection;
@@ -79,7 +80,23 @@ public abstract class JdbcGenericDao<T extends Entity> implements GenericDao<T> 
 
     @Override
     public List<T> findAll() {
-        try (PreparedStatement s = connection.prepareStatement(getFindAllQuery())) {
+        return findList(getFindAllQuery(), (s) -> {});
+        // TODO удали если findAll нормально работает
+//        try (PreparedStatement s = connection.prepareStatement(getFindAllQuery())) {
+//            ResultSet resultSet = s.executeQuery();
+//            ArrayList<T> entities = new ArrayList<>();
+//            while (resultSet.next()) {
+//                entities.add(getFromResultSet(resultSet));
+//            }
+//            return entities;
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+    }
+
+    protected final List<T> findList(String query, Consumer<PreparedStatement> prepareFunc) {
+        try (PreparedStatement s = connection.prepareStatement(query)) {
+            prepareFunc.accept(s);
             ResultSet resultSet = s.executeQuery();
             ArrayList<T> entities = new ArrayList<>();
             while (resultSet.next()) {

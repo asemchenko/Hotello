@@ -1,8 +1,8 @@
 package example.company.model.service;
 
-import example.company.model.dao.DaoFactory;
-import example.company.model.dao.UserDao;
-import example.company.model.dao.implementation.JdbcDaoFactory;
+import example.company.model.dao.api.DaoFactory;
+import example.company.model.dao.api.concreteDao.UserDao;
+import example.company.model.dao.jdbc.JdbcDaoFactory;
 import example.company.model.entity.User;
 
 import javax.crypto.SecretKeyFactory;

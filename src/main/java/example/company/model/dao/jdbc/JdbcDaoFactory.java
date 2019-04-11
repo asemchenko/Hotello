@@ -1,8 +1,12 @@
-package example.company.model.dao.implementation;
+package example.company.model.dao.jdbc;
 
-import example.company.model.dao.ApartmentDao;
-import example.company.model.dao.DaoFactory;
-import example.company.model.dao.UserDao;
+import example.company.model.dao.api.DaoFactory;
+import example.company.model.dao.api.concreteDao.ApartmentDao;
+import example.company.model.dao.api.concreteDao.OrderDao;
+import example.company.model.dao.api.concreteDao.UserDao;
+import example.company.model.dao.jdbc.concreteDao.JdbcApartmentDao;
+import example.company.model.dao.jdbc.concreteDao.JdbcOrderDao;
+import example.company.model.dao.jdbc.concreteDao.JdbcUserDao;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -14,7 +18,9 @@ public class JdbcDaoFactory implements DaoFactory {
     private Connection connection;
     private UserDao userDao;
     private ApartmentDao apartmentDao;
- // TODO фабика фабрик?777
+    private OrderDao orderDao;
+
+    // TODO фабика фабрик?777
     public JdbcDaoFactory(Connection connection) {
         this.connection = connection;
     }
@@ -55,6 +61,17 @@ public class JdbcDaoFactory implements DaoFactory {
             connection = getConnectionFromPool();
         }
         return connection;
+    }
+
+    @Override
+    public OrderDao getOrderDao() {
+        if (orderDao == null) {
+            orderDao = new JdbcOrderDao(
+                    getCurrentConnection(),
+                    getUserDao(),
+                    getApartmentDao());
+        }
+        return orderDao;
     }
 
     @Override

@@ -1,6 +1,7 @@
-package example.company.model.dao.implementation;
+package example.company.model.dao.jdbc.concreteDao;
 
-import example.company.model.dao.UserDao;
+import example.company.model.dao.api.concreteDao.UserDao;
+import example.company.model.dao.jdbc.JdbcGenericDao;
 import example.company.model.entity.User;
 
 import java.sql.Connection;
@@ -12,7 +13,6 @@ import java.util.Optional;
 
 // TODO implement this
 public class JdbcUserDao extends JdbcGenericDao<User> implements UserDao {
-    public static final String ID_COLUMN_LABEL = "user_id";
     private static final String INSERT_QUERY = "INSERT INTO users " +
             "(first_name, last_name, email, password_hash, salt, user_status_id)" +
             " VALUES (?, ?, ?, ?, ?, ?)";
@@ -54,21 +54,6 @@ public class JdbcUserDao extends JdbcGenericDao<User> implements UserDao {
         s.setBytes(5 + offset, user.getPasswordSalt());
         s.setLong(6 + offset, user.getStatus().getId());
         return 6 + 1 + offset;
-    }
-
-    @Override
-    public Optional<User> findById(long id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public List<User> findAll() {
-        return null;
-    }
-
-    @Override
-    public void delete(long id) {
-
     }
 
     @Override
