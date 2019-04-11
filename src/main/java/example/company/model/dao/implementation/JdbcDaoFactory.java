@@ -21,10 +21,9 @@ public class JdbcDaoFactory implements DaoFactory {
 
     private static Connection getConnectionFromPool() {
         try {
-            InitialContext initContext = new InitialContext();
-            DataSource ds = (DataSource) initContext.lookup("java:comp/env/jdbc/hotello");
+            DataSource ds = ConnectionPoolHolder.getDataSource();
             return ds.getConnection();
-        } catch (NamingException | SQLException e) {
+        } catch (SQLException e) {
             // FIXME как то это не оч
             throw new RuntimeException(e);
         }
