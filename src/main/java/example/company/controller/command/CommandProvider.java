@@ -1,5 +1,9 @@
 package example.company.controller.command;
 
+import example.company.controller.command.order.*;
+import example.company.controller.command.search.ApartmentDetail;
+import example.company.controller.command.search.FindApartment;
+import example.company.controller.command.user.*;
 import example.company.model.service.ApartmentService;
 import example.company.model.service.OrderService;
 import example.company.model.service.UserService;
@@ -27,6 +31,7 @@ public final class CommandProvider {
     }
 
     private void initCommandMap() {
+        // FIXME используй один и тот же экземпляр каждого сервиса
         commandMap.put("signIn", new SignIn(new UserService()));
         commandMap.put("signUp", new SignUp(new UserService()));
         commandMap.put("logout", new Logout());
@@ -36,7 +41,10 @@ public final class CommandProvider {
         commandMap.put("apartment", new ApartmentDetail(new ApartmentService()));
         commandMap.put("findApartment", new FindApartment(new ApartmentService()));
         commandMap.put("booking", new Booking(new ApartmentService()));
-        commandMap.put("confirmOrder", new ConfirmOrder(new ApartmentService(), new OrderService()));
+        commandMap.put("makeOrder", new MakeOrder(new ApartmentService(), new OrderService()));
+        commandMap.put("allOrders", new AdminOrdersList(new OrderService()));
+        commandMap.put("confirmOrder", new ConfirmOrder(new OrderService()));
+        commandMap.put("disapproveOrder", new DisapproveOrder(new OrderService()));
     }
 
     public Command getCommand(String identifier) {

@@ -29,6 +29,7 @@ public class Order extends Entity {
     public Order() {
         // default status
         status = OrderStatus.CONFIRMATION_EXPECTED;
+        creationTime = Instant.now();
     }
 
     public Apartment getApartment() {
@@ -107,7 +108,28 @@ public class Order extends Entity {
         this.status = OrderStatus.valueOf(status);
     }
 
+    public void confirm() {
+        if (getStatus() == OrderStatus.CONFIRMATION_EXPECTED) {
+            setStatus(OrderStatus.PAYMENT_EXPECTED);
+        } else {
+            throw new IllegalStateException(String.format("Can not confirm order in state %s", getStatus()));
+        }
+    }
+
+    public void disapprove() {
+        if (getStatus() == OrderStatus.CONFIRMATION_EXPECTED) {
+            setStatus(OrderStatus.DISAPPROVED);
+        } else {
+            throw new IllegalStateException(String.format("Can not confirm order in state %s", getStatus()));
+        }
+    }
+
     public enum OrderStatus {
-        CONFIRMATION_EXPECTED, PAYMENT_EXPECTED, PAID, DISAPPROVED
+        CONFIRMATION_EXPECTED, PAYMENT_EXPECTED, PAID, DISAPPROVED;
+
+        @Override
+        public String toString() {
+            return this.name();
+        }
     }
 }

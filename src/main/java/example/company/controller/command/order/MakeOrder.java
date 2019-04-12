@@ -1,5 +1,6 @@
-package example.company.controller.command;
+package example.company.controller.command.order;
 
+import example.company.controller.command.Command;
 import example.company.model.entity.Apartment;
 import example.company.model.entity.Order;
 import example.company.model.entity.User;
@@ -15,11 +16,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-public class ConfirmOrder implements Command {
+public class MakeOrder implements Command {
     private ApartmentService apartmentService;
     private OrderService orderService;
 
-    public ConfirmOrder(ApartmentService apartmentService, OrderService orderService) {
+    public MakeOrder(ApartmentService apartmentService, OrderService orderService) {
         this.apartmentService = apartmentService;
         this.orderService = orderService;
     }

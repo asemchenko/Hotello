@@ -1,4 +1,6 @@
-package example.company.controller.command;
+package example.company.controller.command.user;
+
+import example.company.controller.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

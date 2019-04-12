@@ -60,6 +60,10 @@ public class User extends Entity {
         this.creationTime = creationTime;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     public UserStatus getStatus() {
         return status;
     }

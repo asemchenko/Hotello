@@ -6,7 +6,7 @@
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" href="${pageContext.request.contextPath}/app/profile">Профиль</a>
-        <a class="dropdown-item" href="#">Все заказы</a>
+        <a class="dropdown-item" href="${pageContext.request.contextPath}/app/allOrders">Все заказы</a>
         <a class="dropdown-item" href="#">Все пользователи</a>
         <a class="dropdown-item" href="${pageContext.request.contextPath}/app/logout">Выйти</a>
     </div>

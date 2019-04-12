@@ -22,10 +22,18 @@ public class AuthFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        allowedUri.put(User.UserStatus.ADMIN, Arrays.asList("logout", "profile", "changePassword", "apartment", "findApartment"));
-        allowedUri.put(User.UserStatus.CLIENT, Arrays.asList("logout", "profile", "changePassword", "apartment", "findApartment", "orders", "booking", "confirmOrder"));
+        allowedUri.put(User.UserStatus.ADMIN, Arrays.asList(
+                "logout", "profile", "changePassword", "apartment", "findApartment",
+                "allOrders", "confirmOrder", "disapproveOrder")
+        );
+        allowedUri.put(User.UserStatus.CLIENT, Arrays.asList(
+                "logout", "profile", "changePassword", "apartment", "findApartment",
+                "orders", "booking", "confirmOrder")
+        );
         // null represents not authenticated user(just a visitor)
-        allowedUri.put(null, Arrays.asList("signIn", "signUp", "apartment", "findApartment"));
+        allowedUri.put(null, Arrays.asList(
+                "signIn", "signUp", "apartment", "findApartment")
+        );
     }
 
     @Override

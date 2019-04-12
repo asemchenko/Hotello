@@ -1,5 +1,6 @@
-package example.company.controller.command;
+package example.company.controller.command.user;
 
+import example.company.controller.command.Command;
 import example.company.model.entity.User;
 
 import javax.servlet.ServletException;

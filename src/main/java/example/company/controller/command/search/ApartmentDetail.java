@@ -1,5 +1,6 @@
-package example.company.controller.command;
+package example.company.controller.command.search;
 
+import example.company.controller.command.Command;
 import example.company.model.entity.Apartment;
 import example.company.model.service.ApartmentService;
 

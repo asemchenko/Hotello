@@ -19,9 +19,11 @@ import java.util.List;
 import static java.util.Objects.nonNull;
 
 public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
-    public static final String FIND_BY_USER_QUERY = "SELECT id_order, bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price, creation_time, order_status FROM orders WHERE user_id=?";
-    private static final String INSERT_QUERY = "INSERT INTO orders (bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price, order_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    private static final String FIND_BY_ID_QUERY = "SELECT id_order, bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price, creation_time FROM orders WHERE id_order=?";
+    private static final String FIND_BY_USER_QUERY = "SELECT id_order, bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price, creation_time, order_status FROM orders WHERE user_id=?";
+    private static final String INSERT_QUERY = "INSERT INTO orders (bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price, creation_time order_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String FIND_BY_ID_QUERY = "SELECT id_order, bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price, creation_time, order_status FROM orders WHERE id_order=?";
+    private static final String FIND_ALL_QUERY = "SELECT id_order, bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price, creation_time, order_status FROM orders";
+    private static final String UPDATE_QUERY = "UPDATE orders SET bill_id=?, apartment_id=?, user_id=?, check_in=?, check_out=?, price_per_day=?, total_price=?, creation_time=?, order_status=? WHERE id_order=?";
     private UserDao userDao;
     private ApartmentDao apartmentDao;
 
@@ -32,13 +34,14 @@ public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
     }
 
     @Override
-    protected void setUpdateQueryParams(PreparedStatement s, Order entity) throws SQLException {
-        throw new UnsupportedOperationException();
+    protected void setUpdateQueryParams(PreparedStatement s, Order order) throws SQLException {
+        int nextParameterIndex = setOrderParams(s, order, 0);
+        s.setLong(nextParameterIndex, order.getId());
     }
 
     @Override
     protected String getUpdateQuery() {
-        throw new UnsupportedOperationException();
+        return UPDATE_QUERY;
     }
 
     @Override
@@ -51,7 +54,7 @@ public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
         setOrderParams(s, order, 0);
     }
 
-    private void setOrderParams(PreparedStatement s, Order order, int offset) throws SQLException {
+    private int setOrderParams(PreparedStatement s, Order order, int offset) throws SQLException {
         // setting bill id if bill is present, null otherwise
         Bill bill = order.getBill();
         if (nonNull(bill)) {
@@ -72,9 +75,11 @@ public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
         s.setLong(6 + offset, order.getPricePerDayAtTheTimeOfOrder());
         // total price
         s.setLong(7 + offset, order.getTotalPrice());
+        // creation time
+        s.setTimestamp(8 + offset, Timestamp.from(order.getCreationTime()));
         // order status
-        s.setString(8 + offset, order.getStatus().name());
-        // TODO вставка creation_time
+        s.setString(9 + offset, order.getStatus().name());
+        return 9 + 1 + offset;
     }
     private void setLocalDate(PreparedStatement s, int parameterIndex, LocalDate date) throws SQLException {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -134,7 +139,7 @@ public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
 
     @Override
     protected String getFindAllQuery() {
-        throw new UnsupportedOperationException();
+        return FIND_ALL_QUERY;
     }
 
     @Override

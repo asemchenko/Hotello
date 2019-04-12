@@ -50,7 +50,7 @@
             </div>
             <div class="col-md-8 order-md-1">
                 <h4 class="mb-3">Информация о заказе</h4>
-                <form method="post" action="${pageContext.request.contextPath}/app/confirmOrder">
+                <form method="post" action="${pageContext.request.contextPath}/app/makeOrder">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="firstName">First name</label>

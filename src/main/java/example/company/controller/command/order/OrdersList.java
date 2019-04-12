@@ -1,5 +1,6 @@
-package example.company.controller.command;
+package example.company.controller.command.order;
 
+import example.company.controller.command.Command;
 import example.company.model.entity.Order;
 import example.company.model.entity.User;
 import example.company.model.service.OrderService;
@@ -21,7 +22,7 @@ public class OrdersList implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         List<Order> ordersList = orderService.getOrders(getUser(request));
         request.setAttribute("orders", ordersList);
-        request.getRequestDispatcher("/WEB-INF/orders.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/user/orders.jsp").forward(request, response);
     }
 
     private User getUser(HttpServletRequest request) {
