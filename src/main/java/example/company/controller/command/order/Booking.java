@@ -28,7 +28,7 @@ public class Booking implements Command {
     }
 
     private long getApartmentId(HttpServletRequest request) {
-        return Long.parseLong(request.getParameter("apartment_id"));
+        return Long.parseLong(request.getParameter("apartmentId"));
     }
 
     private User getUser(HttpServletRequest request) {

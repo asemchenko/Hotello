@@ -68,9 +68,10 @@
                         </div>
                         <hr>
                         <div class="text-center">
-                            <a class="btn btn-outline-success"
-                               href="${pageContext.request.contextPath}/app/booking?apartment_id=${apartment.id}"
-                               style="margin-left: 10px">Забронировать</a>
+                            <form action="${pageContext.request.contextPath}/app/booking" method="post">
+                                <input type="text" name="apartmentId" value="${apartment.id}" hidden>
+                                <button class="btn btn-outline-success" style="margin-left: 10px">Забронировать</button>
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -63,10 +63,14 @@
                                 </p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a href="${pageContext.request.contextPath}/app/apartment?apartment_id=<c:out value="${apartment.id}" />"
-                                           class="btn btn-sm btn-outline-secondary">
-                                            View
-                                        </a>
+                                        <form action="${pageContext.request.contextPath}/app/apartment" method="post">
+                                            <input type="text" name="apartmentId" value="<c:out value="${apartment.id}" />" hidden>
+                                            <button class="btn btn-sm btn-outline-secondary">View</button>
+                                        </form>
+<%--                                        <a href="${pageContext.request.contextPath}/app/apartment?apartment_id=<c:out value="${apartment.id}" />"--%>
+<%--                                           class="btn btn-sm btn-outline-secondary">--%>
+<%--                                            View--%>
+<%--                                        </a>--%>
                                     </div>
 
                                     <span class="fa fa-star checked"></span>
