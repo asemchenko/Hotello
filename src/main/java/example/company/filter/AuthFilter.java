@@ -28,7 +28,7 @@ public class AuthFilter implements Filter {
         );
         allowedUri.put(User.UserStatus.CLIENT, Arrays.asList(
                 "logout", "profile", "changePassword", "apartment", "findApartment",
-                "orders", "booking", "makeOrder")
+                "orders", "booking", "makeOrder", "payForOrder", "processPayment")
         );
         // null represents not authenticated user(just a visitor)
         allowedUri.put(null, Arrays.asList(

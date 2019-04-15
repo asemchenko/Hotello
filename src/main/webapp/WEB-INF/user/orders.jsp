@@ -78,6 +78,14 @@
                             Total $<c:out value="${order.totalPrice}"/>
                         </h4></div>
                     </div>
+                    <c:if test="${order.status eq 'PAYMENT_EXPECTED'}" >
+                        <div class="row justify-content-center">
+                            <form method="post" action="${pageContext.request.contextPath}/app/payForOrder">
+                                <button class="btn btn-success">ОПЛАТИТЬ</button>
+                                <input type="text" value="${order.id}" name="orderId" hidden>
+                            </form>
+                        </div>
+                    </c:if>
                 </div>
             </c:forEach>
         </c:otherwise>

@@ -121,6 +121,14 @@ public class Order extends Entity {
         }
     }
 
+    public void markAsPaid() {
+        if (getStatus() == OrderStatus.PAYMENT_EXPECTED) {
+            setStatus(OrderStatus.PAID);
+        } else {
+            throw new IllegalStateException(String.format("Order in state %s can not be marked as paid", getStatus()));
+        }
+    }
+
     public enum OrderStatus {
         CONFIRMATION_EXPECTED, PAYMENT_EXPECTED, PAID, DISAPPROVED;
 

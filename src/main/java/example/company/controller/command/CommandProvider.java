@@ -45,6 +45,8 @@ public final class CommandProvider {
         commandMap.put("allOrders", new AdminOrdersList(new OrderService()));
         commandMap.put("confirmOrder", new ConfirmOrder(new OrderService()));
         commandMap.put("disapproveOrder", new DisapproveOrder(new OrderService()));
+        commandMap.put("payForOrder", new PayForOrder(new OrderService()));
+        commandMap.put("processPayment", new ProcessPayment(new OrderService()));
     }
 
     public Command getCommand(String identifier) {

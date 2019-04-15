@@ -8,6 +8,7 @@ import example.company.model.entity.User;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class OrderService {
@@ -50,5 +51,16 @@ public class OrderService {
 
     public void disapproveOrder(long orderId) {
         updateOrder(orderId, Order::disapprove);
+    }
+
+    public void markAsPaid(long orderId) {
+        updateOrder(orderId, Order::markAsPaid);
+    }
+
+    public Optional<Order> findById(long id) {
+        try (DaoFactory daoFactory = JdbcDaoFactory.getFactory()) {
+            OrderDao orderDao = daoFactory.getOrderDao();
+            return orderDao.findById(id);
+        }
     }
 }
