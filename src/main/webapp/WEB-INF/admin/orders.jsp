@@ -43,7 +43,7 @@
                              width="32" height="32">
                         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                             <strong class="d-block text-gray-dark"><c:out value="${order.apartment.title}"/></strong>
-                            <a href="${pageContext.request.contextPath}/app/apartment?apartment_id=<c:out value="${order.apartment.id}" />">
+                            <a href="${pageContext.request.contextPath}/app/apartment?apartmentId=<c:out value="${order.apartment.id}" />">
                                 Просмотреть
                             </a>
                         </p>

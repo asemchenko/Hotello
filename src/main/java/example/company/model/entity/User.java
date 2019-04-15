@@ -75,6 +75,7 @@ public class User extends Entity {
     public void setStatus(String role) {
         this.status = UserStatus.valueOf(role);
     }
+
     // TODO rename to UserRole
     public enum UserStatus {
         ADMIN, CLIENT

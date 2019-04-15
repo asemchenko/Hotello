@@ -5,6 +5,19 @@
 <head>
     <title>Title</title>
     <jsp:include page="${pageContext.request.contextPath}/css/bootstrap_min.jsp"/>
+    <style type="text/css">
+        .btn-link {
+            border: none;
+            outline: none;
+            background: none;
+            cursor: pointer;
+            color: #0000EE;
+            padding: 0;
+            text-decoration: underline;
+            font-family: inherit;
+            font-size: inherit;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="${pageContext.request.contextPath}/navbar.jsp"/>
@@ -23,12 +36,27 @@
                     <span class="text-muted">Your cart</span>
                     <span class="badge badge-secondary badge-pill">1</span>
                 </h4>
-                <ul class="list-group mb-3">
+                <div class="row border rounded">
+                    <div class="col">
+                        <form action="${pageContext.request.contextPath}/app/apartment" method="get" target="_blank">
+                            <input type="text" name="apartmentId" value="${apartment.id}" hidden>
+                            <button type="submit" class="btn-link">${apartment.title}</button>
+                        </form>
+                    </div>
+                    <div class="col">
+                        <span class="text-muted" id="apartmentPrice">
+                                $<c:out value="${apartment.pricePerDay}"/>/day
+                            </span>
+                        <br>
+                        <span class="text-muted" id="daysAmount" style="visibility: hidden;">x5 days</span>
+                    </div>
+                </div>
+                <%--<ul class="list-group mb-3">
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div class="md-3 mr-1">
                             <h6 class="my-0">
                                 <a
-                                        href="${pageContext.request.contextPath}/app/apartment?apartment_id=<c:out value="${apartment.id}" />"
+                                        href="${pageContext.request.contextPath}/app/apartment?apartmentId=<c:out value="${apartment.id}" />"
                                         target="_blank">
                                     <c:out value="${apartment.title}"/>
                                 </a>
@@ -42,11 +70,11 @@
                             <span class="text-muted" id="daysAmount" style="visibility: hidden;">x5 days</span>
                         </div>
                     </li>
-                    <%--                    <li class="list-group-item d-flex justify-content-between">--%>
-                    <%--                        <span>Total (USD)</span>--%>
-                    <%--                        <strong id="totalPrice">$20</strong>--%>
-                    <%--                    </li>--%>
-                </ul>
+                                        <li class="list-group-item d-flex justify-content-between">
+                                            <span>Total (USD)</span>
+                                            <strong id="totalPrice">$20</strong>
+                                        </li>
+                </ul>--%>
             </div>
             <div class="col-md-8 order-md-1">
                 <h4 class="mb-3">Информация о заказе</h4>

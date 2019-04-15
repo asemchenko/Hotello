@@ -6,10 +6,8 @@ import example.company.model.dao.jdbc.JdbcDaoFactory;
 import example.company.model.entity.Order;
 import example.company.model.entity.User;
 
-import java.time.Instant;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 public class OrderService {
@@ -45,6 +43,7 @@ public class OrderService {
             orderDao.update(order);
         }
     }
+
     public void confirmOrder(long orderId) {
         updateOrder(orderId, Order::confirm);
     }
