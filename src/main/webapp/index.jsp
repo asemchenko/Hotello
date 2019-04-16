@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html>
 <head>
@@ -28,16 +29,17 @@
                 </div>
                 <div class="col-auto">
                     <label for="inlineFormCustomSelectPref">Класс апартаментов</label>
-                    <select class="form-control" id="inlineFormCustomSelectPref" required>
-                        <option selected>Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select class="form-control" id="inlineFormCustomSelectPref" name="starsAmount" required>
+                        <option value="1">1 звезда</option>
+                        <option value="2">2 звезды</option>
+                        <option value="3">3 звезды</option>
+                        <option value="4">4 звезды</option>
+                        <option value="5">5 звезд</option>
                     </select>
                 </div>
                 <div class="col-auto">
                     <label for="visitorsAmount">Кол-во мест</label>
-                    <input class="form-control" type="number" min="1" id="visitorsAmount" required>
+                    <input class="form-control" type="number" min="1" id="visitorsAmount" name="placesAmount" required>
                 </div>
                 <div class="col-auto">
                     <button type="submit" style="margin-top: 30px;" class="btn btn-primary">Поиск</button>

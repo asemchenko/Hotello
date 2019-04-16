@@ -12,7 +12,7 @@
     <jsp:include page="${pageContext.request.contextPath}/css/bootstrap_min.jsp"/>
     <title>Search results</title>
 </head>
-<body style="background-color: #F8F9FA;">
+<body style="background-color: #F8F9FA;" onload="setStarsAmount();">
 <jsp:include page="${pageContext.request.contextPath}/navbar.jsp"/>
 <main role="main">
     <%--Search bar--%>
@@ -30,17 +30,19 @@
                            value="<c:out value="${checkOut}" />" required>
                 </div>
                 <div class="col-auto">
-                    <label for="inlineFormCustomSelectPref">Класс апартаментов</label>
-                    <select class="form-control" id="inlineFormCustomSelectPref" required>
-                        <option selected>Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <label for="starsAmountSelect">Класс апартаментов</label>
+                    <select class="form-control" id="starsAmountSelect" required>
+                        <option value="1">1 звезда</option>
+                        <option value="2">2 звезды</option>
+                        <option value="3">3 звезды</option>
+                        <option value="4">4 звезды</option>
+                        <option value="5">5 звезд</option>
                     </select>
                 </div>
                 <div class="col-auto">
                     <label for="visitorsAmount">Кол-во мест</label>
-                    <input class="form-control" type="number" min="1" id="visitorsAmount" required>
+                    <input class="form-control" type="number" min="1" id="visitorsAmount"
+                           value="<c:out value="${placesAmount}" />" required>
                 </div>
                 <div class="col-auto">
                     <button type="submit" style="margin-top: 30px;" class="btn btn-primary">Поиск</button>
@@ -65,7 +67,7 @@
                                 </p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <form action="${pageContext.request.contextPath}/app/apartment" method="post">
+                                        <form action="${pageContext.request.contextPath}/app/apartment" method="get">
                                             <input type="text" name="apartmentId"
                                                    value="<c:out value="${apartment.id}" />" hidden>
                                             <button class="btn btn-sm btn-outline-secondary">View</button>
@@ -111,5 +113,11 @@
     </div>
 </main>
 <jsp:include page="${pageContext.request.contextPath}/footer.jsp"/>
+<script type="text/javascript">
+    function setStarsAmount() {
+        var s = document.getElementById('starsAmountSelect');
+        s.value =<c:out value="${starsAmount}" />;
+    }
+</script>
 </body>
 </html>
