@@ -35,7 +35,6 @@ public class OrderService {
         }
     }
 
-
     private void updateOrder(long orderId, Consumer<Order> updateFunc) {
         try (DaoFactory daoFactory = JdbcDaoFactory.getFactory()) {
             OrderDao orderDao = daoFactory.getOrderDao();

@@ -8,11 +8,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
 
 public class JdbcApartmentDao extends JdbcGenericDao<Apartment> implements ApartmentDao {
-    public static final String FIND_ALL_QUERY = "SELECT apartment_id, title, description, places_amount, rooms_amount, price_per_day, stars_amount FROM apartments";
+    private static final String FIND_ALL_QUERY = "SELECT apartment_id, title, description, places_amount, rooms_amount, price_per_day, stars_amount FROM apartments";
     private static final String INSERT_QUERY = "INSERT INTO apartments(title, description, places_amount, rooms_amount, price_per_day, stars_amount) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String FIND_BY_ID_QUERY = "SELECT apartment_id, title, description, places_amount, rooms_amount, price_per_day, stars_amount FROM apartments WHERE apartment_id=?";
+    private static final String FIND_NON_BOOKED_QUERY = "CALL find_non_booked(?, ?)";
 
     public JdbcApartmentDao(Connection connection) {
         super(connection);
@@ -74,5 +77,17 @@ public class JdbcApartmentDao extends JdbcGenericDao<Apartment> implements Apart
     @Override
     protected String getFindAllQuery() {
         return FIND_ALL_QUERY;
+    }
+
+    @Override
+    public List<Apartment> findNotBooked(LocalDate checkIn, LocalDate checkOut) {
+        return findList(FIND_NON_BOOKED_QUERY, (s) -> {
+            try {
+                setLocalDate(s, 1, checkIn);
+                setLocalDate(s, 2, checkOut);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

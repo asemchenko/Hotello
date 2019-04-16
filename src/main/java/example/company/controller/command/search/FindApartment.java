@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class FindApartment implements Command {
@@ -19,7 +20,11 @@ public class FindApartment implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        List<Apartment> filteredApartments = apartmentService.filter();
+        LocalDate checkIn = LocalDate.parse(request.getParameter("checkIn"));
+        LocalDate checkOut = LocalDate.parse(request.getParameter("checkOut"));
+        List<Apartment> filteredApartments = apartmentService.filter(checkIn, checkOut);
+        request.setAttribute("checkIn", request.getParameter("checkIn"));
+        request.setAttribute("checkOut", request.getParameter("checkOut"));
         request.setAttribute("apartments", filteredApartments);
         request.getRequestDispatcher("/WEB-INF/searchResults.jsp").forward(request, response);
     }

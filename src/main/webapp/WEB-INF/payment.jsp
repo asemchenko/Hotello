@@ -14,7 +14,8 @@
 
     <div class="row justify-content-center">
         <div class="col-md-8 order-md-1">
-            <form class="needs-validation" novalidate action="${pageContext.request.contextPath}/app/processPayment" method="post">
+            <form class="needs-validation" novalidate action="${pageContext.request.contextPath}/app/processPayment"
+                  method="post">
                 <input type="text" name="orderId" value="${order.id}" hidden>
                 <h4 class="mb-3 text-center">Способ оплаты</h4>
 
@@ -67,9 +68,9 @@
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                        <h4 class="card-title pricing-card-title mr-0 text-right text-muted">
-                            Total price: $<c:out value="${order.totalPrice}"/>
-                        </h4>
+                    <h4 class="card-title pricing-card-title mr-0 text-right text-muted">
+                        Total price: $<c:out value="${order.totalPrice}"/>
+                    </h4>
                 </div>
                 <hr class="mb-4">
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>

@@ -20,15 +20,15 @@
             <div class="form-row justify-content-center">
                 <div class="col-auto">
                     <label for="checkInInput">Дата заезда</label>
-                    <input class="form-control" type="date" id="checkInInput">
+                    <input class="form-control" type="date" id="checkInInput" name="checkIn" required>
                 </div>
                 <div class="col-auto">
                     <label for="checkOutInput">Дата выезда</label>
-                    <input class="form-control" type="date" id="checkOutInput">
+                    <input class="form-control" type="date" id="checkOutInput" name="checkOut" required>
                 </div>
                 <div class="col-auto">
                     <label for="inlineFormCustomSelectPref">Класс апартаментов</label>
-                    <select class="form-control" id="inlineFormCustomSelectPref">
+                    <select class="form-control" id="inlineFormCustomSelectPref" required>
                         <option selected>Choose...</option>
                         <option value="1">One</option>
                         <option value="2">Two</option>
@@ -37,7 +37,7 @@
                 </div>
                 <div class="col-auto">
                     <label for="visitorsAmount">Кол-во мест</label>
-                    <input class="form-control" type="number" min="1" id="visitorsAmount">
+                    <input class="form-control" type="number" min="1" id="visitorsAmount" required>
                 </div>
                 <div class="col-auto">
                     <button type="submit" style="margin-top: 30px;" class="btn btn-primary">Поиск</button>

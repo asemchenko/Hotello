@@ -4,6 +4,8 @@ import example.company.model.dao.api.GenericDao;
 import example.company.model.entity.Entity;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -116,5 +118,11 @@ public abstract class JdbcGenericDao<T extends Entity> implements GenericDao<T> 
     @Override
     public void delete(long id) {
         throw new UnsupportedOperationException("This feature is not supported yet");
+    }
+
+    protected final void setLocalDate(PreparedStatement s, int parameterIndex, LocalDate date) throws SQLException {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = dateTimeFormatter.format(date);
+        s.setString(parameterIndex, formattedDate);
     }
 }
