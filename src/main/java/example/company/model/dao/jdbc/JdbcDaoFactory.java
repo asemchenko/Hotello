@@ -51,6 +51,7 @@ public class JdbcDaoFactory implements DaoFactory {
         }
         return apartmentDao;
     }
+
     @Override
     public Connection getCurrentConnection() {
         if (connection == null) {

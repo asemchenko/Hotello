@@ -22,6 +22,7 @@ public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
     private static final String FIND_BY_ID_QUERY = "SELECT id_order, bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price, creation_time, order_status FROM orders WHERE id_order=?";
     private static final String FIND_ALL_QUERY = "SELECT id_order, bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price, creation_time, order_status FROM orders";
     private static final String UPDATE_QUERY = "UPDATE orders SET bill_id=?, apartment_id=?, user_id=?, check_in=?, check_out=?, price_per_day=?, total_price=?, creation_time=?, order_status=? WHERE id_order=?";
+    private static final String DROP_RESERVATION_QUERY = "DELETE FROM reservations WHERE order_id=?";
     private UserDao userDao;
     private ApartmentDao apartmentDao;
 
@@ -29,6 +30,21 @@ public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
         super(connection);
         this.userDao = userDao;
         this.apartmentDao = apartmentDao;
+    }
+
+
+    @Override
+    public void update(Order order) {
+        if (order.getStatus() == Order.OrderStatus.DISAPPROVED) {
+            // removing reservation
+            try (PreparedStatement s = getConnection().prepareStatement(DROP_RESERVATION_QUERY)) {
+                s.setLong(1, order.getId());
+                s.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        super.update(order);
     }
 
     @Override
