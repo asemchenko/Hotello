@@ -6,6 +6,8 @@ import example.company.model.dao.jdbc.JdbcDaoFactory;
 import example.company.model.entity.Order;
 import example.company.model.entity.User;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -14,8 +16,13 @@ import java.util.function.Consumer;
 public class OrderService {
     public void makeOrder(Order order) {
         try (DaoFactory daoFactory = JdbcDaoFactory.getFactory()) {
+            Connection connection = daoFactory.getCurrentConnection();
+            connection.setAutoCommit(false);
             OrderDao orderDao = daoFactory.getOrderDao();
             orderDao.create(order);
+            connection.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

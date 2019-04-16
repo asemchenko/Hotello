@@ -28,7 +28,6 @@ public class JdbcDaoFactory implements DaoFactory {
             DataSource ds = ConnectionPoolHolder.getDataSource();
             return ds.getConnection();
         } catch (SQLException e) {
-            // FIXME как то это не оч
             throw new RuntimeException(e);
         }
     }
@@ -52,8 +51,8 @@ public class JdbcDaoFactory implements DaoFactory {
         }
         return apartmentDao;
     }
-
-    private Connection getCurrentConnection() {
+    @Override
+    public Connection getCurrentConnection() {
         if (connection == null) {
             connection = getConnectionFromPool();
         }
@@ -74,6 +73,10 @@ public class JdbcDaoFactory implements DaoFactory {
     @Override
     public void close() {
         try {
+            if (!connection.getAutoCommit()) {
+                connection.rollback();
+                connection.setAutoCommit(true);
+            }
             connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
