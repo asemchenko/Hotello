@@ -16,19 +16,21 @@ public class JdbcApartmentDao extends JdbcGenericDao<Apartment> implements Apart
     private static final String INSERT_QUERY = "INSERT INTO apartments(title, description, places_amount, rooms_amount, price_per_day, stars_amount) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String FIND_BY_ID_QUERY = "SELECT apartment_id, title, description, places_amount, rooms_amount, price_per_day, stars_amount FROM apartments WHERE apartment_id=?";
     private static final String FIND_NON_BOOKED_QUERY = "CALL find_non_booked(?, ?)";
+    private static final String UPDATE_QUERY = "UPDATE apartments SET title=?, description=?, places_amount=?, rooms_amount=?, price_per_day=?, stars_amount=? WHERE apartment_id=?";
 
     public JdbcApartmentDao(Connection connection) {
         super(connection);
     }
 
     @Override
-    protected void setUpdateQueryParams(PreparedStatement s, Apartment apartment) {
-        throw new UnsupportedOperationException();
+    protected void setUpdateQueryParams(PreparedStatement s, Apartment apartment) throws SQLException {
+        int nextParamId = setApartmentParams(s, apartment, 0);
+        s.setLong(nextParamId, apartment.getId());
     }
 
     @Override
     protected String getUpdateQuery() {
-        throw new UnsupportedOperationException();
+        return UPDATE_QUERY;
     }
 
     @Override

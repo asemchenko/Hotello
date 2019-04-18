@@ -15,6 +15,7 @@ import java.util.function.Consumer;
 
 public class OrderService {
     private PaymentService paymentService = new PaymentService();
+
     public void makeOrder(Order order) {
         try (DaoFactory daoFactory = JdbcDaoFactory.getFactory()) {
             Connection connection = daoFactory.getCurrentConnection();

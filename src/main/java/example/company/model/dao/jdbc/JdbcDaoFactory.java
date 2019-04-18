@@ -9,13 +9,10 @@ import example.company.model.dao.jdbc.concreteDao.JdbcApartmentDao;
 import example.company.model.dao.jdbc.concreteDao.JdbcBillDao;
 import example.company.model.dao.jdbc.concreteDao.JdbcOrderDao;
 import example.company.model.dao.jdbc.concreteDao.JdbcUserDao;
-import example.company.model.entity.Bill;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
 
 public class JdbcDaoFactory implements DaoFactory {
     private Connection connection;
