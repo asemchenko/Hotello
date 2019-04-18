@@ -6,6 +6,8 @@ import java.time.Instant;
 import java.time.LocalDate;
 
 public class Order extends Entity {
+    // FIXME обязательно придумай куда это деть
+    private static final String DEFAULT_BANK_ACCOUNT_NUMBER = "1234-1234-1234-1234";
     @Nullable
     private Bill bill;
     private Apartment apartment;
@@ -108,6 +110,7 @@ public class Order extends Entity {
     public void confirm() {
         if (getStatus() == OrderStatus.CONFIRMATION_EXPECTED) {
             setStatus(OrderStatus.PAYMENT_EXPECTED);
+            setBill(new Bill(totalPrice, DEFAULT_BANK_ACCOUNT_NUMBER));
         } else {
             throw new IllegalStateException(String.format("Can not confirm order in state %s", getStatus()));
         }

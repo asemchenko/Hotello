@@ -2,21 +2,27 @@ package example.company.model.dao.jdbc;
 
 import example.company.model.dao.api.DaoFactory;
 import example.company.model.dao.api.concreteDao.ApartmentDao;
+import example.company.model.dao.api.concreteDao.BillDao;
 import example.company.model.dao.api.concreteDao.OrderDao;
 import example.company.model.dao.api.concreteDao.UserDao;
 import example.company.model.dao.jdbc.concreteDao.JdbcApartmentDao;
+import example.company.model.dao.jdbc.concreteDao.JdbcBillDao;
 import example.company.model.dao.jdbc.concreteDao.JdbcOrderDao;
 import example.company.model.dao.jdbc.concreteDao.JdbcUserDao;
+import example.company.model.entity.Bill;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
 
 public class JdbcDaoFactory implements DaoFactory {
     private Connection connection;
     private UserDao userDao;
     private ApartmentDao apartmentDao;
     private OrderDao orderDao;
+    private BillDao billDao;
 
     // TODO фабика фабрик?777
     public JdbcDaoFactory(Connection connection) {
@@ -66,9 +72,18 @@ public class JdbcDaoFactory implements DaoFactory {
             orderDao = new JdbcOrderDao(
                     getCurrentConnection(),
                     getUserDao(),
-                    getApartmentDao());
+                    getApartmentDao(),
+                    getBillDao());
         }
         return orderDao;
+    }
+
+    @Override
+    public BillDao getBillDao() {
+        if (billDao == null) {
+            billDao = new JdbcBillDao(getCurrentConnection());
+        }
+        return billDao;
     }
 
     @Override

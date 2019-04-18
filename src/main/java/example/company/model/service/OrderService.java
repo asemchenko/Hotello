@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 public class OrderService {
+    private PaymentService paymentService = new PaymentService();
     public void makeOrder(Order order) {
         try (DaoFactory daoFactory = JdbcDaoFactory.getFactory()) {
             Connection connection = daoFactory.getCurrentConnection();
@@ -59,8 +60,18 @@ public class OrderService {
         updateOrder(orderId, Order::disapprove);
     }
 
-    public void markAsPaid(long orderId) {
-        updateOrder(orderId, Order::markAsPaid);
+    public void payForOrder(long orderId, PaymentCredentials credentials) {
+        // processing payment required
+        updateOrder(orderId, o -> {
+            String transactionId = paymentService.processPayment(o.getBill().getBankAccountNumber(), credentials);
+            if (transactionId != null) {
+                o.markAsPaid();
+                o.getBill().setPaymentTransactionId(transactionId);
+            } else {
+                // FIXME замени на свой exception
+                throw new RuntimeException("payment failed");
+            }
+        });
     }
 
     public Optional<Order> findById(long id) {

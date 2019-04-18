@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-auto">
                     <label for="starsAmountSelect">Класс апартаментов</label>
-                    <select class="form-control" id="starsAmountSelect" required>
+                    <select class="form-control" id="starsAmountSelect" required name="starsAmount">
                         <option value="1">1 звезда</option>
                         <option value="2">2 звезды</option>
                         <option value="3">3 звезды</option>
@@ -42,7 +42,7 @@
                 <div class="col-auto">
                     <label for="visitorsAmount">Кол-во мест</label>
                     <input class="form-control" type="number" min="1" id="visitorsAmount"
-                           value="<c:out value="${placesAmount}" />" required>
+                           value="<c:out value="${placesAmount}" />" name="placesAmount" required>
                 </div>
                 <div class="col-auto">
                     <button type="submit" style="margin-top: 30px;" class="btn btn-primary">Поиск</button>

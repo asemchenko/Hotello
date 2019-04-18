@@ -1,6 +1,7 @@
 package example.company.model.dao.jdbc.concreteDao;
 
 import example.company.model.dao.api.concreteDao.ApartmentDao;
+import example.company.model.dao.api.concreteDao.BillDao;
 import example.company.model.dao.api.concreteDao.OrderDao;
 import example.company.model.dao.api.concreteDao.UserDao;
 import example.company.model.dao.jdbc.JdbcGenericDao;
@@ -25,26 +26,45 @@ public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
     private static final String DROP_RESERVATION_QUERY = "DELETE FROM reservations WHERE order_id=?";
     private UserDao userDao;
     private ApartmentDao apartmentDao;
+    private BillDao billDao;
 
-    public JdbcOrderDao(Connection connection, UserDao userDao, ApartmentDao apartmentDao) {
+    public JdbcOrderDao(Connection connection, UserDao userDao, ApartmentDao apartmentDao, BillDao billDao) {
         super(connection);
         this.userDao = userDao;
         this.apartmentDao = apartmentDao;
+        this.billDao = billDao;
     }
 
 
     @Override
     public void update(Order order) {
+//        Connection connection = getConnection();
+//        try {
+//            connection.setAutoCommit(false);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            connection.setAutoCommit(true);
+//        }
         if (order.getStatus() == Order.OrderStatus.DISAPPROVED) {
             // removing reservation
-            try (PreparedStatement s = getConnection().prepareStatement(DROP_RESERVATION_QUERY)) {
-                s.setLong(1, order.getId());
-                s.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            dropReservation(order);
+        }
+        // if bill have not been created
+        Bill bill = order.getBill();
+        if (bill != null && bill.getId() == null) {
+            billDao.create(bill);
         }
         super.update(order);
+    }
+
+    private void dropReservation(Order order) {
+        try (PreparedStatement s = getConnection().prepareStatement(DROP_RESERVATION_QUERY)) {
+            s.setLong(1, order.getId());
+            s.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -131,8 +151,7 @@ public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
         if (resultSet.wasNull()) {
             return null;
         } else {
-            // TODO implement reading bill
-            throw new UnsupportedOperationException("reading bill is unsupported yet");
+            return billDao.findById(billId).get();
         }
     }
 
