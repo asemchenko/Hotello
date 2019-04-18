@@ -57,10 +57,12 @@ public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
         }
         // updating bill
         Bill bill = order.getBill();
-        if (bill != null && bill.getId() == null) { // if bill have not been created
-            billDao.create(bill);
-        } else {
-            billDao.update(bill);
+        if (nonNull(bill)) {
+            if (bill.getId() == null) { // if bill have not been created
+                billDao.create(bill);
+            } else {
+                billDao.update(bill);
+            }
         }
         // updating apartment
         apartmentDao.update(order.getApartment());
