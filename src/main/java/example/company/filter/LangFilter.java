@@ -16,7 +16,7 @@ public class LangFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        request.setAttribute("lang", getCurrentLanguage(httpRequest));
+        request.setAttribute("locale", getCurrentLanguage(httpRequest));
         chain.doFilter(request, response);
     }
 
@@ -26,14 +26,14 @@ public class LangFilter implements Filter {
                 cs -> Arrays
                         .stream(cs)
                         .filter(
-                                c -> c.getName().equals("lang")
+                                c -> c.getName().equals("locale")
                         ).findAny().map(Cookie::getValue)
         );
         return lang.orElse(getDefaultLanguage(request));
     }
 
     private String getDefaultLanguage(HttpServletRequest request) {
-        return "eng";
+        return "en_US";
 //        return request.getLocale().getLanguage();
     }
 
