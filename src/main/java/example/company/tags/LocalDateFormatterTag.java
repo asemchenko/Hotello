@@ -2,14 +2,13 @@ package example.company.tags;
 
 import javax.servlet.jsp.JspException;
 import java.io.IOException;
-import java.time.Instant;
-import java.time.ZoneId;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class InstantFormatterTag extends TimeFormatter {
-    private Instant value;
+public class LocalDateFormatterTag extends TimeFormatter {
+    private LocalDate value;
 
-    public void setValue(Instant value) {
+    public void setValue(LocalDate value) {
         this.value = value;
     }
 
@@ -19,10 +18,7 @@ public class InstantFormatterTag extends TimeFormatter {
     }
 
     private String format() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(style)
-                .withLocale(locale).withZone(ZoneId.systemDefault());
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(style).withLocale(locale);
         return formatter.format(value);
     }
-
-
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<taglib xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://java.sun.com/xml/ns/j2ee"
         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
         version="2.0">
     <description>Custom tag for formatting java.time.Instant objects</description>
@@ -11,6 +11,25 @@
     <tag>
         <name>inst</name>
         <tag-class>example.company.tags.InstantFormatterTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>locale</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>value</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>style</name>
+            <required>false</required>
+        </attribute>
+    </tag>
+    <tag>
+        <name>lclDate</name>
+        <tag-class>example.company.tags.LocalDateFormatterTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>locale</name>

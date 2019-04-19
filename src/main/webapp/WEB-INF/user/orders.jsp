@@ -39,11 +39,11 @@
                         <div class="col-sm"></div>
                         <div class="col-sm">
                             <h6 class="border-bottom border-gray pb-2 mb-0 text-right">
-                                <fmt:message key="orders.orderCreationDate"/>
-                                <fmtTime:inst locale="${locale}" value="${order.creationTime}"/>
-<%--                                FIXME--%>
-                               <%-- <fmt:parseDate value="${order.creationTime}" type="BOTH" pa
-                                <fmt:formatDate value="${order.creationTime}" type="BOTH"/></h6>--%>
+                                    <fmt:message key="orders.orderCreationDate"/>
+                                    <fmtTime:inst locale="${locale}" value="${order.creationTime}"/>
+                                    <%--                                FIXME--%>
+                                    <%-- <fmt:parseDate value="${order.creationTime}" type="BOTH" pa
+                                     <fmt:formatDate value="${order.creationTime}" type="BOTH"/></h6>--%>
                         </div>
                     </div>
                     <div class="media text-muted pt-3">
@@ -69,8 +69,7 @@
                              width="32" height="32">
                         <p class="media-body my-3">
                             <fmt:message key="orders.checkInDate"/>
-                            <%--FIXME
-                            <fmt:formatDate value="${order.checkInDate}"/>--%>
+                            <fmtTime:lclDate locale="${locale}" value="${order.checkInDate}" style="FULL"/>
                         </p>
                     </div>
                     <div class="media text-muted">
@@ -79,8 +78,7 @@
                              width="32" height="32">
                         <p class="media-body my-3">
                             <fmt:message key="orders.checkOutDate"/>
-                            <%--FIXME
-                            <fmt:formatDate value="${order.checkOutDate}"/>--%>
+                            <fmtTime:lclDate locale="${locale}" value="${order.checkOutDate}" style="FULL"/>
                         </p>
                     </div>
                     <div class="row">

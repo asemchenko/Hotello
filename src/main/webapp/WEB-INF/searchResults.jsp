@@ -60,7 +60,8 @@
                            value="<c:out value="${placesAmount}" />" name="placesAmount" required>
                 </div>
                 <div class="col-auto">
-                    <button type="submit" style="margin-top: 30px;" class="btn btn-primary"><fmt:message key="searchBar.search"/></button>
+                    <button type="submit" style="margin-top: 30px;" class="btn btn-primary"><fmt:message
+                            key="searchBar.search"/></button>
                 </div>
             </div>
         </form>
@@ -98,7 +99,8 @@
                                     <span class="fa fa-star"></span>
 
                                     <h4 class="card-title pricing-card-title">
-                                        <fmt:formatNumber value="${apartment.pricePerDay / 100}" type="CURRENCY" maxFractionDigits="2" />
+                                        <fmt:formatNumber value="${apartment.pricePerDay / 100}" type="CURRENCY"
+                                                          maxFractionDigits="2"/>
                                         <small class="text-muted">/ day</small>
                                     </h4>
                                 </div>
@@ -116,7 +118,7 @@
             <ul class="pagination justify-content-center">
                 <li class="page-item disabled">
                     <a class="page-link" href="#" tabindex="-1">
-                        <fmt:message key="pagination.previous" />
+                        <fmt:message key="pagination.previous"/>
                     </a>
                 </li>
                 <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -126,7 +128,7 @@
                 <li class="page-item"><a class="page-link" href="#">3</a></li>
                 <li class="page-item">
                     <a class="page-link" href="#">
-                        <fmt:message key="pagination.next" />
+                        <fmt:message key="pagination.next"/>
                     </a>
                 </li>
             </ul>

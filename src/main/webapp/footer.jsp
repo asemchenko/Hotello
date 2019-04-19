@@ -7,7 +7,8 @@
                 id="langSelector">
             <option <%--data-content='<span class="flag-icon flag-icon-us"></span> English'--%> value="en_US">English
             </option>
-            <option  <%--data-content='<span class="flag-icon flag-icon-mx"></span> Español'--%> value="uk_UA">Українська
+            <option  <%--data-content='<span class="flag-icon flag-icon-mx"></span> Español'--%> value="uk_UA">
+                Українська
             </option>
         </select></div>
     <script type="text/javascript">
