@@ -1,5 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="message"/>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -20,32 +25,42 @@
         <form method="get" action="${pageContext.request.contextPath}/app/findApartment">
             <div class="form-row justify-content-center">
                 <div class="col-auto">
-                    <label for="checkInInput">Дата заезда</label>
+                    <label for="checkInInput"><fmt:message key="searchBar.checkIn"/></label>
                     <input class="form-control" type="date" id="checkInInput" name="checkIn"
                            value="<c:out value="${checkIn}" />" required>
                 </div>
                 <div class="col-auto">
-                    <label for="checkOutInput">Дата выезда</label>
+                    <label for="checkOutInput"><fmt:message key="searchBar.checkOut"/></label>
                     <input class="form-control" type="date" id="checkOutInput" name="checkOut"
                            value="<c:out value="${checkOut}" />" required>
                 </div>
                 <div class="col-auto">
-                    <label for="starsAmountSelect">Класс апартаментов</label>
-                    <select class="form-control" id="starsAmountSelect" required name="starsAmount">
-                        <option value="1">1 звезда</option>
-                        <option value="2">2 звезды</option>
-                        <option value="3">3 звезды</option>
-                        <option value="4">4 звезды</option>
-                        <option value="5">5 звезд</option>
+                    <label for="starsAmountSelect"><fmt:message key="searchBar.apartmentClass"/></label>
+                    <select class="custom-select" id="starsAmountSelect" required name="starsAmount">
+                        <option value="1">
+                            <fmt:message key="searchBar.oneStar"/>
+                        </option>
+                        <option value="2">
+                            <fmt:message key="searchBar.twoStars"/>
+                        </option>
+                        <option value="3">
+                            <fmt:message key="searchBar.threeStars"/>
+                        </option>
+                        <option value="4">
+                            <fmt:message key="searchBar.fourStars"/>
+                        </option>
+                        <option value="5">
+                            <fmt:message key="searchBar.fiveStars"/>
+                        </option>
                     </select>
                 </div>
                 <div class="col-auto">
-                    <label for="visitorsAmount">Кол-во мест</label>
+                    <label for="visitorsAmount"><fmt:message key="searchBar.placesAmount"/></label>
                     <input class="form-control" type="number" min="1" id="visitorsAmount"
                            value="<c:out value="${placesAmount}" />" name="placesAmount" required>
                 </div>
                 <div class="col-auto">
-                    <button type="submit" style="margin-top: 30px;" class="btn btn-primary">Поиск</button>
+                    <button type="submit" style="margin-top: 30px;" class="btn btn-primary"><fmt:message key="searchBar.search"/></button>
                 </div>
             </div>
         </form>
@@ -70,7 +85,9 @@
                                         <form action="${pageContext.request.contextPath}/app/apartment" method="get">
                                             <input type="text" name="apartmentId"
                                                    value="<c:out value="${apartment.id}" />" hidden>
-                                            <button class="btn btn-sm btn-outline-secondary">View</button>
+                                            <button class="btn btn-sm btn-outline-secondary">
+                                                <fmt:message key="searchResults.viewButton"/>
+                                            </button>
                                         </form>
                                     </div>
 
@@ -81,7 +98,7 @@
                                     <span class="fa fa-star"></span>
 
                                     <h4 class="card-title pricing-card-title">
-                                        <c:out value="${apartment.pricePerDay}"/>
+                                        <fmt:formatNumber value="${apartment.pricePerDay / 100}" type="CURRENCY" maxFractionDigits="2" />
                                         <small class="text-muted">/ day</small>
                                     </h4>
                                 </div>
@@ -98,7 +115,9 @@
         <nav aria-label="...">
             <ul class="pagination justify-content-center">
                 <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    <a class="page-link" href="#" tabindex="-1">
+                        <fmt:message key="pagination.previous" />
+                    </a>
                 </li>
                 <li class="page-item"><a class="page-link" href="#">1</a></li>
                 <li class="page-item active">
@@ -106,7 +125,9 @@
                 </li>
                 <li class="page-item"><a class="page-link" href="#">3</a></li>
                 <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
+                    <a class="page-link" href="#">
+                        <fmt:message key="pagination.next" />
+                    </a>
                 </li>
             </ul>
         </nav>

@@ -1,5 +1,9 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="message"/>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -20,29 +24,49 @@
         <form method="get" action="${pageContext.request.contextPath}/app/findApartment">
             <div class="form-row justify-content-center">
                 <div class="col-auto">
-                    <label for="checkInInput">Дата заезда</label>
+                    <label for="checkInInput">
+                        <fmt:message key="searchBar.checkIn"/>
+                    </label>
                     <input class="form-control" type="date" id="checkInInput" name="checkIn" required>
                 </div>
                 <div class="col-auto">
-                    <label for="checkOutInput">Дата выезда</label>
+                    <label for="checkOutInput">
+                        <fmt:message key="searchBar.checkOut"/>
+                    </label>
                     <input class="form-control" type="date" id="checkOutInput" name="checkOut" required>
                 </div>
                 <div class="col-auto">
-                    <label for="inlineFormCustomSelectPref">Класс апартаментов</label>
-                    <select class="form-control" id="inlineFormCustomSelectPref" name="starsAmount" required>
-                        <option value="1">1 звезда</option>
-                        <option value="2">2 звезды</option>
-                        <option value="3">3 звезды</option>
-                        <option value="4">4 звезды</option>
-                        <option value="5">5 звезд</option>
+                    <label for="inlineFormCustomSelectPref">
+                        <fmt:message key="searchBar.apartmentClass"/>
+                    </label>
+                    <select class="custom-select" id="inlineFormCustomSelectPref" name="starsAmount" required>
+                        <option value="1">
+                            <fmt:message key="searchBar.oneStar"/>
+                        </option>
+                        <option value="2">
+                            <fmt:message key="searchBar.twoStars"/>
+                        </option>
+                        <option value="3">
+                            <fmt:message key="searchBar.threeStars"/>
+                        </option>
+                        <option value="4">
+                            <fmt:message key="searchBar.fourStars"/>
+                        </option>
+                        <option value="5">
+                            <fmt:message key="searchBar.fiveStars"/>
+                        </option>
                     </select>
                 </div>
                 <div class="col-auto">
-                    <label for="visitorsAmount">Кол-во мест</label>
+                    <label for="visitorsAmount">
+                        <fmt:message key="searchBar.placesAmount"/>
+                    </label>
                     <input class="form-control" type="number" min="1" id="visitorsAmount" name="placesAmount" required>
                 </div>
                 <div class="col-auto">
-                    <button type="submit" style="margin-top: 30px;" class="btn btn-primary">Поиск</button>
+                    <button type="submit" style="margin-top: 30px;" class="btn btn-primary">
+                        <fmt:message key="searchBar.search"/>
+                    </button>
                 </div>
             </div>
         </form>
