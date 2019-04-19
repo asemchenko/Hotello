@@ -38,24 +38,40 @@ public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
 
     @Override
     public void update(Order order) {
-//        Connection connection = getConnection();
-//        try {
-//            connection.setAutoCommit(false);
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        } finally {
-//            connection.setAutoCommit(true);
-//        }
+        try {
+            updateOrder(order);
+        } catch (SQLException e) {
+            try {
+                getConnection().rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+
+    private void updateOrder(Order order) throws SQLException {
+        getConnection().setAutoCommit(false);
         if (order.getStatus() == Order.OrderStatus.DISAPPROVED) {
             // removing reservation
             dropReservation(order);
         }
-        // if bill have not been created
+        // updating bill
         Bill bill = order.getBill();
-        if (bill != null && bill.getId() == null) {
-            billDao.create(bill);
+        if (nonNull(bill)) {
+            if (bill.getId() == null) { // if bill have not been created
+                billDao.create(bill);
+            } else {
+                billDao.update(bill);
+            }
         }
+        // updating apartment
+        apartmentDao.update(order.getApartment());
+        // updating user
+        userDao.update(order.getUser());
+        // updating order
         super.update(order);
+        getConnection().commit();
+        getConnection().setAutoCommit(true);
     }
 
     private void dropReservation(Order order) {

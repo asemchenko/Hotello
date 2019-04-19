@@ -27,6 +27,4 @@ public class ApartmentService {
     public List<Apartment> filter(LocalDate checkIn, LocalDate checkOut) {
         return getNonBooked(checkIn, checkOut);
     }
-
-
 }
