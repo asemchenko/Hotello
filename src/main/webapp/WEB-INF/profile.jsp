@@ -7,7 +7,7 @@
 
 <html>
 <head>
-    <title><fmt:message key="profile.title" /></title>
+    <title><fmt:message key="profile.title"/></title>
     <jsp:include page="${pageContext.request.contextPath}/css/bootstrap_min.jsp"/>
 </head>
 <body>

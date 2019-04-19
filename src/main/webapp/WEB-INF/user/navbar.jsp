@@ -11,13 +11,13 @@
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" href="${pageContext.request.contextPath}/app/profile">
-            <fmt:message key="navbar.user.profile" />
+            <fmt:message key="navbar.user.profile"/>
         </a>
         <a class="dropdown-item" href="${pageContext.request.contextPath}/app/orders">
-            <fmt:message key="navbar.client.myOrders" />
+            <fmt:message key="navbar.client.myOrders"/>
         </a>
         <a class="dropdown-item" href="${pageContext.request.contextPath}/app/logout">
-            <fmt:message key="navbar.user.logout" />
+            <fmt:message key="navbar.user.logout"/>
         </a>
     </div>
 </div>

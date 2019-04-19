@@ -42,12 +42,12 @@
                required>
         <div class="text-center mb-3">
             <a href="${pageContext.request.contextPath}/signUp.jsp" class="text-center">
-                <fmt:message key="signIn.signUpLink" />
+                <fmt:message key="signIn.signUpLink"/>
             </a>
         </div>
         <%--        Sign in button--%>
         <button class="btn btn-lg btn-primary btn-block" type="submit">
-            <fmt:message key="signIn.signInButton" />
+            <fmt:message key="signIn.signInButton"/>
         </button>
     </div>
 </form>

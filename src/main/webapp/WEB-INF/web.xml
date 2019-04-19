@@ -46,7 +46,7 @@
         <!--        FIXME magic constant - app. Maybe pattern should be '/*'-->
         <url-pattern>/app/*</url-pattern>
     </filter-mapping>
-<!--    Lang filter (localization)-->
+    <!--    Lang filter (localization)-->
     <filter>
         <filter-name>langFilter</filter-name>
         <filter-class>example.company.filter.LangFilter</filter-class>
@@ -55,7 +55,6 @@
         <filter-name>langFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
 
 
     <!--    <session-config>-->
