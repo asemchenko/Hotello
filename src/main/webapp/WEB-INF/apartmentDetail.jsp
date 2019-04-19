@@ -1,5 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="message"/>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -10,7 +15,7 @@
         }
     </style>
     <jsp:include page="${pageContext.request.contextPath}/css/bootstrap_min.jsp"/>
-    <title>Hotello</title>
+    <title><c:out value="${apartment.title}"/></title>
 </head>
 <body style="background-color: #F8F9FA;">
 <jsp:include page="${pageContext.request.contextPath}/navbar.jsp"/>
@@ -22,7 +27,7 @@
             <div class="col-lg-8">
 
                 <!-- Title -->
-                <h1 class="mt-4">VIP номер в подвале гостинцы 'Уют'</h1>
+                <h1 class="mt-4"><c:out value="${apartment.title}"/></h1>
 
                 <hr>
 
@@ -44,7 +49,7 @@
 
                 <!-- Categories Widget -->
                 <div class="card my-4">
-                    <h5 class="card-header">Характеристики</h5>
+                    <h5 class="card-header"><fmt:message key="apartmentDetail.characteristics"/></h5>
                     <div class="card-body">
                         <div class="container text-center">
                             <link rel="stylesheet"
@@ -54,16 +59,19 @@
                             </c:forEach></div>
                             <ul>
                                 <li>
-                                    Количество мест - <c:out value="${apartment.placesAmount}"/>
+                                    <fmt:message key="apartmentDetail.placesAmount"/>
+                                    <c:out value="${apartment.placesAmount}"/>
                                 </li>
                                 <li>
-                                    Количество комнат - <c:out value="${apartment.roomsAmount}"/>
+                                    <fmt:message key="apartmentDetail.roomsAmount"/>
+                                    <c:out value="${apartment.roomsAmount}"/>
                                 </li>
                             </ul>
                             <div class="container text-center">
                                 <h4 class="card-title pricing-card-title">
-                                    <c:out value="${apartment.pricePerDay}"/>
-                                    <small class="text-muted">/ day</small>
+                                    <fmt:formatNumber type="CURRENCY" value="${apartment.pricePerDay / 100}"
+                                                      maxFractionDigits="2"/>
+                                    <small class="text-muted">/ <fmt:message key="perDay"/></small>
                                 </h4>
                             </div>
                         </div>
@@ -71,7 +79,8 @@
                         <div class="text-center">
                             <form action="${pageContext.request.contextPath}/app/booking" method="post">
                                 <input type="text" name="apartmentId" value="${apartment.id}" hidden>
-                                <button class="btn btn-outline-success" style="margin-left: 10px">Забронировать</button>
+                                <button class="btn btn-outline-success" style="margin-left: 10px"><fmt:message
+                                        key="apartmentDetail.bookButton"/></button>
                             </form>
                         </div>
                     </div>

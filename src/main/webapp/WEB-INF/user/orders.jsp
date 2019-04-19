@@ -58,7 +58,7 @@
                         <h4 class="card-title pricing-card-title mr-0">
                             <fmt:formatNumber type="CURRENCY" value="${order.pricePerDayAtTheTimeOfOrder / 100}"
                                               maxFractionDigits="2"/>
-                            <small class="text-muted">/ <fmt:message key="orders.perDay"/></small>
+                            <small class="text-muted">/ <fmt:message key="perDay"/></small>
                         </h4>
                     </div>
                     <div class="media text-muted">
