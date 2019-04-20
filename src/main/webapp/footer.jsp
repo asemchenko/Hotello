@@ -5,15 +5,15 @@
     <div class="w-25 mx-auto">
         <select class="custom-select w-50 mx-auto" data-width="fit" onchange="updateLanguage(this)"
                 id="langSelector">
-            <option <%--data-content='<span class="flag-icon flag-icon-us"></span> English'--%> value="en_US">English
+            <option <%--data-content='<span class="flag-icon flag-icon-us"></span> English'--%> value="en-US">English
             </option>
-            <option  <%--data-content='<span class="flag-icon flag-icon-mx"></span> Español'--%> value="uk_UA">
+            <option  <%--data-content='<span class="flag-icon flag-icon-mx"></span> Español'--%> value="uk-UA">
                 Українська
             </option>
         </select></div>
     <script type="text/javascript">
         // setting current language
-        setCurrentLanguage('<c:out value="${locale}" />');
+        setCurrentLanguage('<c:out value="${locale.language}" />', '<c:out value="${locale.country}"/>');
 
         function updateLanguage(langSelector) {
             var langTag = langSelector.value;
@@ -52,8 +52,8 @@
             document.cookie = updatedCookie;
         }
 
-        function setCurrentLanguage(langTag) {
-            document.getElementById('langSelector').value = langTag;
+        function setCurrentLanguage(langTag, regionTag) {
+            document.getElementById('langSelector').value = langTag + '-' + regionTag;
         }
     </script>
 </footer>

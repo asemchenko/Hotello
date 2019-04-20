@@ -4,6 +4,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class Order extends Entity {
     // FIXME обязательно придумай куда это деть
@@ -134,6 +136,10 @@ public class Order extends Entity {
 
     public enum OrderStatus {
         CONFIRMATION_EXPECTED, PAYMENT_EXPECTED, PAID, DISAPPROVED;
+
+        public String toLocalizedString(Locale locale) {
+            return ResourceBundle.getBundle("orderStatus", locale).getString(this.name());
+        }
 
         @Override
         public String toString() {

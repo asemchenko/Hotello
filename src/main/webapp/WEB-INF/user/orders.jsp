@@ -82,7 +82,7 @@
                         <div class="col-sm ">
                             <h6 class="border-bottom border-gray text-left text-muted">
                                 <fmt:message key="orders.orderStatus"/>
-                                <c:out value="${order.status}"/>
+                                <c:out value="${order.status.toLocalizedString(locale)}"/>
                             </h6>
                         </div>
                         <div class="col-sm"><h4 class="card-title pricing-card-title mr-0 text-right text-muted">

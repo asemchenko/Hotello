@@ -49,7 +49,7 @@
     <!--    Lang filter (localization)-->
     <filter>
         <filter-name>langFilter</filter-name>
-        <filter-class>example.company.filter.LangFilter</filter-class>
+        <filter-class>example.company.filter.LocaleFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>langFilter</filter-name>
