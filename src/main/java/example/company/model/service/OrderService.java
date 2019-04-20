@@ -1,13 +1,16 @@
 package example.company.model.service;
 
+import com.google.common.base.Throwables;
 import example.company.model.dao.api.DaoFactory;
 import example.company.model.dao.api.concreteDao.OrderDao;
 import example.company.model.dao.jdbc.JdbcDaoFactory;
 import example.company.model.entity.Order;
 import example.company.model.entity.User;
+import example.company.model.service.exceptions.ApartmentAlreadyBookedException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -16,13 +19,18 @@ import java.util.function.Consumer;
 public class OrderService {
     private PaymentService paymentService = new PaymentService();
 
-    public void makeOrder(Order order) {
+    public void makeOrder(Order order) throws ApartmentAlreadyBookedException {
         try (DaoFactory daoFactory = JdbcDaoFactory.getFactory()) {
             Connection connection = daoFactory.getCurrentConnection();
             connection.setAutoCommit(false);
             OrderDao orderDao = daoFactory.getOrderDao();
             orderDao.create(order);
             connection.commit();
+        } catch (RuntimeException e) {
+            Throwable rootCause = Throwables.getRootCause(e);
+            if (rootCause instanceof SQLIntegrityConstraintViolationException) {
+                throw new ApartmentAlreadyBookedException(rootCause);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

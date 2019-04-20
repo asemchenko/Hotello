@@ -6,6 +6,7 @@ import example.company.model.entity.Order;
 import example.company.model.entity.User;
 import example.company.model.service.ApartmentService;
 import example.company.model.service.OrderService;
+import example.company.model.service.exceptions.ApartmentAlreadyBookedException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +29,12 @@ public class MakeOrder implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Order order = extractOrderInfo(request);
-        orderService.makeOrder(order);
+        try {
+            orderService.makeOrder(order);
+        } catch (ApartmentAlreadyBookedException e) {
+            response.sendRedirect("/error/alreadyBookedError.jsp");
+            return;
+        }
         response.sendRedirect("/app/orders");
     }
 
