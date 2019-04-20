@@ -1,5 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmtTime" uri="https://company.example/jsp/tld/fmtTime" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="message"/>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -18,7 +24,7 @@
     <c:choose>
         <c:when test="${empty orders}">
             <div class="alert alert-warning text-center w-50 mx-auto" role="alert">
-                Нет заказов
+                <fmt:message key="orders.noOrdersYet"/>
             </div>
         </c:when>
         <c:otherwise>
@@ -26,13 +32,17 @@
                 <div class="my-3 p-3 bg-white rounded shadow-sm justify-content-center mx-auto border border-dark"
                      style="width: 50%">
                     <div class="row">
-                        <div class="col-sm"><h6 class="border-bottom border-gray pb-2 mb-0 text-left">Заказ №<c:out
-                                value="${order.id}"/></h6>
+                        <div class="col-sm">
+                            <h6 class="border-bottom border-gray pb-2 mb-0 text-left">
+                                <fmt:message key="orders.orderNumber"/>
+                                <fmt:formatNumber value="${order.id}"/>
+                            </h6>
                         </div>
                         <div class="col-sm"></div>
                         <div class="col-sm">
                             <h6 class="border-bottom border-gray pb-2 mb-0 text-right">
-                                Дата заказа - <c:out value="${order.creationTime}"/>
+                                <fmt:message key="orders.orderCreationDate"/>
+                                <fmtTime:inst locale="${locale}" value="${order.creationTime}"/>
                             </h6>
                         </div>
                     </div>
@@ -44,11 +54,12 @@
                         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                             <strong class="d-block text-gray-dark"><c:out value="${order.apartment.title}"/></strong>
                             <a href="${pageContext.request.contextPath}/app/apartment?apartmentId=<c:out value="${order.apartment.id}" />">
-                                Просмотреть
+                                <fmt:message key="orders.viewApartment"/>
                             </a>
                         </p>
                         <h4 class="card-title pricing-card-title mr-0">
-                            $<c:out value="${order.pricePerDayAtTheTimeOfOrder}"/>
+                            <fmt:formatNumber type="CURRENCY" value="${order.pricePerDayAtTheTimeOfOrder / 100}"
+                                              maxFractionDigits="2"/>
                             <small class="text-muted">/ day</small>
                         </h4>
                     </div>
@@ -57,7 +68,8 @@
                              alt="check in logo"
                              width="32" height="32">
                         <p class="media-body my-3">
-                            Дата въезда - <c:out value="${order.checkInDate}"/>
+                            <fmt:message key="orders.checkInDate"/>
+                            <fmtTime:lclDate locale="${locale}" value="${order.checkInDate}" style="FULL"/>
                         </p>
                     </div>
                     <div class="media text-muted">
@@ -65,43 +77,48 @@
                              alt="check in logo"
                              width="32" height="32">
                         <p class="media-body my-3">
-                            Дата выезда - <c:out value="${order.checkOutDate}"/>
+                            <fmt:message key="orders.checkOutDate"/>
+                            <fmtTime:lclDate locale="${locale}" value="${order.checkOutDate}" style="FULL"/>
                         </p>
                     </div>
                     <div class="row">
                         <div class="col-sm ">
                             <h6 class="border-bottom border-gray text-left text-muted">
-                                СТАТУС ЗАКАЗА - <c:out value="${order.status}"/>
+                                <fmt:message key="orders.orderStatus"/>
+                                <c:out value="${order.status}"/>
                             </h6>
                         </div>
                         <div class="col-sm"><h4 class="card-title pricing-card-title mr-0 text-right text-muted">
-                            Total $<c:out value="${order.totalPrice}"/>
+                            <fmt:message key="orders.total"/>
+                            <fmt:formatNumber type="CURRENCY" value="${order.totalPrice / 100}" maxFractionDigits="2"/>
                         </h4></div>
                     </div>
                     <c:if test="${order.status eq 'CONFIRMATION_EXPECTED'}">
                         <hr>
                         <div class="row">
-                                <%--                            FIXME получается что админ не может принять уже отмененный заказ, даже если он просто ошибся кнопкой. Исправь это--%>
                             <div class="col-sm text-center">
                                 <form action="${pageContext.request.contextPath}/app/confirmOrder" method="post">
-                                    <button type="submit" class="btn btn-success">Одобрить</button>
+                                    <button type="submit" class="btn btn-success">
+                                        <fmt:message key="orders.admin.confirmButton"/>
+                                    </button>
                                     <input type="text" value="${order.id}" hidden name="orderId">
                                 </form>
                             </div>
                             <div class="col-sm text-center">
                                 <form action="${pageContext.request.contextPath}/app/disapproveOrder" method="post">
-                                    <button type="submit" class="btn btn-danger">Отклонить</button>
+                                    <button type="submit" class="btn btn-danger">
+                                        <fmt:message key="orders.admin.disapprove"/>
+                                    </button>
                                     <input type="text" value="${order.id}" hidden name="orderId">
                                 </form>
                             </div>
                         </div>
-                        <%--                        TODO add user info--%>
                     </c:if>
                     <hr>
                         <%--Client full name--%>
                     <div class="row">
                         <div class="col-sm">
-                            Client full name
+                            <fmt:message key="orders.admin.clientFullNameLabel"/>
                         </div>
                         <div class="col-sm">
                                 ${order.user.fullName}
@@ -110,7 +127,7 @@
                         <%--Client email--%>
                     <div class="row">
                         <div class="col-sm">
-                            Client email
+                            <fmt:message key="orders.admin.clientEmailLabel"/>
                         </div>
                         <div class="col-sm">
                                 ${order.user.email}
