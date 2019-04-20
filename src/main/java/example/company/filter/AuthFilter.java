@@ -2,6 +2,8 @@ package example.company.filter;
 
 import example.company.model.entity.User;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,7 @@ import java.util.Map;
 import static java.util.Objects.nonNull;
 
 public class AuthFilter implements Filter {
+    private static final Logger logger = LoggerFactory.getLogger(AuthFilter.class);
     // TODO реализуй чтение разрешенных URI из файла конфигурации
     private Map<User.UserStatus, List<String>> allowedUri = new HashMap<>();
 
@@ -42,10 +45,13 @@ public class AuthFilter implements Filter {
         User.UserStatus role = getRole(httpRequest);
         String currentUri = getUri(httpRequest);
         if (allowedUri.get(role).contains(currentUri)) {
+            logger.info("Successfully skip request [ip : {}; method : {}; sessionId: {}]", httpRequest.getRemoteAddr(), httpRequest.getMethod(), httpRequest.getSession().getId());
             chain.doFilter(request, response);
         } else if (role == null) {
+            logger.info("Drop request [ip : {}; method : {}; sessionId: {}] because of unauthenticated user. User redirected to '/signIn.jsp'", httpRequest.getRemoteAddr(), httpRequest.getMethod(), httpRequest.getSession().getId());
             ((HttpServletResponse) response).sendRedirect("/signIn.jsp");
         } else {
+            logger.info("Drop request [ip : {}; method : {}; sessionId: {}] because user has not enough privileges. Forbidden status code is sent to user", httpRequest.getRemoteAddr(), httpRequest.getMethod(), httpRequest.getSession().getId());
             ((HttpServletResponse) response).sendError(HttpServletResponse.SC_FORBIDDEN);
         }
     }

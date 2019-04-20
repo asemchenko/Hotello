@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="30">
+    <Appenders>
+        <Console name="Console">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <RollingFile name="RollingFile" filename="logs/app.log"
+                     filePattern="logs/%d{MMM-yyyy}/app-%d{dd.MM.yyyy}.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <TimeBasedTriggeringPolicy interval="1"/>
+        </RollingFile>
+        <RollingFile name="RollingFileAccess" filename="logs/access.log"
+                     filePattern="logs/%d{MMM-yyyy}/access-%d{dd.MM.yyyy}.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <TimeBasedTriggeringPolicy interval="1"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

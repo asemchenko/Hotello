@@ -70,3 +70,5 @@ fabric.properties
 todo.txt
 voprosiki.txt
 last_task.txt
+
+logs/
