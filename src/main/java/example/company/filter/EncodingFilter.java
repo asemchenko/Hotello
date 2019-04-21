@@ -4,8 +4,8 @@ import javax.servlet.*;
 import java.io.IOException;
 
 public class EncodingFilter implements Filter {
-    private String requestEncoding;
-    private String responseEncoding;
+    private String requestEncoding = "UTF-8";
+    private String responseEncoding = "UTF-8";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -15,7 +15,9 @@ public class EncodingFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        request.setCharacterEncoding(requestEncoding);
+        if (request.getCharacterEncoding() == null) {
+            request.setCharacterEncoding(requestEncoding);
+        }
         response.setCharacterEncoding(responseEncoding);
         chain.doFilter(request, response);
     }

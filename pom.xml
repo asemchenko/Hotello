@@ -15,8 +15,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -154,7 +154,6 @@
                         <!-- deploy parameters -->
                         <port>8888</port>
                         <path>/</path>
-                        <contextFile>${project.basedir}/src/main/webapp/META-INF/context.xml</contextFile>
                     </configuration>
                 </plugin>
             </plugins>
