@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import org.slf4j.*;
 
 public class SignIn implements Command {
+    private static final Logger logger = LoggerFactory.getLogger(SignIn.class);
     private final UserService userService;
 
     public SignIn(UserService userService) {
@@ -25,19 +27,13 @@ public class SignIn implements Command {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
             System.out.println("Successfully login");
+            logger.info("User {} has been successfully signed in. Request [addr: {}, session id: {}]", user, request.getRemoteAddr(), request.getSession().getId());
             response.sendRedirect("/");
 
         } else {
-            // TODO передай ошибку где-то тут
-            System.out.println("Error: invalid login/password");
-            // TODO подумай как установаливать код ошибки, с учетом того что тут редирект
+            logger.info("An attempt to sign in with email {} failed. Request [addr: {}, method: {}]", email, request.getRemoteAddr(), request.getMethod());
             String redirectLocation = String.format("/signIn.jsp?invalidCredentials=true&email=%s", email);
             response.sendRedirect(redirectLocation);
-//            try {
-//                request.getRequestDispatcher("/index.jsp").forward(request, response);
-//            } catch (ServletException e) {
-//                throw new RuntimeException(e);
-//            }
         }
     }
 }

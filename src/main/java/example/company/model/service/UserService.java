@@ -4,6 +4,9 @@ import example.company.model.dao.api.DaoFactory;
 import example.company.model.dao.api.concreteDao.UserDao;
 import example.company.model.dao.jdbc.JdbcDaoFactory;
 import example.company.model.entity.User;
+import example.company.model.service.password.Hasher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -15,8 +18,8 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.Optional;
 
-// TODO сделай интерфейс, который реализует этот класс
 public class UserService {
+    public static final Logger logger = LoggerFactory.getLogger(UserService.class);
     public void signUp(User user, String password) {
         user.setCreationTime(Instant.now());
         setPassword(user, password);
@@ -58,29 +61,17 @@ public class UserService {
         }
     }
 
-    // TODO возможно метод setPassword нужно перенести в user
     private void setPassword(User user, String password) {
-        byte[] salt = new byte[16];
-        SecureRandom random = new SecureRandom();
-        random.nextBytes(salt);
-        user.setPasswordSalt(salt);
-        user.setPasswordHash(hashPassword(password, salt));
-    }
-
-    private byte[] hashPassword(String password, byte[] salt) {
-        KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
-        try {
-            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-            return factory.generateSecret(keySpec).getEncoded();
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new RuntimeException(e);
-        }
+        Hasher hasher = new Hasher(password);
+        user.setPasswordSalt(hasher.getSalt());
+        user.setPasswordHash(hasher.getHashedPassword());
     }
 
     private boolean verifyPassword(User user, String password) {
-        byte[] usedSalt = user.getPasswordSalt();
+        Hasher hasher = new Hasher(password);
+        hasher.setSalt(user.getPasswordSalt());
         byte[] expectedHash = user.getPasswordHash();
-        byte[] actualHash = hashPassword(password, usedSalt);
+        byte[] actualHash = hasher.getHashedPassword();
         return Arrays.equals(expectedHash, actualHash);
     }
 }
