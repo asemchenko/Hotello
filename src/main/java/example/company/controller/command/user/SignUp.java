@@ -19,8 +19,6 @@ public class SignUp implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        // TODO add error handling
-        // TODO придумай способ передавать сообщение об ошибке/успехе отсюда
         User user = new User();
         user.setFirstName(request.getParameter("firstName"));
         user.setLastName(request.getParameter("lastName"));

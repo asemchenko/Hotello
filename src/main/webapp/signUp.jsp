@@ -24,7 +24,7 @@
                     <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/app/signUp">
                         <c:if test="${not empty duplicateEmail and duplicateEmail eq true}">
                             <div class="alert alert-danger text-center" role="alert">
-                                <fmt:message key="signUp.duplicateEmailMessage" />
+                                <fmt:message key="signUp.duplicateEmailMessage"/>
                             </div>
                         </c:if>
                         <div class="form-group">
@@ -101,7 +101,7 @@
                         </div>
                         <div class="alert alert-danger" role="alert" id="passwordConfirmationFailedAlert"
                              style="display: none">
-                            <fmt:message key="signUp.passwordConfirmationFailedAlert"/>
+                            <fmt:message key="passwordConfirmationFailedAlert"/>
                         </div>
                     </form>
                 </div>

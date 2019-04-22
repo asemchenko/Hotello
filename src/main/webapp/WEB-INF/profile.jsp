@@ -66,6 +66,11 @@
                 <div class="panel-heading text-center mt-2">
                     <h4><fmt:message key="profile.changePassword"/></h4>
                 </div>
+                <c:if test="${not empty invalidPassword and invalidPassword eq true}">
+                    <div class="alert alert-danger text-center" role="alert">
+                        Неправильный пароль
+                    </div>
+                </c:if>
                 <div class="w-50 mx-auto">
                     <div>
                         <input class="form-control" id="currentPassword"
@@ -73,19 +78,23 @@
                                required type="password" name="oldPassword">
                     </div>
                     <div style="margin-top: 10px;">
-                        <input class="form-control" id="inputPassword"
+                        <input class="form-control" id="newPassword"
                                placeholder="<fmt:message key="profile.newPasswordPlaceholder"/>"
-                               required type="password" name="newPassword">
+                               required type="password" name="newPassword" oninput="checkPasswordsSame()">
                     </div>
                     <div style="margin-top: 10px;">
-                        <input class="form-control" id="confirmPassword"
+                        <input class="form-control" id="passwordConfirmation"
                                placeholder="<fmt:message key="profile.newPasswordConfirmPlaceholder"/>"
-                               required type="password" name="newPasswordConfirmation">
+                               required type="password" name="newPasswordConfirmation" oninput="checkPasswordsSame()">
                     </div>
                     <div class="mx-auto w-75 my-2">
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" id="submitButton">
                             <fmt:message key="profile.changePasswordButton"/>
                         </button>
+                    </div>
+                    <div class="alert alert-danger" role="alert" id="passwordConfirmationFailedAlert"
+                         style="display: none">
+                        <fmt:message key="passwordConfirmationFailedAlert"/>
                     </div>
                 </div>
             </form>
@@ -93,5 +102,21 @@
     </div>
 </main>
 <jsp:include page="${pageContext.request.contextPath}/footer.jsp"/>
+<script type="text/javascript">
+    function checkPasswordsSame() {
+        var passwordInput = document.getElementById('newPassword');
+        var passwordConfirmationInput = document.getElementById('passwordConfirmation');
+        var submitButton = document.getElementById('submitButton');
+        var alertLabel = document.getElementById('passwordConfirmationFailedAlert');
+        if (passwordInput.value !== passwordConfirmationInput.value) {
+            submitButton.disabled = true;
+            alertLabel.style.display = 'block';
+        } else {
+            submitButton.disabled = false;
+            alertLabel.style.display = 'none';
+
+        }
+    }
+</script>
 </body>
 </html>
