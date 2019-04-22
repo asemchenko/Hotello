@@ -6,6 +6,7 @@ import example.company.model.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,7 +21,7 @@ public class SignIn implements Command {
     }
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         if (userService.signIn(email, password)) {
@@ -33,8 +34,9 @@ public class SignIn implements Command {
 
         } else {
             logger.info("An attempt to sign in with email {} failed. Request [addr: {}, method: {}]", email, request.getRemoteAddr(), request.getMethod());
-            String redirectLocation = String.format("/signIn.jsp?invalidCredentials=true&email=%s", email);
-            response.sendRedirect(redirectLocation);
+            request.setAttribute("invalidCredentials", true);
+            request.setAttribute("email", email);
+            request.getRequestDispatcher("/signIn.jsp").forward(request, response);
         }
     }
 }

@@ -56,9 +56,6 @@
                         <label for="cc-number"><fmt:message key="payment.cardNumberLabel"/></label>
                         <input type="text" class="form-control" id="cc-number" placeholder="" name="creditCardNumber"
                                required>
-                        <div class="invalid-feedback">
-                            Credit card number is required
-                        </div>
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -68,19 +65,12 @@
                         </label>
                         <input type="text" class="form-control" id="cc-expiration" placeholder="" name="expirationDate"
                                required>
-                        <div class="invalid-feedback">
-                            <%--                            FIXME проверь отображается ли этот текст и если да то локализируй его--%>
-                            Expiration date required
-                        </div>
                     </div>
                     <div class="col-md-3 mb-3 pt-4">
                         <label for="cc-cvv">
                             <fmt:message key="payment.cardCvvCode"/>
                         </label>
                         <input type="text" class="form-control" id="cc-cvv" placeholder="" name="cvvCode" required>
-                        <div class="invalid-feedback">
-                            Security code required
-                        </div>
                     </div>
                 </div>
                 <div class="row justify-content-center">

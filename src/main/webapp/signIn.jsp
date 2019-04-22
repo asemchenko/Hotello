@@ -18,7 +18,7 @@
         <fmt:message key="signIn.pleaseSignIn"/>
     </h1>
         <%--    Error message--%>
-        <c:if test="${not empty param.invalidCredentials and param.invalidCredentials eq true}">
+        <c:if test="${not empty invalidCredentials and invalidCredentials eq true}">
             <div class="alert alert-danger text-center" role="alert">
                 <fmt:message key="signIn.invalidCredentialsMessage"/>
             </div>
@@ -29,7 +29,7 @@
                placeholder="<fmt:message key="signIn.emailAddressPlaceholder"/> " name="email"
                required
                autofocus
-               value="<c:out value="${param.email}" />"
+               value="<c:out value="${email}" />"
         >
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control"

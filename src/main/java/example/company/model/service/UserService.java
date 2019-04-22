@@ -1,13 +1,16 @@
 package example.company.model.service;
 
+import com.google.common.base.Throwables;
 import example.company.model.dao.api.DaoFactory;
 import example.company.model.dao.api.concreteDao.UserDao;
 import example.company.model.dao.jdbc.JdbcDaoFactory;
 import example.company.model.entity.User;
+import example.company.model.service.exceptions.EmailAlreadyTakenException;
 import example.company.model.service.password.Hasher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Optional;
@@ -15,12 +18,19 @@ import java.util.Optional;
 public class UserService {
     public static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    public void signUp(User user, String password) {
+    public void signUp(User user, String password) throws EmailAlreadyTakenException {
         user.setCreationTime(Instant.now());
         setPassword(user, password);
         try (DaoFactory factory = JdbcDaoFactory.getFactory()) {
             UserDao userDao = factory.getUserDao();
             userDao.create(user);
+        } catch (RuntimeException e) {
+            Throwable rootCause = Throwables.getRootCause(e);
+            if (rootCause instanceof SQLIntegrityConstraintViolationException) {
+                throw new EmailAlreadyTakenException(rootCause);
+            } else {
+                throw e;
+            }
         }
     }
 

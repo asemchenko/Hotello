@@ -1,4 +1,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="message"/>
 
@@ -21,7 +22,11 @@
                 <div class="card-body">
                     <%--todo поменяй ссылку action в форме --%>
                     <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/app/signUp">
-
+                        <c:if test="${not empty duplicateEmail and duplicateEmail eq true}">
+                            <div class="alert alert-danger text-center" role="alert">
+                                <fmt:message key="signUp.duplicateEmailMessage" />
+                            </div>
+                        </c:if>
                         <div class="form-group">
                             <label for="firstName" class="cols-sm-2 control-label">
                                 <fmt:message key="signUp.firstNameLabel"/>
@@ -31,7 +36,9 @@
                                     <span class="input-group-addon"><i class="fa fa-user fa"
                                                                        aria-hidden="true"></i></span>
                                     <input type="text" class="form-control" name="firstName" id="firstName"
-                                           placeholder="<fmt:message key="signUp.firstNamePlaceholder"/>"/>
+                                           placeholder="<fmt:message key="signUp.firstNamePlaceholder"/>"
+                                           value="<c:out value="${firstName}"/>"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -44,7 +51,9 @@
                                     <span class="input-group-addon"><i class="fa fa-user fa"
                                                                        aria-hidden="true"></i></span>
                                     <input type="text" class="form-control" name="lastName" id="lastName"
-                                           placeholder="<fmt:message key="signUp.lastNamePlaceholder"/>"/>
+                                           placeholder="<fmt:message key="signUp.lastNamePlaceholder"/>"
+                                           value="<c:out value="${lastName}" />"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -56,7 +65,9 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
                                     <input type="text" class="form-control" name="email" id="email"
-                                           placeholder="<fmt:message key="signUp.emailPlaceholder"/>"/>
+                                           placeholder="<fmt:message key="signUp.emailPlaceholder"/>"
+                                           value="<c:out value="${email}"/>"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -72,7 +83,6 @@
                                 </div>
                             </div>
                         </div>
-                        <%--                        TODO реализуй проверку что пароли совпадают--%>
                         <div class="form-group">
                             <label for="passwordConfirmation" class="cols-sm-2 control-label"><fmt:message
                                     key="signUp.confirmPasswordLabel"/></label>
