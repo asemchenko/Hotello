@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ApartmentDao extends GenericDao<Apartment> {
     List<Apartment> findNotBooked(LocalDate checkIn, LocalDate checkOut);
+
+    List<Apartment> findNotBooked(LocalDate checkIn, LocalDate checkOut, short placesAmount, short starsAmount, int pageNumber, int pageSize);
 }

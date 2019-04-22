@@ -120,20 +120,48 @@
     <div class="container">
         <nav aria-label="...">
             <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">
-                        <fmt:message key="pagination.previous"/>
-                    </a>
+                <li
+                        <c:choose>
+                            <c:when test="${pageNumber eq 1}">
+                                class="page-item disabled"
+                            </c:when>
+                            <c:otherwise>
+                                class="page-item active"
+                            </c:otherwise>
+                        </c:choose>
+                >
+                    <form action="">
+                        <input type="text" name="checkIn" hidden value="${checkIn}">
+                        <input type="text" name="checkOut" hidden value="${checkOut}">
+                        <input type="text" name="starsAmount" hidden value="${starsAmount}">
+                        <input type="text" name="placesAmount" hidden value="${placesAmount}">
+                        <input type="text" name="pageNumber" hidden value="${pageNumber - 1}">
+                        <button type="submit" class="page-link"><fmt:message key="pagination.previous"/></button>
+                    </form>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active">
-                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
                 <li class="page-item">
-                    <a class="page-link" href="#">
-                        <fmt:message key="pagination.next"/>
+                    <a class="page-link" href="#"><c:out value="${pageNumber}"/>
+                        <span class="sr-only">(current)</span>
                     </a>
+                </li>
+                <li
+                        <c:choose>
+                            <c:when test="${lastPage}">
+                                class="page-item disabled"
+                            </c:when>
+                            <c:otherwise>
+                                class="page-item active"
+                            </c:otherwise>
+                        </c:choose>
+                >
+                    <form action="">
+                        <input type="text" name="checkIn" hidden value="${checkIn}">
+                        <input type="text" name="checkOut" hidden value="${checkOut}">
+                        <input type="text" name="starsAmount" hidden value="${starsAmount}">
+                        <input type="text" name="placesAmount" hidden value="${placesAmount}">
+                        <input type="text" name="pageNumber" hidden value="${pageNumber + 1}">
+                        <button type="submit" class="page-link"><fmt:message key="pagination.next"/></button>
+                    </form>
                 </li>
             </ul>
         </nav>
