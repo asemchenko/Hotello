@@ -12,10 +12,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class JdbcApartmentDao extends JdbcGenericDao<Apartment> implements ApartmentDao {
+    // FIXME magic constant
     private static final String FIND_ALL_QUERY = "SELECT apartment_id, title, description, places_amount, rooms_amount, price_per_day, stars_amount FROM apartments";
     private static final String INSERT_QUERY = "INSERT INTO apartments(title, description, places_amount, rooms_amount, price_per_day, stars_amount) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String FIND_BY_ID_QUERY = "SELECT apartment_id, title, description, places_amount, rooms_amount, price_per_day, stars_amount FROM apartments WHERE apartment_id=?";
     private static final String FIND_NON_BOOKED_QUERY = "CALL find_non_booked(?, ?)";
+    private static final String EXTENDED_FIND_QUERY = "CALL extended_find_non_booked(?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_QUERY = "UPDATE apartments SET title=?, description=?, places_amount=?, rooms_amount=?, price_per_day=?, stars_amount=? WHERE apartment_id=?";
 
     public JdbcApartmentDao(Connection connection) {
@@ -87,6 +89,26 @@ public class JdbcApartmentDao extends JdbcGenericDao<Apartment> implements Apart
             try {
                 setLocalDate(s, 1, checkIn);
                 setLocalDate(s, 2, checkOut);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Override
+    public List<Apartment> findNotBooked(LocalDate checkIn, LocalDate checkOut,
+                                         short placesAmount,
+                                         short starsAmount,
+                                         int pageNumber,
+                                         int pageSize) {
+        return findList(EXTENDED_FIND_QUERY, s -> {
+            try {
+                setLocalDate(s, 1, checkIn);
+                setLocalDate(s, 2, checkOut);
+                s.setInt(3, starsAmount);
+                s.setInt(4, placesAmount);
+                s.setInt(5, (pageNumber - 1) * pageSize);
+                s.setInt(6, pageSize);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

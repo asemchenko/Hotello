@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ApartmentService {
+    private static final int PAGE_SIZE = 3;
+
     public Optional<Apartment> get(long id) {
         try (DaoFactory daoFactory = JdbcDaoFactory.getFactory()) {
             ApartmentDao apartmentDao = daoFactory.getApartmentDao();
@@ -25,16 +27,59 @@ public class ApartmentService {
         }
     }
 
+    public int getPageSize() {
+        return PAGE_SIZE;
+    }
+
+    public List<Apartment> filter(LocalDate checkIn, LocalDate checkOut, short starsAmount, short placesAmount, int pageNumber) {
+        try (DaoFactory daoFactory = JdbcDaoFactory.getFactory()) {
+            ApartmentDao apartmentDao = daoFactory.getApartmentDao();
+            return apartmentDao.findNotBooked(checkIn, checkOut, placesAmount, starsAmount, pageNumber, PAGE_SIZE);
+        }
+    }
+
     public List<Apartment> filter(LocalDate checkIn, LocalDate checkOut) {
         return getNonBooked(checkIn, checkOut);
     }
 
-    public List<Apartment> filter(LocalDate checkIn, LocalDate checkOut, short starsAmount, short placesAmount) {
+    public List<Apartment> filter(LocalDate checkIn, LocalDate checkOut, FilterFunc f) {
         return filter(checkIn, checkOut)
                 .stream()
-                .filter(
-                        a -> a.getStarsAmount() == starsAmount
-                                && a.getPlacesAmount() == placesAmount
-                ).collect(Collectors.toList());
+                .filter(f::accept)
+                .collect(Collectors.toList());
+    }
+
+    public static class FilterFunc {
+        private short starsAmount = 1;
+        private short placesAmount = 1;
+
+        private FilterFunc() {
+        }
+
+        public boolean accept(Apartment apartment) {
+            return apartment.getPlacesAmount() == placesAmount && apartment.getStarsAmount() == starsAmount;
+        }
+
+        public static class Builder {
+            private FilterFunc func;
+
+            public Builder() {
+                func = new FilterFunc();
+            }
+
+            public Builder setStarsAmount(short amount) {
+                func.starsAmount = amount;
+                return this;
+            }
+
+            public Builder setPlacesAmount(short placesAmount) {
+                func.placesAmount = placesAmount;
+                return this;
+            }
+
+            public FilterFunc build() {
+                return func;
+            }
+        }
     }
 }
