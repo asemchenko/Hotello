@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Order extends Entity {
@@ -132,6 +133,43 @@ public class Order extends Entity {
         } else {
             throw new IllegalStateException(String.format("Order in state %s can not be marked as paid", getStatus()));
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return pricePerDayAtTheTimeOfOrder == order.pricePerDayAtTheTimeOfOrder &&
+                totalPrice == order.totalPrice &&
+                Objects.equals(bill, order.bill) &&
+                Objects.equals(apartment, order.apartment) &&
+                Objects.equals(user, order.user) &&
+                Objects.equals(checkInDate, order.checkInDate) &&
+                Objects.equals(checkOutDate, order.checkOutDate) &&
+                Objects.equals(creationTime, order.creationTime) &&
+                status == order.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bill, apartment, user, checkInDate, checkOutDate, pricePerDayAtTheTimeOfOrder, totalPrice, creationTime, status);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "bill=" + bill +
+                ", apartment=" + apartment +
+                ", user=" + user +
+                ", checkInDate=" + checkInDate +
+                ", checkOutDate=" + checkOutDate +
+                ", pricePerDayAtTheTimeOfOrder=" + pricePerDayAtTheTimeOfOrder +
+                ", totalPrice=" + totalPrice +
+                ", creationTime=" + creationTime +
+                ", status=" + status +
+                ", id=" + id +
+                "} ";
     }
 
     public enum OrderStatus {

@@ -2,6 +2,8 @@ package example.company.model.dao.jdbc;
 
 import example.company.model.dao.api.GenericDao;
 import example.company.model.entity.Entity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -12,6 +14,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 public abstract class JdbcGenericDao<T extends Entity> implements GenericDao<T> {
+    private static final Logger logger = LoggerFactory.getLogger(JdbcGenericDao.class);
     private final Connection connection;
 
     protected JdbcGenericDao(Connection connection) {
@@ -28,6 +31,7 @@ public abstract class JdbcGenericDao<T extends Entity> implements GenericDao<T> 
             setInsertQueryParams(s, entity);
             s.executeUpdate();
             entity.setId(getInsertionId(s));
+            logger.debug("Created new {}", entity);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -38,6 +42,7 @@ public abstract class JdbcGenericDao<T extends Entity> implements GenericDao<T> 
         try (PreparedStatement s = connection.prepareStatement(getUpdateQuery())) {
             setUpdateQueryParams(s, t);
             s.executeUpdate();
+            logger.debug("Updated {}", t);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -84,17 +89,6 @@ public abstract class JdbcGenericDao<T extends Entity> implements GenericDao<T> 
     public List<T> findAll() {
         return findList(getFindAllQuery(), (s) -> {
         });
-        // TODO удали если findAll нормально работает
-//        try (PreparedStatement s = connection.prepareStatement(getFindAllQuery())) {
-//            ResultSet resultSet = s.executeQuery();
-//            ArrayList<T> entities = new ArrayList<>();
-//            while (resultSet.next()) {
-//                entities.add(getFromResultSet(resultSet));
-//            }
-//            return entities;
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
     }
 
     protected final List<T> findList(String query, Consumer<PreparedStatement> prepareFunc) {

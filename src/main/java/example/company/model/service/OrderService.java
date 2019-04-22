@@ -7,6 +7,8 @@ import example.company.model.dao.jdbc.JdbcDaoFactory;
 import example.company.model.entity.Order;
 import example.company.model.entity.User;
 import example.company.model.service.exceptions.ApartmentAlreadyBookedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,11 +19,14 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 public class OrderService {
+    private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
     private PaymentService paymentService = new PaymentService();
 
     public void makeOrder(Order order) throws ApartmentAlreadyBookedException {
+        logger.info("Making an order {}", order);
         try (DaoFactory daoFactory = JdbcDaoFactory.getFactory()) {
             Connection connection = daoFactory.getCurrentConnection();
+            // FIXME перенеси транзакцию в dao
             connection.setAutoCommit(false);
             OrderDao orderDao = daoFactory.getOrderDao();
             orderDao.create(order);
@@ -30,6 +35,8 @@ public class OrderService {
             Throwable rootCause = Throwables.getRootCause(e);
             if (rootCause instanceof SQLIntegrityConstraintViolationException) {
                 throw new ApartmentAlreadyBookedException(rootCause);
+            } else {
+                throw e;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -39,7 +46,9 @@ public class OrderService {
     public List<Order> getOrders(User user) {
         try (DaoFactory daoFactory = JdbcDaoFactory.getFactory()) {
             OrderDao orderDao = daoFactory.getOrderDao();
-            return orderDao.getByUser(user);
+            List<Order> byUser = orderDao.getByUser(user);
+            byUser.sort(Comparator.comparing(Order::getCreationTime).reversed());
+            return byUser;
         }
     }
 
@@ -62,15 +71,17 @@ public class OrderService {
     }
 
     public void confirmOrder(long orderId) {
+        logger.info("Confirming an order with id {}", orderId);
         updateOrder(orderId, Order::confirm);
     }
 
     public void disapproveOrder(long orderId) {
+        logger.info("Disapproving order with id {}", orderId);
         updateOrder(orderId, Order::disapprove);
     }
 
     public void payForOrder(long orderId, PaymentCredentials credentials) {
-        // processing payment required
+        logger.info("Paying for order id {}", orderId);
         updateOrder(orderId, o -> {
             String transactionId = paymentService.processPayment(o.getBill().getBankAccountNumber(), credentials);
             if (transactionId != null) {

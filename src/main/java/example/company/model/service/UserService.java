@@ -33,11 +33,7 @@ public class UserService {
         try (DaoFactory factory = JdbcDaoFactory.getFactory()) {
             UserDao userDao = factory.getUserDao();
             Optional<User> user = userDao.findByEmail(email);
-            if (user.isPresent()) {
-                return verifyPassword(user.get(), password);
-            } else {
-                return false;
-            }
+            return user.isPresent() && verifyPassword(user.get(), password);
         }
     }
 
@@ -49,6 +45,7 @@ public class UserService {
     }
 
     public boolean changePassword(User user, String oldPassword, String newPassword) {
+        logger.debug("Changing password for user {}", user);
         if (verifyPassword(user, oldPassword)) {
             setPassword(user, newPassword);
             try (DaoFactory daoFactory = JdbcDaoFactory.getFactory()) {
@@ -62,6 +59,7 @@ public class UserService {
     }
 
     private void setPassword(User user, String password) {
+        logger.debug("Setting password for user {}", user);
         Hasher hasher = new Hasher(password);
         user.setPasswordSalt(hasher.getSalt());
         user.setPasswordHash(hasher.getHashedPassword());

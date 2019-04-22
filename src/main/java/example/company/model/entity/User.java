@@ -109,7 +109,7 @@ public class User extends Entity {
                 ", creationTime=" + creationTime +
                 ", status=" + status +
                 ", id=" + id +
-                "} " + super.toString();
+                "} ";
     }
 
     public enum UserStatus {
