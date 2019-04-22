@@ -24,7 +24,7 @@ public class FindApartment implements Command {
         LocalDate checkOut = LocalDate.parse(request.getParameter("checkOut"));
         short starsAmount = Short.parseShort(request.getParameter("starsAmount"));
         short placesAmount = Short.parseShort(request.getParameter("placesAmount"));
-        List<Apartment> filteredApartments = apartmentService.filter(checkIn, checkOut);
+        List<Apartment> filteredApartments = apartmentService.filter(checkIn, checkOut, starsAmount, placesAmount);
         request.setAttribute("checkIn", request.getParameter("checkIn"));
         request.setAttribute("checkOut", request.getParameter("checkOut"));
         request.setAttribute("starsAmount", request.getParameter("starsAmount"));

@@ -8,6 +8,7 @@ import example.company.model.entity.Apartment;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ApartmentService {
     public Optional<Apartment> get(long id) {
@@ -26,5 +27,14 @@ public class ApartmentService {
 
     public List<Apartment> filter(LocalDate checkIn, LocalDate checkOut) {
         return getNonBooked(checkIn, checkOut);
+    }
+
+    public List<Apartment> filter(LocalDate checkIn, LocalDate checkOut, short starsAmount, short placesAmount) {
+        return filter(checkIn, checkOut)
+                .stream()
+                .filter(
+                        a -> a.getStarsAmount() == starsAmount
+                                && a.getPlacesAmount() == placesAmount
+                ).collect(Collectors.toList());
     }
 }
