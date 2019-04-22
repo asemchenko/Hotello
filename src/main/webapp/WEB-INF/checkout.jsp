@@ -5,6 +5,8 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="message"/>
 
+<jsp:useBean id="now" class="java.util.Date"/>
+<fmt:formatDate var="nowDate" value="${now}" pattern="yyyy-MM-dd"/>
 
 <html>
 <head>
@@ -91,56 +93,71 @@
                             <label for="checkInInput">
                                 <fmt:message key="checkout.checkInLabel"/>
                             </label>
-                            <input class="form-control" type="date" id="checkInInput" onchange="updatePrice(this)"
+                            <input class="form-control" type="date" id="checkInInput" min="${nowDate}"
+                                   oninput="updatePrice(this); checkDates();"
                                    name="checkInDate" required>
                         </div>
                         <div class="col-mb-3 mx-auto">
                             <label for="checkOutInput">
                                 <fmt:message key="checkout.checkOutLabel"/>
                             </label>
-                            <input class="form-control" type="date" id="checkOutInput" onchange="updatePrice(this)"
+                            <input class="form-control" type="date" id="checkOutInput" min="${nowDate}"
+                                   oninput="updatePrice(this); checkDates();"
                                    name="checkOutDate" required>
                         </div>
                         <input type="number" hidden value="${apartment.id}" name="apartmentId">
                     </div>
                     <hr class="mb-4">
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit" id="submitButton">
                         <fmt:message key="checkout.confirmOrderButton"/>
                     </button>
                 </form>
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        function updatePrice(dateTag) {
-            var checkInDate = document.getElementById("checkInInput").valueAsDate;
-            var checkOutDate = document.getElementById("checkOutInput").valueAsDate;
-            var daysAmount = document.getElementById("daysAmount");
-            var daysDiff = dateDiffInDays(checkInDate, checkOutDate);
-            if (daysDiff <= 0) {
-                daysAmount.style.visibility = 'hidden';
-                dateTag.value = '';
-                alert('Check out date must be after check in date');
-            } else {
-                // updating days amount
-                daysAmount.textContent = '<fmt:message key="checkout.totalDays"/>' + daysDiff;
-                // daysAmount.textContent = 'x' + daysDiff + ' days';
-                daysAmount.style.visibility = 'visible';
-            }
-        }
-
-        function dateDiffInDays(a, b) {
-
-            // a and b are javascript Date objects
-            var _MS_PER_DAY = 1000 * 60 * 60 * 24;
-            // Discard the time and time-zone information.
-            var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-            var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-
-            return Math.floor((utc2 - utc1) / _MS_PER_DAY);
-        }
-    </script>
 </main>
 <jsp:include page="${pageContext.request.contextPath}/footer.jsp"/>
+<script type="text/javascript">
+    function updatePrice(dateTag) {
+        var checkInDate = document.getElementById("checkInInput").valueAsDate;
+        var checkOutDate = document.getElementById("checkOutInput").valueAsDate;
+        var daysAmount = document.getElementById("daysAmount");
+        if (checkInDate == null || checkOutDate == null) {
+            daysAmount.style.visibility = 'hidden';
+            return;
+        }
+        var daysDiff = dateDiffInDays(checkInDate, checkOutDate);
+        if (daysDiff <= 0) {
+            daysAmount.style.visibility = 'hidden';
+        } else {
+            // updating days amount
+            daysAmount.textContent = '<fmt:message key="checkout.totalDays"/>' + daysDiff;
+            // daysAmount.textContent = 'x' + daysDiff + ' days';
+            daysAmount.style.visibility = 'visible';
+        }
+    }
+
+    function dateDiffInDays(a, b) {
+
+        // a and b are javascript Date objects
+        var _MS_PER_DAY = 1000 * 60 * 60 * 24;
+        // Discard the time and time-zone information.
+        var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+        var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+        return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+    }
+
+    function checkDates() {
+        var checkIn = new Date(document.getElementById('checkInInput').value);
+        var checkOut = new Date(document.getElementById('checkOutInput').value);
+        var searchButton = document.getElementById('submitButton');
+        if (checkIn < checkOut) {
+            searchButton.disabled = false;
+        } else {
+            searchButton.disabled = true;
+        }
+    }
+</script>
 </body>
 </html>

@@ -28,7 +28,6 @@ public class SignIn implements Command {
             User user = userService.getUserByEmail(email).get();
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
-            System.out.println("Successfully login");
             logger.info("User {} has been successfully signed in. Request [addr: {}, session id: {}]", user, request.getRemoteAddr(), request.getSession().getId());
             response.sendRedirect("/");
 

@@ -23,9 +23,7 @@ public class ChangePassword implements Command {
         assert user != null : "user can not be null";
         String oldPassword = request.getParameter("oldPassword");
         String newPassword = request.getParameter("newPassword");
-        if (userService.changePassword(user, oldPassword, newPassword)) {
-            System.out.println("Password successfully changed");
-        } else {
+        if (!userService.changePassword(user, oldPassword, newPassword)) {
             request.setAttribute("invalidPassword", true);
             request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
             return;

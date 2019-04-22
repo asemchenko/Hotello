@@ -4,6 +4,9 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="message"/>
 
+<jsp:useBean id="now" class="java.util.Date"/>
+<fmt:formatDate var="nowDate" value="${now}" pattern="yyyy-MM-dd"/>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -27,13 +30,15 @@
                     <label for="checkInInput">
                         <fmt:message key="searchBar.checkIn"/>
                     </label>
-                    <input class="form-control" type="date" id="checkInInput" name="checkIn" required>
+                    <input class="form-control" type="date" id="checkInInput" name="checkIn" min="${nowDate}"
+                           oninput="checkDates()" required>
                 </div>
                 <div class="col-auto">
                     <label for="checkOutInput">
                         <fmt:message key="searchBar.checkOut"/>
                     </label>
-                    <input class="form-control" type="date" id="checkOutInput" name="checkOut" required>
+                    <input class="form-control" type="date" id="checkOutInput" name="checkOut" min="${nowDate}"
+                           oninput="checkDates()" required>
                 </div>
                 <div class="col-auto">
                     <label for="inlineFormCustomSelectPref">
@@ -64,7 +69,7 @@
                     <input class="form-control" type="number" min="1" id="visitorsAmount" name="placesAmount" required>
                 </div>
                 <div class="col-auto">
-                    <button type="submit" style="margin-top: 30px;" class="btn btn-primary">
+                    <button type="submit" style="margin-top: 30px;" class="btn btn-primary" id="searchButton">
                         <fmt:message key="searchBar.search"/>
                     </button>
                 </div>
@@ -75,5 +80,17 @@
     </section>
 </main>
 <jsp:include page="${pageContext.request.contextPath}/footer.jsp"/>
+<script type="text/javascript">
+    function checkDates() {
+        var checkIn = new Date(document.getElementById('checkInInput').value);
+        var checkOut = new Date(document.getElementById('checkOutInput').value);
+        var searchButton = document.getElementById('searchButton');
+        if (checkIn < checkOut) {
+            searchButton.disabled = false;
+        } else {
+            searchButton.disabled = true;
+        }
+    }
+</script>
 </body>
 </html>

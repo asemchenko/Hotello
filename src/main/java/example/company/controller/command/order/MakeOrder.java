@@ -45,12 +45,9 @@ public class MakeOrder implements Command {
     private Order extractOrderInfo(HttpServletRequest request) {
         Order order = new Order();
         // setting checkIn && checkOut dates
-        LocalDate checkInDate = extractCheckInDate(request);
-        System.out.println("checkInDate = " + checkInDate);
-        order.setCheckInDate(checkInDate);
-        LocalDate checkOutDate = extractCheckOutDate(request);
-        System.out.println("checkOutDate = " + checkOutDate);
-        order.setCheckOutDate(checkOutDate);
+        order.setCheckInDate(extractCheckInDate(request));
+        order.setCheckOutDate(extractCheckOutDate(request));
+        checkDatesRange(order.getCheckInDate(), order.getCheckOutDate());
         // setting apartment
         Optional<Apartment> apartment = loadApartment(extractApartmentId(request));
         if (apartment.isEmpty()) {
@@ -61,7 +58,7 @@ public class MakeOrder implements Command {
         order.setUser(getCurrentUser(request));
         // setting prices
         order.setPricePerDayAtTheTimeOfOrder(apartment.get().getPricePerDay());
-        order.setTotalPrice(calcTotalPrice(checkInDate, checkOutDate, apartment.get()));
+        order.setTotalPrice(calcTotalPrice(order.getCheckInDate(), order.getCheckOutDate(), apartment.get()));
         return order;
     }
 
@@ -84,5 +81,14 @@ public class MakeOrder implements Command {
 
     private LocalDate extractCheckInDate(HttpServletRequest request) {
         return LocalDate.parse(request.getParameter("checkInDate"));
+    }
+
+    private void checkDatesRange(LocalDate checkIn, LocalDate checkOut) {
+        LocalDate now = LocalDate.now();
+        if (checkOut.isAfter(checkIn)
+                && (checkIn.isAfter(now) || checkIn.equals(now))) {
+            return;
+        }
+        throw new IllegalArgumentException("Invalid date in request");
     }
 }

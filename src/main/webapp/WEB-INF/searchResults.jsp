@@ -5,6 +5,9 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="message"/>
 
+<jsp:useBean id="now" class="java.util.Date"/>
+<fmt:formatDate var="nowDate" value="${now}" pattern="yyyy-MM-dd"/>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -27,12 +30,12 @@
                 <div class="col-auto">
                     <label for="checkInInput"><fmt:message key="searchBar.checkIn"/></label>
                     <input class="form-control" type="date" id="checkInInput" name="checkIn"
-                           value="<c:out value="${checkIn}" />" required>
+                           value="<c:out value="${checkIn}" />" min="${nowDate}" oninput="checkDates()" required>
                 </div>
                 <div class="col-auto">
                     <label for="checkOutInput"><fmt:message key="searchBar.checkOut"/></label>
                     <input class="form-control" type="date" id="checkOutInput" name="checkOut"
-                           value="<c:out value="${checkOut}" />" required>
+                           value="<c:out value="${checkOut}" />" min="${nowDate}" oninput="checkDates()" required>
                 </div>
                 <div class="col-auto">
                     <label for="starsAmountSelect"><fmt:message key="searchBar.apartmentClass"/></label>
@@ -60,8 +63,9 @@
                            value="<c:out value="${placesAmount}" />" name="placesAmount" required>
                 </div>
                 <div class="col-auto">
-                    <button type="submit" style="margin-top: 30px;" class="btn btn-primary"><fmt:message
-                            key="searchBar.search"/></button>
+                    <button type="submit" style="margin-top: 30px;" class="btn btn-primary" id="searchButton">
+                        <fmt:message
+                                key="searchBar.search"/></button>
                 </div>
             </div>
         </form>
@@ -140,6 +144,17 @@
     function setStarsAmount() {
         var s = document.getElementById('starsAmountSelect');
         s.value =<c:out value="${starsAmount}" />;
+    }
+
+    function checkDates() {
+        var checkIn = new Date(document.getElementById('checkInInput').value);
+        var checkOut = new Date(document.getElementById('checkOutInput').value);
+        var searchButton = document.getElementById('searchButton');
+        if (checkIn < checkOut) {
+            searchButton.disabled = false;
+        } else {
+            searchButton.disabled = true;
+        }
     }
 </script>
 </body>
