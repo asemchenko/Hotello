@@ -21,7 +21,6 @@ public class JdbcDaoFactory implements DaoFactory {
     private OrderDao orderDao;
     private BillDao billDao;
 
-    // TODO фабика фабрик?777
     public JdbcDaoFactory(Connection connection) {
         this.connection = connection;
     }

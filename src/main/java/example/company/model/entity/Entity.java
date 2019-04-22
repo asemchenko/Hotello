@@ -7,7 +7,6 @@ public abstract class Entity {
         return id;
     }
 
-    // TODO разрешать менять id-шник как-то не оч
     public void setId(Long id) {
         this.id = id;
     }

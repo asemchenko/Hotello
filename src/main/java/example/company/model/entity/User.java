@@ -12,7 +12,6 @@ public class User extends Entity {
     private byte[] passwordSalt;
     private Instant creationTime;
     private UserStatus status;
-    // TODO добавь поле creation_time как в БД и обнови код DAO
 
     public String getFirstName() {
         return firstName;

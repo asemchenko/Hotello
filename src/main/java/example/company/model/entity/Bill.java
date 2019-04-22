@@ -1,6 +1,7 @@
 package example.company.model.entity;
 
 import java.time.Instant;
+import java.util.Objects;
 
 public class Bill extends Entity {
     private long amountDue;
@@ -48,5 +49,32 @@ public class Bill extends Entity {
 
     public void setPaymentTransactionId(String paymentTransactionId) {
         this.paymentTransactionId = paymentTransactionId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bill bill = (Bill) o;
+        return amountDue == bill.amountDue &&
+                Objects.equals(bankAccountNumber, bill.bankAccountNumber) &&
+                Objects.equals(creationTime, bill.creationTime) &&
+                Objects.equals(paymentTransactionId, bill.paymentTransactionId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amountDue, bankAccountNumber, creationTime, paymentTransactionId);
+    }
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "amountDue=" + amountDue +
+                ", bankAccountNumber='" + bankAccountNumber + '\'' +
+                ", creationTime=" + creationTime +
+                ", paymentTransactionId='" + paymentTransactionId + '\'' +
+                ", id=" + id +
+                "} ";
     }
 }
