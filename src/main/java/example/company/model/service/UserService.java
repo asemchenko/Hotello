@@ -8,18 +8,13 @@ import example.company.model.service.password.Hasher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Optional;
 
 public class UserService {
     public static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
     public void signUp(User user, String password) {
         user.setCreationTime(Instant.now());
         setPassword(user, password);

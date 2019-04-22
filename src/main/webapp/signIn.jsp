@@ -4,11 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="message"/>
-
-<c:if test="${not empty param.invalidCredentials}">
-    <%--    TODO стыд-позор или качественное решение?) --%>
-    <% response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); %>
-</c:if>
 <html>
 <head>
     <meta charset="UTF-8">

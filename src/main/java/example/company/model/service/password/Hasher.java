@@ -28,6 +28,10 @@ public class Hasher {
         return salt;
     }
 
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
+    }
+
     public byte[] getHashedPassword() {
         if (isNull(hashedPassword)) {
             KeySpec keySpec = new PBEKeySpec(password.toCharArray(), getSalt(), 65536, 128);
@@ -39,9 +43,5 @@ public class Hasher {
             }
         }
         return hashedPassword;
-    }
-
-    public void setSalt(byte[] salt) {
-        this.salt = salt;
     }
 }

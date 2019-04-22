@@ -67,25 +67,31 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                                     <input type="password" class="form-control" name="password" id="password"
-                                           placeholder="<fmt:message key="signUp.passwordPlaceholder"/>"/>
+                                           placeholder="<fmt:message key="signUp.passwordPlaceholder"/>"
+                                           oninput="checkPasswordsSame()"/>
                                 </div>
                             </div>
                         </div>
                         <%--                        TODO реализуй проверку что пароли совпадают--%>
                         <div class="form-group">
-                            <label for="confirm" class="cols-sm-2 control-label"><fmt:message
+                            <label for="passwordConfirmation" class="cols-sm-2 control-label"><fmt:message
                                     key="signUp.confirmPasswordLabel"/></label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                    <input type="password" class="form-control" name="confirm" id="confirm"
-                                           placeholder="<fmt:message key="signUp.confirmPasswordPlaceholder"/>"/>
+                                    <input type="password" class="form-control" name="confirm" id="passwordConfirmation"
+                                           placeholder="<fmt:message key="signUp.confirmPasswordPlaceholder"/>"
+                                           oninput="checkPasswordsSame()"/>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group ">
                             <input type="submit" class="btn btn-primary btn-lg btn-block login-button"
-                                   value="<fmt:message key="signUp.registerButton"/>"/>
+                                   value="<fmt:message key="signUp.registerButton"/>" id="submitButton"/>
+                        </div>
+                        <div class="alert alert-danger" role="alert" id="passwordConfirmationFailedAlert"
+                             style="display: none">
+                            <fmt:message key="signUp.passwordConfirmationFailedAlert"/>
                         </div>
                     </form>
                 </div>
@@ -95,5 +101,21 @@
     </div>
 </div>
 <jsp:include page="${pageContext.request.contextPath}/footer.jsp"/>
+<script type="text/javascript">
+    function checkPasswordsSame() {
+        var passwordInput = document.getElementById('password');
+        var passwordConfirmationInput = document.getElementById('passwordConfirmation');
+        var submitButton = document.getElementById('submitButton');
+        var alertLabel = document.getElementById('passwordConfirmationFailedAlert');
+        if (passwordInput.value !== passwordConfirmationInput.value) {
+            submitButton.disabled = true;
+            alertLabel.style.display = 'block';
+        } else {
+            submitButton.disabled = false;
+            alertLabel.style.display = 'none';
+
+        }
+    }
+</script>
 </body>
 </html>

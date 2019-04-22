@@ -3,12 +3,13 @@ package example.company.controller.command.user;
 import example.company.controller.command.Command;
 import example.company.model.entity.User;
 import example.company.model.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import org.slf4j.*;
 
 public class SignIn implements Command {
     private static final Logger logger = LoggerFactory.getLogger(SignIn.class);
