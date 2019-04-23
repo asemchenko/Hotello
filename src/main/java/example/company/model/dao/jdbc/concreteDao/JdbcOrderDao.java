@@ -16,7 +16,6 @@ import java.util.List;
 
 import static java.util.Objects.nonNull;
 
-// FIXME очень важно! реализуй сохранения связанных с order объектов (user, apartment, bill)
 public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
     private static final String FIND_BY_USER_QUERY = "SELECT id_order, bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price, creation_time, order_status FROM orders WHERE user_id=?";
     private static final String INSERT_QUERY = "INSERT INTO orders (bill_id, apartment_id, user_id, check_in, check_out, price_per_day, total_price, creation_time, order_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -113,7 +112,6 @@ public class JdbcOrderDao extends JdbcGenericDao<Order> implements OrderDao {
             s.setNull(1 + offset, Types.INTEGER);
         }
         // apartment_id
-        // FIXME нарушение принципа Деметры?
         s.setLong(2 + offset, order.getApartment().getId());
         // user_id
         s.setLong(3 + offset, order.getUser().getId());

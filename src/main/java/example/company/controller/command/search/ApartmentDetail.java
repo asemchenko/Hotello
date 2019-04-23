@@ -19,14 +19,12 @@ public class ApartmentDetail implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        // TODO error handling
         long apartment_id = Long.parseLong(request.getParameter("apartmentId"));
         Optional<Apartment> apartmentOptional = apartmentService.get(apartment_id);
         if (apartmentOptional.isPresent()) {
             request.setAttribute("apartment", apartmentOptional.get());
             request.getRequestDispatcher("/WEB-INF/apartmentDetail.jsp").forward(request, response);
         } else {
-            // FIXME возможно optional тут как возу пятое колесо?
             throw new RuntimeException();
         }
     }

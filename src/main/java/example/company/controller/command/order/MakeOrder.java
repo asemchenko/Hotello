@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 public class MakeOrder implements Command {
@@ -49,16 +48,13 @@ public class MakeOrder implements Command {
         order.setCheckOutDate(extractCheckOutDate(request));
         checkDatesRange(order.getCheckInDate(), order.getCheckOutDate());
         // setting apartment
-        Optional<Apartment> apartment = loadApartment(extractApartmentId(request));
-        if (apartment.isEmpty()) {
-            throw new NoSuchElementException("No such apartment");
-        }
-        order.setApartment(apartment.get());
+        Apartment apartment = loadApartment(extractApartmentId(request)).get();
+        order.setApartment(apartment);
         // setting user
         order.setUser(getCurrentUser(request));
         // setting prices
-        order.setPricePerDayAtTheTimeOfOrder(apartment.get().getPricePerDay());
-        order.setTotalPrice(calcTotalPrice(order.getCheckInDate(), order.getCheckOutDate(), apartment.get()));
+        order.setPricePerDayAtTheTimeOfOrder(apartment.getPricePerDay());
+        order.setTotalPrice(calcTotalPrice(order.getCheckInDate(), order.getCheckOutDate(), apartment));
         return order;
     }
 

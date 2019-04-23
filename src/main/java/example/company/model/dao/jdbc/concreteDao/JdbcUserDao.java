@@ -7,7 +7,6 @@ import example.company.model.entity.User;
 import java.sql.*;
 import java.util.Optional;
 
-// TODO implement this
 public class JdbcUserDao extends JdbcGenericDao<User> implements UserDao {
     private static final String INSERT_QUERY = "INSERT INTO users " +
             "(first_name, last_name, email, password_hash, salt, creation_time ,user_role)" +
