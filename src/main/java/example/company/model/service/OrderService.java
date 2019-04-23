@@ -17,14 +17,21 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class OrderService {
     private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
-    private PaymentService paymentService = new PaymentService();
+    private PaymentService paymentService;
+    private Supplier<DaoFactory> daoFactorySupplier;
+
+    public OrderService(PaymentService paymentService, Supplier<DaoFactory> daoFactorySupplier) {
+        this.paymentService = paymentService;
+        this.daoFactorySupplier = daoFactorySupplier;
+    }
 
     public void makeOrder(Order order) throws ApartmentAlreadyBookedException {
         logger.info("Making an order {}", order);
-        try (DaoFactory daoFactory = JdbcDaoFactory.getFactory()) {
+        try (DaoFactory daoFactory = daoFactorySupplier.get()) {
             Connection connection = daoFactory.getCurrentConnection();
             // FIXME перенеси транзакцию в dao
             connection.setAutoCommit(false);
@@ -44,7 +51,7 @@ public class OrderService {
     }
 
     public List<Order> getOrders(User user) {
-        try (DaoFactory daoFactory = JdbcDaoFactory.getFactory()) {
+        try (DaoFactory daoFactory = daoFactorySupplier.get()) {
             OrderDao orderDao = daoFactory.getOrderDao();
             List<Order> byUser = orderDao.getByUser(user);
             byUser.sort(Comparator.comparing(Order::getCreationTime).reversed());
@@ -53,7 +60,7 @@ public class OrderService {
     }
 
     public List<Order> getAllOrdersSortedByDate() {
-        try (DaoFactory daoFactory = JdbcDaoFactory.getFactory()) {
+        try (DaoFactory daoFactory = daoFactorySupplier.get()) {
             OrderDao orderDao = daoFactory.getOrderDao();
             List<Order> all = orderDao.findAll();
             all.sort(Comparator.comparing(Order::getCreationTime).reversed());
@@ -62,7 +69,7 @@ public class OrderService {
     }
 
     private void updateOrder(long orderId, Consumer<Order> updateFunc) {
-        try (DaoFactory daoFactory = JdbcDaoFactory.getFactory()) {
+        try (DaoFactory daoFactory = daoFactorySupplier.get()) {
             OrderDao orderDao = daoFactory.getOrderDao();
             Order order = orderDao.findById(orderId).get();
             updateFunc.accept(order);
@@ -95,7 +102,7 @@ public class OrderService {
     }
 
     public Optional<Order> findById(long id) {
-        try (DaoFactory daoFactory = JdbcDaoFactory.getFactory()) {
+        try (DaoFactory daoFactory = daoFactorySupplier.get()) {
             OrderDao orderDao = daoFactory.getOrderDao();
             return orderDao.findById(id);
         }
