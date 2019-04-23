@@ -93,17 +93,19 @@
                             <fmt:formatNumber type="CURRENCY" value="${order.totalPrice / 100}" maxFractionDigits="2"/>
                         </h4></div>
                     </div>
-                    <c:if test="${order.status eq 'CONFIRMATION_EXPECTED'}">
+                    <c:if test="${order.status eq 'CONFIRMATION_EXPECTED' or order.status eq 'PAYMENT_EXPECTED'}">
                         <hr>
                         <div class="row">
-                            <div class="col-sm text-center">
-                                <form action="${pageContext.request.contextPath}/app/confirmOrder" method="post">
-                                    <button type="submit" class="btn btn-success">
-                                        <fmt:message key="orders.admin.confirmButton"/>
-                                    </button>
-                                    <input type="text" value="${order.id}" hidden name="orderId">
-                                </form>
-                            </div>
+                            <c:if test="${order.status eq 'CONFIRMATION_EXPECTED'}">
+                                <div class="col-sm text-center">
+                                    <form action="${pageContext.request.contextPath}/app/confirmOrder" method="post">
+                                        <button type="submit" class="btn btn-success">
+                                            <fmt:message key="orders.admin.confirmButton"/>
+                                        </button>
+                                        <input type="text" value="${order.id}" hidden name="orderId">
+                                    </form>
+                                </div>
+                            </c:if>
                             <div class="col-sm text-center">
                                 <form action="${pageContext.request.contextPath}/app/disapproveOrder" method="post">
                                     <button type="submit" class="btn btn-danger">

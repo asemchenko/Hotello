@@ -120,7 +120,8 @@ public class Order extends Entity {
     }
 
     public void disapprove() {
-        if (getStatus() == OrderStatus.CONFIRMATION_EXPECTED) {
+        if (getStatus() == OrderStatus.CONFIRMATION_EXPECTED
+                || getStatus() == OrderStatus.PAYMENT_EXPECTED) {
             setStatus(OrderStatus.DISAPPROVED);
         } else {
             throw new IllegalStateException(String.format("Can not confirm order in state %s", getStatus()));

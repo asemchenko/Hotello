@@ -3,7 +3,6 @@ package example.company.model.service;
 import com.google.common.base.Throwables;
 import example.company.model.dao.api.DaoFactory;
 import example.company.model.dao.api.concreteDao.OrderDao;
-import example.company.model.dao.jdbc.JdbcDaoFactory;
 import example.company.model.entity.Order;
 import example.company.model.entity.User;
 import example.company.model.service.exceptions.ApartmentAlreadyBookedException;

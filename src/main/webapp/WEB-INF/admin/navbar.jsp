@@ -16,9 +16,6 @@
         <a class="dropdown-item" href="${pageContext.request.contextPath}/app/allOrders">
             <fmt:message key="navbar.admin.allOrders"/>
         </a>
-        <a class="dropdown-item" href="#">
-            <fmt:message key="navbar.admin.allUsers"/>
-        </a>
         <a class="dropdown-item" href="${pageContext.request.contextPath}/app/logout">
             <fmt:message key="navbar.user.logout"/>
         </a>

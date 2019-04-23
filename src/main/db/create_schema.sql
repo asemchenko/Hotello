@@ -3,9 +3,10 @@
 -- Model: New Model    Version: 1.0
 -- MySQL Workbench Forward Engineering
 
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+SET @OLD_UNIQUE_CHECKS = @@UNIQUE_CHECKS, UNIQUE_CHECKS = 0;
+SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0;
+SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE =
+        'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
 -- Schema mydb
@@ -13,120 +14,130 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema hotello
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `hotello` ;
+DROP SCHEMA IF EXISTS `hotello`;
 
 -- -----------------------------------------------------
 -- Schema hotello
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `hotello` DEFAULT CHARACTER SET utf8 ;
-USE `hotello` ;
+CREATE SCHEMA IF NOT EXISTS `hotello` DEFAULT CHARACTER SET utf8;
+USE `hotello`;
 
 -- -----------------------------------------------------
 -- Table `hotello`.`apartments`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `hotello`.`apartments` ;
+DROP TABLE IF EXISTS `hotello`.`apartments`;
 
-CREATE TABLE IF NOT EXISTS `hotello`.`apartments` (
-  `apartment_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(512) NULL DEFAULT NULL,
-  `description` MEDIUMTEXT NOT NULL,
-  `places_amount` TINYINT(4) NULL DEFAULT NULL,
-  `rooms_amount` TINYINT(4) NULL DEFAULT NULL,
-  `price_per_day` INT(11) NULL DEFAULT NULL,
-  `stars_amount` TINYINT(4) NULL DEFAULT NULL,
-  PRIMARY KEY (`apartment_id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 2
-DEFAULT CHARACTER SET = utf8;
+CREATE TABLE IF NOT EXISTS `hotello`.`apartments`
+(
+    `apartment_id`  INT(11)      NOT NULL AUTO_INCREMENT,
+    `title`         VARCHAR(512) NULL DEFAULT NULL,
+    `description`   MEDIUMTEXT   NOT NULL,
+    `places_amount` TINYINT(4)   NULL DEFAULT NULL,
+    `rooms_amount`  TINYINT(4)   NULL DEFAULT NULL,
+    `price_per_day` INT(11)      NULL DEFAULT NULL,
+    `stars_amount`  TINYINT(4)   NULL DEFAULT NULL,
+    PRIMARY KEY (`apartment_id`)
+)
+    ENGINE = InnoDB
+    AUTO_INCREMENT = 2
+    DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
 -- Table `hotello`.`bills`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `hotello`.`bills` ;
+DROP TABLE IF EXISTS `hotello`.`bills`;
 
-CREATE TABLE IF NOT EXISTS `hotello`.`bills` (
-  `bill_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `amount_due` INT(11) NULL DEFAULT NULL,
-  `bank_account_number` VARCHAR(80) NULL DEFAULT NULL,
-  `payment_transaction_id` VARCHAR(45) NULL,
-  `creation_time` TIMESTAMP NULL,
-  PRIMARY KEY (`bill_id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+CREATE TABLE IF NOT EXISTS `hotello`.`bills`
+(
+    `bill_id`                INT(11)     NOT NULL AUTO_INCREMENT,
+    `amount_due`             INT(11)     NULL DEFAULT NULL,
+    `bank_account_number`    VARCHAR(80) NULL DEFAULT NULL,
+    `payment_transaction_id` VARCHAR(45) NULL,
+    `creation_time`          TIMESTAMP   NULL,
+    PRIMARY KEY (`bill_id`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
 -- Table `hotello`.`users`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `hotello`.`users` ;
+DROP TABLE IF EXISTS `hotello`.`users`;
 
-CREATE TABLE IF NOT EXISTS `hotello`.`users` (
-  `user_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `first_name` VARCHAR(128) NULL DEFAULT NULL,
-  `last_name` VARCHAR(128) NULL DEFAULT NULL,
-  `email` VARCHAR(128) NULL DEFAULT NULL,
-  `password_hash` VARBINARY(128) NULL DEFAULT NULL,
-  `salt` VARBINARY(128) NULL DEFAULT NULL,
-  `creation_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-  `user_role` ENUM('ADMIN', 'CLIENT') NULL DEFAULT NULL,
-  PRIMARY KEY (`user_id`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
-ENGINE = InnoDB
-AUTO_INCREMENT = 33
-DEFAULT CHARACTER SET = utf8;
+CREATE TABLE IF NOT EXISTS `hotello`.`users`
+(
+    `user_id`       INT(11)                  NOT NULL AUTO_INCREMENT,
+    `first_name`    VARCHAR(128)             NULL DEFAULT NULL,
+    `last_name`     VARCHAR(128)             NULL DEFAULT NULL,
+    `email`         VARCHAR(128)             NULL DEFAULT NULL,
+    `password_hash` VARBINARY(128)           NULL DEFAULT NULL,
+    `salt`          VARBINARY(128)           NULL DEFAULT NULL,
+    `creation_time` TIMESTAMP                NULL DEFAULT CURRENT_TIMESTAMP,
+    `user_role`     ENUM ('ADMIN', 'CLIENT') NULL DEFAULT NULL,
+    PRIMARY KEY (`user_id`),
+    UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE
+)
+    ENGINE = InnoDB
+    AUTO_INCREMENT = 33
+    DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
 -- Table `hotello`.`orders`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `hotello`.`orders` ;
+DROP TABLE IF EXISTS `hotello`.`orders`;
 
-CREATE TABLE IF NOT EXISTS `hotello`.`orders` (
-  `id_order` INT(11) NOT NULL AUTO_INCREMENT,
-  `bill_id` INT(11) NULL DEFAULT NULL,
-  `apartment_id` INT(11) NOT NULL,
-  `user_id` INT(11) NOT NULL,
-  `check_in` DATE NULL DEFAULT NULL,
-  `check_out` DATE NULL DEFAULT NULL,
-  `price_per_day` INT(11) NULL DEFAULT NULL,
-  `total_price` INT(11) NULL DEFAULT NULL,
-  `creation_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-  `order_status` ENUM('CONFIRMATION_EXPECTED', 'PAYMENT_EXPECTED', 'PAID', 'DISAPPROVED') NULL DEFAULT NULL,
-  PRIMARY KEY (`id_order`),
-  INDEX `fk_orders_apartments1_idx` (`apartment_id` ASC) VISIBLE,
-  INDEX `fk_orders_users1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_orders_bill1_idx` (`bill_id` ASC) VISIBLE,
-  CONSTRAINT `fk_orders_apartments1`
-    FOREIGN KEY (`apartment_id`)
-    REFERENCES `hotello`.`apartments` (`apartment_id`),
-  CONSTRAINT `fk_orders_bill1`
-    FOREIGN KEY (`bill_id`)
-    REFERENCES `hotello`.`bills` (`bill_id`),
-  CONSTRAINT `fk_orders_users1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `hotello`.`users` (`user_id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 16
-DEFAULT CHARACTER SET = utf8;
+CREATE TABLE IF NOT EXISTS `hotello`.`orders`
+(
+    `id_order`      INT(11)                                                                   NOT NULL AUTO_INCREMENT,
+    `bill_id`       INT(11)                                                                   NULL DEFAULT NULL,
+    `apartment_id`  INT(11)                                                                   NOT NULL,
+    `user_id`       INT(11)                                                                   NOT NULL,
+    `check_in`      DATE                                                                      NULL DEFAULT NULL,
+    `check_out`     DATE                                                                      NULL DEFAULT NULL,
+    `price_per_day` INT(11)                                                                   NULL DEFAULT NULL,
+    `total_price`   INT(11)                                                                   NULL DEFAULT NULL,
+    `creation_time` TIMESTAMP                                                                 NULL DEFAULT CURRENT_TIMESTAMP,
+    `order_status`  ENUM ('CONFIRMATION_EXPECTED', 'PAYMENT_EXPECTED', 'PAID', 'DISAPPROVED') NULL DEFAULT NULL,
+    PRIMARY KEY (`id_order`),
+    INDEX `fk_orders_apartments1_idx` (`apartment_id` ASC) VISIBLE,
+    INDEX `fk_orders_users1_idx` (`user_id` ASC) VISIBLE,
+    INDEX `fk_orders_bill1_idx` (`bill_id` ASC) VISIBLE,
+    CONSTRAINT `fk_orders_apartments1`
+        FOREIGN KEY (`apartment_id`)
+            REFERENCES `hotello`.`apartments` (`apartment_id`),
+    CONSTRAINT `fk_orders_bill1`
+        FOREIGN KEY (`bill_id`)
+            REFERENCES `hotello`.`bills` (`bill_id`),
+    CONSTRAINT `fk_orders_users1`
+        FOREIGN KEY (`user_id`)
+            REFERENCES `hotello`.`users` (`user_id`)
+)
+    ENGINE = InnoDB
+    AUTO_INCREMENT = 16
+    DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
 -- Table `hotello`.`reservations`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `hotello`.`reservations` ;
+DROP TABLE IF EXISTS `hotello`.`reservations`;
 
-CREATE TABLE IF NOT EXISTS `hotello`.`reservations` (
-  `order_id` INT(11) NOT NULL,
-  PRIMARY KEY (`order_id`),
-  INDEX `fk_reservations_orders1_idx` (`order_id` ASC) VISIBLE,
-  CONSTRAINT `fk_reservations_orders1`
-    FOREIGN KEY (`order_id`)
-    REFERENCES `hotello`.`orders` (`id_order`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+CREATE TABLE IF NOT EXISTS `hotello`.`reservations`
+(
+    `order_id` INT(11) NOT NULL,
+    PRIMARY KEY (`order_id`),
+    INDEX `fk_reservations_orders1_idx` (`order_id` ASC) VISIBLE,
+    CONSTRAINT `fk_reservations_orders1`
+        FOREIGN KEY (`order_id`)
+            REFERENCES `hotello`.`orders` (`id_order`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
 
-USE `hotello` ;
+USE `hotello`;
 
 -- -----------------------------------------------------
 -- procedure extended_find_non_booked
@@ -137,11 +148,12 @@ DROP procedure IF EXISTS `hotello`.`extended_find_non_booked`;
 
 DELIMITER $$
 USE `hotello`$$
-CREATE DEFINER=`hotello`@`localhost` PROCEDURE `extended_find_non_booked`(IN check_in_p DATE,
-                                          IN check_out_p DATE,
-                                          IN stars_amount_p INT,
-                                          IN places_amount_p INT,
-                                          IN offset INT, IN page_size INT)
+CREATE
+    DEFINER =`hotello`@`localhost` PROCEDURE `extended_find_non_booked`(IN check_in_p DATE,
+                                                                        IN check_out_p DATE,
+                                                                        IN stars_amount_p INT,
+                                                                        IN places_amount_p INT,
+                                                                        IN offset INT, IN page_size INT)
 BEGIN
     SELECT *
     FROM apartments
@@ -168,7 +180,8 @@ DROP procedure IF EXISTS `hotello`.`find_non_booked`;
 
 DELIMITER $$
 USE `hotello`$$
-CREATE DEFINER=`hotello`@`localhost` PROCEDURE `find_non_booked`(IN check_in_p DATE, IN check_out_p DATE)
+CREATE
+    DEFINER =`hotello`@`localhost` PROCEDURE `find_non_booked`(IN check_in_p DATE, IN check_out_p DATE)
 BEGIN
     SELECT *
     FROM apartments
@@ -191,11 +204,11 @@ DROP procedure IF EXISTS `hotello`.`check_no_interval_intersections`;
 
 DELIMITER $$
 USE `hotello`$$
-CREATE PROCEDURE `check_no_interval_intersections` ()
+CREATE PROCEDURE `check_no_interval_intersections`()
 BEGIN
-IF intersection_amount(order_id_p) != 0 THEN
+    IF intersection_amount(order_id_p) != 0 THEN
         SIGNAL SQLSTATE '23000'
-           SET MESSAGE_TEXT = 'check constraint on reservations failed';
+            SET MESSAGE_TEXT = 'check constraint on reservations failed';
     END IF;
 END$$
 
@@ -218,14 +231,18 @@ BEGIN
     DECLARE apartment_id_p LONG;
     DECLARE amount LONG;
 
-    SELECT check_in, check_out, apartment_id INTO check_in_p, check_out_p, apartment_id_p FROM orders WHERE id_order = order_id_p;
+    SELECT check_in, check_out, apartment_id INTO check_in_p, check_out_p, apartment_id_p
+    FROM orders
+    WHERE id_order = order_id_p;
     SELECT COUNT(*) INTO amount
     FROM reservations r
              INNER JOIN orders o on r.order_id = o.id_order
-    WHERE apartment_id=apartment_id_p AND is_intersected(check_in_p, check_out_p, o.check_in, o.check_out);
+    WHERE apartment_id = apartment_id_p
+      AND is_intersected(check_in_p, check_out_p, o.check_in, o.check_out);
 
     RETURN amount;
-END;$$
+END;
+$$
 
 DELIMITER ;
 
@@ -241,7 +258,8 @@ USE `hotello`$$
 CREATE FUNCTION is_intersected(check_in1 DATE, check_out1 DATE, check_in2 DATE, check_out2 DATE) RETURNS BOOL DETERMINISTIC
 BEGIN
     RETURN (check_in1 BETWEEN check_in2 AND check_out2) OR (check_in2 BETWEEN check_in1 AND check_out1);
-END;$$
+END;
+$$
 
 DELIMITER ;
 USE `hotello`;
@@ -252,10 +270,11 @@ USE `hotello`$$
 DROP TRIGGER IF EXISTS `hotello`.`make_reservation` $$
 USE `hotello`$$
 CREATE
-DEFINER=`root`@`localhost`
-TRIGGER `hotello`.`make_reservation`
-AFTER INSERT ON `hotello`.`orders`
-FOR EACH ROW
+    DEFINER =`root`@`localhost`
+    TRIGGER `hotello`.`make_reservation`
+    AFTER INSERT
+    ON `hotello`.`orders`
+    FOR EACH ROW
 BEGIN
     INSERT INTO reservations(order_id) VALUES (NEW.id_order);
 END$$
@@ -265,10 +284,11 @@ USE `hotello`$$
 DROP TRIGGER IF EXISTS `hotello`.`reservations_before_insert` $$
 USE `hotello`$$
 CREATE
-DEFINER=`root`@`localhost`
-TRIGGER `hotello`.`reservations_before_insert`
-BEFORE INSERT ON `hotello`.`reservations`
-FOR EACH ROW
+    DEFINER =`root`@`localhost`
+    TRIGGER `hotello`.`reservations_before_insert`
+    BEFORE INSERT
+    ON `hotello`.`reservations`
+    FOR EACH ROW
 BEGIN
     CALL check_no_interval_intersections(new.order_id);
 END$$
@@ -278,10 +298,11 @@ USE `hotello`$$
 DROP TRIGGER IF EXISTS `hotello`.`reservations_before_update` $$
 USE `hotello`$$
 CREATE
-DEFINER=`root`@`localhost`
-TRIGGER `hotello`.`reservations_before_update`
-BEFORE UPDATE ON `hotello`.`reservations`
-FOR EACH ROW
+    DEFINER =`root`@`localhost`
+    TRIGGER `hotello`.`reservations_before_update`
+    BEFORE UPDATE
+    ON `hotello`.`reservations`
+    FOR EACH ROW
 BEGIN
     CALL check_no_interval_intersections(new.order_id);
 END$$
@@ -289,6 +310,6 @@ END$$
 
 DELIMITER ;
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+SET SQL_MODE = @OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
