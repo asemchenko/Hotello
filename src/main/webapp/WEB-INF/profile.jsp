@@ -68,7 +68,7 @@
                 </div>
                 <c:if test="${not empty invalidPassword and invalidPassword eq true}">
                     <div class="alert alert-danger text-center" role="alert">
-                        Неправильный пароль
+                        <fmt:message key="profile.invalidPasswordAlert"/>
                     </div>
                 </c:if>
                 <div class="w-50 mx-auto">
