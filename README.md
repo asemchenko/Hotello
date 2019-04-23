@@ -30,12 +30,13 @@ There is a few ways to deploy an application
   `mvn clean tomcat7:deploy`
 1.  That's it
 
-##### Manual deplying
+##### Manual deploying
 1. Use maven to create `war` file
 
 `mvn clean package`
 
 `war`-file will appear in `$PROJECT_ROOT/target directory`
+
 2. Copy generated `war`-file in `$CATALINA_HOME/webapps/`
 
 
