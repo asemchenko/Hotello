@@ -32,7 +32,6 @@ public class OrderService {
         logger.info("Making an order {}", order);
         try (DaoFactory daoFactory = daoFactorySupplier.get()) {
             Connection connection = daoFactory.getCurrentConnection();
-            // FIXME перенеси транзакцию в dao
             connection.setAutoCommit(false);
             OrderDao orderDao = daoFactory.getOrderDao();
             orderDao.create(order);
@@ -94,7 +93,6 @@ public class OrderService {
                 o.markAsPaid();
                 o.getBill().setPaymentTransactionId(transactionId);
             } else {
-                // FIXME замени на свой exception
                 throw new RuntimeException("payment failed");
             }
         });

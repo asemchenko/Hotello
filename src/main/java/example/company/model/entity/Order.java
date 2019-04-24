@@ -9,8 +9,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Order extends Entity {
-    // FIXME обязательно придумай куда это деть
-    private static final String DEFAULT_BANK_ACCOUNT_NUMBER = "1234-1234-1234-1234";
+    private static final String DEFAULT_BANK_ACCOUNT_NUMBER = getDefaultDstBankAccount();
     @Nullable
     private Bill bill;
     private Apartment apartment;
@@ -134,6 +133,10 @@ public class Order extends Entity {
         } else {
             throw new IllegalStateException(String.format("Order in state %s can not be marked as paid", getStatus()));
         }
+    }
+
+    private static String getDefaultDstBankAccount() {
+        return ResourceBundle.getBundle("paymentCredentias").getString("destinationBankAccountNumber");
     }
 
     @Override

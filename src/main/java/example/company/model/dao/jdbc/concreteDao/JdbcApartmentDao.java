@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class JdbcApartmentDao extends JdbcGenericDao<Apartment> implements ApartmentDao {
-    // FIXME magic constant
     private static final String FIND_ALL_QUERY = "SELECT apartment_id, title, description, places_amount, rooms_amount, price_per_day, stars_amount FROM apartments";
     private static final String INSERT_QUERY = "INSERT INTO apartments(title, description, places_amount, rooms_amount, price_per_day, stars_amount) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String FIND_BY_ID_QUERY = "SELECT apartment_id, title, description, places_amount, rooms_amount, price_per_day, stars_amount FROM apartments WHERE apartment_id=?";

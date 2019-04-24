@@ -43,7 +43,6 @@
     </filter>
     <filter-mapping>
         <filter-name>authorizationFilter</filter-name>
-        <!--        FIXME magic constant - app. Maybe pattern should be '/*'-->
         <url-pattern>/app/*</url-pattern>
     </filter-mapping>
     <!--    Lang filter (localization)-->

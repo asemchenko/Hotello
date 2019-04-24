@@ -20,7 +20,6 @@
             <div class="card">
                 <div class="card-header"><fmt:message key="signUp.register"/></div>
                 <div class="card-body">
-                    <%--todo поменяй ссылку action в форме --%>
                     <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/app/signUp">
                         <c:if test="${not empty duplicateEmail and duplicateEmail eq true}">
                             <div class="alert alert-danger text-center" role="alert">

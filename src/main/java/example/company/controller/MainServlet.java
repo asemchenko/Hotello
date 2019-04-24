@@ -10,21 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class MainServlet extends HttpServlet {
-    @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        proccess(req, resp);
-    }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        proccess(req, resp);
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        processRequest(req, resp);
     }
 
-    private void proccess(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String requestURI = req.getRequestURI();
-        // FIXME delete this trash
         requestURI = requestURI.replaceAll("/app/", "");
-        // FIXME закинь в атрибут
         CommandProvider commandProvider = CommandProvider.getInstance();
         Command command = commandProvider.getCommand(requestURI);
         if (command == null) {

@@ -33,22 +33,33 @@ public final class CommandProvider {
     }
 
     private void initCommandMap() {
-        // FIXME используй один и тот же экземпляр каждого сервиса
-        commandMap.put("signIn", new SignIn(new UserService()));
-        commandMap.put("signUp", new SignUp(new UserService()));
+        commandMap.put("signIn", new SignIn(getUserService()));
+        commandMap.put("signUp", new SignUp(getUserService()));
         commandMap.put("logout", new Logout());
-        commandMap.put("orders", new OrdersList(new OrderService(new PaymentService(), JdbcDaoFactory::getFactory)));
+        commandMap.put("orders", new OrdersList(getOrderService()));
         commandMap.put("profile", new Profile());
-        commandMap.put("changePassword", new ChangePassword(new UserService()));
-        commandMap.put("apartment", new ApartmentDetail(new ApartmentService()));
-        commandMap.put("findApartment", new FindApartment(new ApartmentService()));
-        commandMap.put("booking", new Booking(new ApartmentService()));
-        commandMap.put("makeOrder", new MakeOrder(new ApartmentService(), new OrderService(new PaymentService(), JdbcDaoFactory::getFactory)));
-        commandMap.put("allOrders", new AdminOrdersList(new OrderService(new PaymentService(), JdbcDaoFactory::getFactory)));
-        commandMap.put("confirmOrder", new ConfirmOrder(new OrderService(new PaymentService(), JdbcDaoFactory::getFactory)));
-        commandMap.put("disapproveOrder", new DisapproveOrder(new OrderService(new PaymentService(), JdbcDaoFactory::getFactory)));
-        commandMap.put("payForOrder", new PayForOrder(new OrderService(new PaymentService(), JdbcDaoFactory::getFactory)));
-        commandMap.put("processPayment", new ProcessPayment(new OrderService(new PaymentService(), JdbcDaoFactory::getFactory)));
+        commandMap.put("changePassword", new ChangePassword(getUserService()));
+        commandMap.put("apartment", new ApartmentDetail(getApartmentService()));
+        commandMap.put("findApartment", new FindApartment(getApartmentService()));
+        commandMap.put("booking", new Booking(getApartmentService()));
+        commandMap.put("makeOrder", new MakeOrder(getApartmentService(), getOrderService()));
+        commandMap.put("allOrders", new AdminOrdersList(getOrderService()));
+        commandMap.put("confirmOrder", new ConfirmOrder(getOrderService()));
+        commandMap.put("disapproveOrder", new DisapproveOrder(getOrderService()));
+        commandMap.put("payForOrder", new PayForOrder(getOrderService()));
+        commandMap.put("processPayment", new ProcessPayment(getOrderService()));
+    }
+    
+    private UserService getUserService() {
+        return new UserService();
+    }
+    
+    private OrderService getOrderService() {
+        return new OrderService(new PaymentService(), JdbcDaoFactory::getFactory);
+    }
+    
+    private ApartmentService getApartmentService() {
+        return new ApartmentService();
     }
 
     public Command getCommand(String identifier) {

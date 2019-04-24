@@ -14,7 +14,6 @@ public class Logout implements Command {
         if (session != null) {
             session.invalidate();
         }
-        // TODO все пути нужно вынести в конфиг файл
         response.sendRedirect("/");
     }
 }

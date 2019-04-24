@@ -19,7 +19,6 @@ import static java.util.Objects.nonNull;
 
 public class AuthFilter implements Filter {
     private static final Logger logger = LoggerFactory.getLogger(AuthFilter.class);
-    // TODO реализуй чтение разрешенных URI из файла конфигурации
     private Map<User.UserStatus, List<String>> allowedUri = new HashMap<>();
 
 
@@ -70,7 +69,6 @@ public class AuthFilter implements Filter {
 
     private String getUri(HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        // FIXME magic constant
         return requestURI.replaceAll("/app/", "");
     }
 
