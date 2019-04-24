@@ -36,6 +36,7 @@
                                                                        aria-hidden="true"></i></span>
                                     <input type="text" class="form-control" name="firstName" id="firstName"
                                            placeholder="<fmt:message key="signUp.firstNamePlaceholder"/>"
+                                           minlength="4"
                                            value="<c:out value="${firstName}"/>"
                                     />
                                 </div>
@@ -51,6 +52,7 @@
                                                                        aria-hidden="true"></i></span>
                                     <input type="text" class="form-control" name="lastName" id="lastName"
                                            placeholder="<fmt:message key="signUp.lastNamePlaceholder"/>"
+                                           minlength="4"
                                            value="<c:out value="${lastName}" />"
                                     />
                                 </div>
@@ -64,6 +66,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
                                     <input type="text" class="form-control" name="email" id="email"
+                                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                                            placeholder="<fmt:message key="signUp.emailPlaceholder"/>"
                                            value="<c:out value="${email}"/>"
                                     />
@@ -78,6 +81,7 @@
                                     <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                                     <input type="password" class="form-control" name="password" id="password"
                                            placeholder="<fmt:message key="signUp.passwordPlaceholder"/>"
+                                           minlength="4"
                                            oninput="checkPasswordsSame()"/>
                                 </div>
                             </div>

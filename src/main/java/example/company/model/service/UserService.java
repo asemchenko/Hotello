@@ -19,6 +19,8 @@ public class UserService {
     public static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     public void signUp(User user, String password) throws EmailAlreadyTakenException {
+        validateUser(user);
+        validatePassword(password);
         user.setCreationTime(Instant.now());
         setPassword(user, password);
         try (DaoFactory factory = JdbcDaoFactory.getFactory()) {
@@ -76,5 +78,20 @@ public class UserService {
         byte[] expectedHash = user.getPasswordHash();
         byte[] actualHash = hasher.getHashedPassword();
         return Arrays.equals(expectedHash, actualHash);
+    }
+
+    private void validatePassword(String password) {
+        if (password.length() < 4) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private void validateUser(User user) {
+        if (user.getFirstName().length() > 3
+                && user.getLastName().length() > 3
+                && user.getEmail().length() > 5) {
+            return;
+        }
+        throw new IllegalArgumentException();
     }
 }
